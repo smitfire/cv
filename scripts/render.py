@@ -18,38 +18,89 @@ Writes:
 from __future__ import annotations
 
 import argparse
+import re
 import sys
 from datetime import date, datetime
 from pathlib import Path
 
 import yaml
 from jinja2 import Environment, FileSystemLoader, StrictUndefined
+from markupsafe import Markup
 
 ROOT = Path(__file__).resolve().parent.parent
 TEMPLATES = ROOT / "templates"
+
+# Graduated cap on bullets per role — older roles get fewer, since the most
+# recent / most-relevant role should dominate the page.
+BULLET_CAP_BY_ROLE_INDEX = [5, 4, 3, 3, 2, 2, 2, 2]
+MAX_BULLETS_PER_ROLE = 5  # absolute fallback
 
 
 # ---------------------------------------------------------------------------- helpers
 
 
 def _fmt_date(v) -> str:
-    """Render YYYY-MM, YYYY, or 'present' from a yaml date / string / int."""
+    """Render dates in human form: 'Jul 2025' / '2025' / 'Present'."""
     if v is None:
         return ""
-    if isinstance(v, str):
-        return v
-    if isinstance(v, int):
-        return str(v)
     if isinstance(v, (date, datetime)):
         return v.strftime("%b %Y")
+    if isinstance(v, int):
+        return str(v)
+    if isinstance(v, str):
+        # Try YYYY-MM
+        m = re.match(r"^(\d{4})-(\d{1,2})$", v)
+        if m:
+            year, month = int(m.group(1)), int(m.group(2))
+            try:
+                return datetime(year, month, 1).strftime("%b %Y")
+            except ValueError:
+                pass
+        # YYYY-MM-DD
+        m = re.match(r"^(\d{4})-(\d{1,2})-\d{1,2}$", v)
+        if m:
+            year, month = int(m.group(1)), int(m.group(2))
+            try:
+                return datetime(year, month, 1).strftime("%b %Y")
+            except ValueError:
+                pass
+        # Plain YYYY
+        if re.match(r"^\d{4}$", v):
+            return v
+        return v
     return str(v)
+
+
+# Bold common metric tokens in body text. Applied as a Jinja filter; output is HTML-safe.
+import html as _html
+
+_METRIC_PATTERNS = [
+    re.compile(r"(\b\d{1,3}(?:,\d{3})*(?:\.\d+)?\s*[×xX]\b)"),    # 3,370× / 10x
+    re.compile(r"(\b\d+(?:\.\d+)?\s*%)"),                          # 5% / 85%
+    re.compile(r"(\b\d+(?:\.\d+)?\s*(?:to|→|->)\s*\d+(?:\.\d+)?\s*%)"),  # 5% to 85%
+    re.compile(r"(\b\d{2,}\+\b)"),                                # 320+, 10k+
+    re.compile(r"(\b\d{1,3}(?:,\d{3})+\b)"),                      # 162,000
+    re.compile(r"(\$\s*\d+(?:\.\d+)?\s*[KMB]?\b)"),               # $50M
+    re.compile(r"(\b€\s*\d+(?:\.\d+)?\s*[KMB]?\b)"),              # €4.4M
+]
+
+
+def metric_emphasis(text: str) -> Markup:
+    """HTML-escape input, then wrap metric tokens in <strong>. Markup-safe (won't double-escape)."""
+    if text is None:
+        return Markup("")
+    safe = _html.escape(str(text))
+    for pat in _METRIC_PATTERNS:
+        safe = pat.sub(r"<strong>\1</strong>", safe)
+    return Markup(safe)
 
 
 def _normalise_experience(exp_list):
     """Add start_str/end_str fields the template expects, plus default empty fields
-    so StrictUndefined doesn't blow up on optional keys."""
+    so StrictUndefined doesn't blow up on optional keys. Graduated cap on bullets
+    per role — recent roles get more, older roles get fewer."""
     out = []
-    for e in exp_list:
+    for i, e in enumerate(exp_list):
         e = dict(e)
         e["start_str"] = _fmt_date(e.get("start"))
         end = e.get("end")
@@ -61,6 +112,14 @@ def _normalise_experience(exp_list):
         e.setdefault("stack", [])
         e.setdefault("bullets", [])
         e.setdefault("location", "")
+        # Graduated bullet cap (most recent role dominates).
+        cap = (
+            BULLET_CAP_BY_ROLE_INDEX[i]
+            if i < len(BULLET_CAP_BY_ROLE_INDEX)
+            else BULLET_CAP_BY_ROLE_INDEX[-1]
+        )
+        if e["bullets"] and len(e["bullets"]) > cap:
+            e["bullets"] = e["bullets"][:cap]
         out.append(e)
     return out
 
@@ -79,7 +138,9 @@ def _jinja(template: str):
         undefined=StrictUndefined,
         trim_blocks=False,
         lstrip_blocks=False,
+        autoescape=True,
     )
+    env.filters["metric_emphasis"] = metric_emphasis
     return env.get_template(template)
 
 

@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Nick Smit — Senior AI / Full Stack Engineer · RAG · RLM · Agentic AI</title>
-<meta name="description" content="Senior AI / fullstack engineer with 12+ years and three 1st-engineer / leadership-track builds — currently lead contributor at Delta Labs (Zurich, UZH spin-off,">
+<meta name="description" content="Senior AI / full-stack engineer (12+ yrs) and lead contributor at Delta Labs — Zurich AI startup, €4.4M seed Mar 2026. I ship production AI systems end-to-end: ">
 <meta name="author" content="Nick Smit">
 <meta property="og:title" content="Nick Smit — Senior AI / Full Stack Engineer · RAG · RLM · Agentic AI">
-<meta property="og:description" content="Senior AI / fullstack engineer with 12+ years and three 1st-engineer / leadership-track builds — currently lead contributor at Delta Labs (Zurich, UZH spin-off,">
+<meta property="og:description" content="Senior AI / full-stack engineer (12+ yrs) and lead contributor at Delta Labs — Zurich AI startup, €4.4M seed Mar 2026. I ship production AI systems end-to-end: ">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,7 +39,7 @@
   </header>
 
   <section class="brief">
-    <p>Senior AI / fullstack engineer with 12+ years and three 1st-engineer / leadership-track builds — currently lead contributor at Delta Labs (Zurich, UZH spin-off, €4.4M seed Mar 2026). I design and ship production AI systems end-to-end: Recursive Language Models (RLM) inference, RAG pipelines, semantic search, prompt orchestration, multi-step agentic workflows (MCP / Model Context Protocol), document parsing / OCR ingestion, evaluation loops, and the reliability patterns (throttling, retry, circuit-breakers, observability) that keep them stable in production. Two prior exits as 1st engineer; CTO at a healthcare-data startup. Most effective at the intersection of AI systems, backend architecture, technical leadership, and product execution.</p>
+    <p>Senior AI / full-stack engineer (12+ yrs) and lead contributor at Delta Labs — Zurich AI startup, €4.4M seed Mar 2026. I ship production AI systems end-to-end: RAG, Recursive Language Model (RLM) inference, agentic workflows (MCP), OCR pipelines, plus the prompt orchestration and reliability layer (throttling, retry, eval loops) that makes them production-grade. Track record of measurable wins — 3,370× vector-search speedup, 5% → 85% test coverage, 320+ PRs in 10 months. Prior CTO at a healthcare-data startup; acquired exit as 1st technical hire at RTK.io / Magnite.</p>
   </section>
 
   <section class="experience">
@@ -55,11 +55,11 @@
         </header>
         <p class="role__blurb">Lead contributor at Delta Labs — UZH spin-off building Elaiia, an AI customer- simulation platform powered by Recursive Language Models (RLM). €4.4M seed round led by Cusp Capital (Mar 2026). Owning end-to-end delivery across the AI / LLM stack, backend services, data pipelines, and frontend.</p>
         <ul class="role__bullets">
-          <li>Built and scaled a production RAG / semantic-search platform (Python, Azure, Postgres + pgvector) for high-quality retrieval over proprietary enterprise documents — designed the ingestion → parsing → OCR → chunking → embedding → indexing pipeline end-to-end.</li>
-          <li>Architected and operated production Recursive Language Model (RLM) inference and persona-generation services — multi-turn, multi-step LLM workflows backing the company&#x27;s core product, with strict latency, cost and reliability targets.</li>
-          <li>Designed LLM orchestration: prompt frameworks, evaluation loops, throttling, retry / circuit-breaker patterns, schema-enforced structured outputs, and reliability guardrails — the production layer that turns LLM prototypes into trustworthy systems.</li>
+          <li>Built the production AI stack end-to-end on Azure + Postgres + pgvector: RAG retrieval over proprietary enterprise documents (ingestion → OCR → chunking → embedding → indexing), Recursive Language Model (RLM) inference + persona-generation services, prompt orchestration with evaluation loops, throttling, retry / circuit-breaker reliability guardrails.</li>
+          <li>Drove SQL / DB performance: 3,370× vector-search speedup (25s → 7ms on 162k rows) via pg_diskann + index strategy redesign; 10× query speed-ups via materialised views, indexing, schema normalisation; co-designed schema decisions with senior engineers.</li>
+          <li>Owned the testing suite + CI/CD: lifted backend test coverage 5% → 85% (100% on async / event-driven functions, ~8,500 LOC of new tests across 21 files), set code-review and merge-process discipline, hardened GitHub Actions pipelines.</li>
           <li>Introduced the team&#x27;s AI Agent Skills + MCP (Model Context Protocol) framework — codified how Claude / Copilot / ChatGPT-style coding agents auto-discover release, ticket, and DB workflows. Standardised AI-assisted productivity team-wide.</li>
-          <li>Achieved a 3,370× vector-search speedup (25s → 7ms on 162k rows) by introducing pg_diskann, enabling full 3072-dim cosine similarity natively at scale.</li>
+          <li>Architected and shipped a greenfield FastAPI microservice (data-service) replacing the legacy distribution model — significantly more efficient, with weighted distributions, multi-country support and reference validation.</li>
         </ul>
         <ul class="stack">
           <li>Python</li>
@@ -179,11 +179,11 @@
     <h2 class="section-title">Selected wins</h2>
     <ul class="callouts__grid">
       <li>Lead contributor at Delta Labs (UZH spin-off, €4.4M seed Mar 2026) — production RAG, RLM inference, agentic / MCP tooling, OCR ingestion.</li>
-      <li>3,370× vector-search speedup (25s → 7ms on 162k rows) via pg_diskann migration.</li>
-      <li>Lifted test coverage from ~5% to ~85% at Delta Labs (100% on async / event-driven functions); 320+ merged PRs across 8 repos in 10 months.</li>
-      <li>Three leadership-track engagements: lead at Delta Labs, CTO at Ranova, 1st technical hire at the startup that became Magnite. Two prior exits as 1st engineer.</li>
-      <li>Introduced AI Agent Skills + MCP (Model Context Protocol) framework — team-wide standardisation of how AI coding agents plug into our codebase.</li>
-      <li>300% ETL throughput uplift + 55% CI/CD time cut at Ranova via Inngest + AWS-serverless overhaul.</li>
+      <li>3,370× vector-search speedup (25s → 7ms on 162k rows) via pg_diskann + index strategy redesign.</li>
+      <li>Test coverage 5% → 85% (100% on async / event-driven functions); 320+ merged PRs across 8 repos in 10 months.</li>
+      <li>Introduced the team&#x27;s AI Agent Skills + MCP (Model Context Protocol) framework — team-wide standardisation of AI coding-agent productivity.</li>
+      <li>300% ETL throughput uplift + 55% CI/CD time cut at Ranova (CTO) via Inngest + AWS-serverless overhaul.</li>
+      <li>10× SQL-query speed-ups via caching, indexing, materialised-view strategies (Postgres / NeonDB).</li>
     </ul>
   </section>
 
@@ -214,27 +214,27 @@
     <dl class="skills__list">
       <div class="skills__row">
         <dt>AI / LLM</dt>
-        <dd>Production RAG architecture, Recursive Language Models (RLM) inference &amp; persona generation, Agentic workflows &amp; MCP (Model Context Protocol), Prompt engineering &amp; orchestration, Evaluation loops &amp; metrics, OpenAI / Anthropic / Azure OpenAI APIs, Embedding pipelines (ingestion → chunking → vectorisation → indexing), OCR &amp; document parsing pipelines, Vector DBs (pgvector + DiskANN, FAISS, Pinecone), Throttling, retry, circuit-breaker reliability patterns, Schema-enforced structured outputs</dd>
+        <dd>Production RAG architecture, Recursive Language Models (RLM) inference &amp; persona generation, Agentic workflows &amp; MCP (Model Context Protocol), Prompt engineering &amp; orchestration, LLM evaluation loops &amp; metrics, OpenAI / Anthropic / Azure OpenAI APIs, Embedding pipelines (ingestion → chunking → vectorisation → indexing), OCR &amp; document parsing pipelines, Vector DBs (pgvector + DiskANN, FAISS, Pinecone), Throttling, retry, circuit-breaker reliability patterns, Schema-enforced structured outputs</dd>
       </div>
       <div class="skills__row">
         <dt>Python</dt>
-        <dd>Python 3 (12+ yrs), Flask, FastAPI, ETL pipelines, Pytest, Pandas / NumPy, asyncio</dd>
+        <dd>Python 3 (12+ yrs), FastAPI, Flask, ETL pipelines, Pytest, asyncio, Pandas / NumPy</dd>
       </div>
       <div class="skills__row">
         <dt>Frontend</dt>
-        <dd>React (8+ yrs), Next.js, TypeScript, Streamlit (4+ yrs), AngularJS (legacy), Tailwind, AntD</dd>
+        <dd>TypeScript (8+ yrs), React (8+ yrs), Next.js, Node.js, Tailwind, AntD, Streamlit (4+ yrs)</dd>
       </div>
       <div class="skills__row">
         <dt>Data &amp; Storage</dt>
-        <dd>PostgreSQL (incl. pgvector), Elasticsearch, Triple / Graph DBs, Redis, NeonDB, MySQL, Knowledge graphs (1M+ nodes)</dd>
+        <dd>PostgreSQL (incl. pgvector + DiskANN), Elasticsearch, Triple / Graph DBs, Redis, NeonDB, MySQL, Knowledge graphs (1M+ nodes)</dd>
       </div>
       <div class="skills__row">
         <dt>Cloud &amp; DevOps</dt>
-        <dd>AWS (Lambda, Batch, DMS, S3), Azure, Docker, Kubernetes, GitLab CI/CD, GitHub Actions, Vercel, Render, ArgoCD, Inngest</dd>
+        <dd>AWS (Lambda, Batch, DMS, S3), Azure, Docker, Kubernetes, GitHub Actions, GitLab CI/CD, Vercel, Inngest, ArgoCD</dd>
       </div>
       <div class="skills__row">
-        <dt>Observability &amp; Quality</dt>
-        <dd>Structured logging, Metrics &amp; tracing, Pytest, Selenium / Playwright / Cypress, Coverage reporting, Linters / formatters</dd>
+        <dt>Observability</dt>
+        <dd>Structured logging, Metrics &amp; tracing, Coverage reporting, Cost / latency / quality dashboards</dd>
       </div>
     </dl>
   </section>

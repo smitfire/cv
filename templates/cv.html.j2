@@ -34,6 +34,8 @@
       font-weight: 700;
     }
     .summary { margin: 0 0 4pt 0; text-align: justify; }
+    .summary strong { color: #111; font-weight: 600; }
+    .role__bullets li strong, .role__blurb strong, ul.achievements li strong { color: #111; font-weight: 600; }
     .role {
       margin: 8pt 0 6pt 0;
     }
@@ -75,7 +77,7 @@
   </p>
 
   <h2>Summary</h2>
-  <p class="summary">{{ summary }}</p>
+  <p class="summary">{{ summary | metric_emphasis }}</p>
 
   <h2>Experience</h2>
   {%- for role in experience %}
@@ -90,7 +92,7 @@
     {%- if role.bullets %}
     <ul>
       {%- for b in role.bullets %}
-      <li>{{ b }}</li>
+      <li>{{ b | metric_emphasis }}</li>
       {%- endfor %}
     </ul>
     {%- endif %}
@@ -104,7 +106,7 @@
   <h2>Selected Achievements</h2>
   <ul class="achievements">
     {%- for a in key_achievements %}
-    <li>{{ a }}</li>
+    <li>{{ a | metric_emphasis }}</li>
     {%- endfor %}
   </ul>
   {%- endif %}
