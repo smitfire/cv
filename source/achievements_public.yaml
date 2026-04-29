@@ -1,0 +1,165 @@
+# achievements_public.yaml — public, sanitized version of achievements_bank.yaml.
+#
+# What's here:
+#   - Personal achievements + metrics (the things YOU did and own)
+#   - Public technologies / patterns (pg_diskann, Inngest, etc.)
+#   - Generic problem descriptions
+#
+# What's NOT here (lives in achievements_bank.yaml, gitignored):
+#   - Client / customer names
+#   - Internal product names, project codenames, repo names
+#   - Internal Jira keys, PR numbers, ticket IDs
+#   - Architecture details that would identify proprietary systems
+#   - Any other IP or confidential information from Delta Labs, Ranova, or earlier
+#     employers (Scaler, RTK.io, EPFL, etc.)
+#
+# Last sanitized: 2026-04-29
+
+bullets:
+
+  # =====================================================================================
+  # Current senior role at a Zurich AI startup (Jul 2025 – present)
+  # 1st engineer / lead contributor on a production AI / LLM platform
+  # =====================================================================================
+
+  # ----- PERFORMANCE -------------------------------------------------------------------
+
+  - text: "Achieved a ~3,370× vector-search speedup (25s → 7ms on a 162k-row table) by introducing pg_diskann to Postgres, enabling full 3072-dim cosine similarity natively (HNSW/IVFFlat are capped at 2000 dims on pgvector 0.8.0). Zero application code change."
+    tags: [perf, vectordb, postgres, pgvector, diskann, embeddings, rag]
+    metric: { kind: speedup, value: "3370x", before: "25s", after: "7ms", rows: "162k" }
+
+  - text: "Lifted automated test coverage on a critical async / event-driven function set from 8% (2/26) to 100% (26/26) — added ~8,500 lines of integration + unit tests across 21 new files. Diagnosed and fixed a Bun mock.module() process-global leakage causing CI flakiness."
+    tags: [perf, quality, testing, ci, inngest, bun]
+    metric: { kind: coverage_uplift, value: "8% → 100%", lines_added: 8500 }
+
+  - text: "Cut serverless function memory footprint 40-70% per request by splitting a 1,932-line monolithic catch-all route (37 endpoints, 40+ imports) into 9 focused serverless functions. Resolved memory exhaustion under Vercel Fluid Compute."
+    tags: [perf, serverless, vercel, memory, architecture, refactor]
+    metric: { kind: memory_reduction, value: "40-70%" }
+
+  - text: "Reduced a long-running insights-generation job from ~7.5 min to ~45-60s (~10× faster) by replacing a sequential for-loop with Promise.all() + Inngest step.run() fan-out, with a concurrency cap of 10 to avoid overwhelming OpenAI."
+    tags: [perf, parallelization, inngest, llm, openai]
+    metric: { kind: speedup, value: "~10x", before: "7.5min", after: "45-60s" }
+
+  - text: "Fixed ENOSPC ('no space left on device') failures on Vercel/Inngest serverless workers under heavy data import (28k+ records, large-payload streaming) by replacing a buffering SDK download with native fetch() + SAS URLs streaming directly to a Node Readable. Tested with a 2.6 GB payload."
+    tags: [perf, serverless, azure, streaming, reliability]
+    metric: { kind: payload_handled, value: "2.6GB" }
+
+  - text: "Solved OpenAI's 50 MB image-payload limit on long multi-turn vision interactions — payloads dropping from ~73 MB to ~5 MB — by introducing a `compressedContent` JSONB column and a sharp-based 512px JPEG q70 compression utility, applied to past-turn images while keeping the current turn full-quality."
+    tags: [perf, llm, openai, image_processing, postgres]
+    metric: { kind: payload_reduction, value: "73MB → 5MB" }
+
+  - text: "Worked around Postgres's hard 256 MB per-JSONB-value limit (JENTRY_OFFLENMASK = 2^28 - 1) blocking large data imports — designed an option-axis row split with a nullable offset column. Existing rows untouched (NULL = single self-contained row); split rows reassembled at read time."
+    tags: [perf, postgres, scaling, schema_design, etl, jsonb]
+    metric: { kind: limit_overcome, value: "256 MB JSONB" }
+
+  - text: "Solved Inngest's 4 MB step output limit for large data imports by persisting warning arrays to a Postgres `result` JSONB column instead of returning them as step output, with type-only schema updates (no migration)."
+    tags: [perf, inngest, etl, postgres, scaling]
+    metric: { kind: limit_overcome, value: "4 MB step output" }
+
+  - text: "Introduced streaming JSON parsing (`stream-json`) and a batched-commit strategy (2000 records, 20 segmentations per batch) into a critical import path, enabling memory-efficient ingestion of 2.6 GB+ files and avoiding PgBouncer connection timeouts."
+    tags: [perf, etl, streaming, postgres, pgbouncer, scaling]
+    metric: { kind: payload_handled, value: "2.6 GB" }
+
+  # ----- BIG FEATURE BUILD-OUTS --------------------------------------------------------
+
+  - text: "Designed and shipped a major new reporting capability end-to-end (~42k LOC) — backend infrastructure, frontend components, and report generation. Lets users compare results across custom-defined segments instead of being limited to default breakdowns. Re-computes NPS, A/B, Likert and ChoiceFrequency reports per segment."
+    tags: [feature, fullstack, llm, postgres, frontend, backend, product]
+    metric: { kind: loc_shipped, value: "~42k" }
+
+  - text: "Built a streaming data-import system handling 2.7 GB+ JSON files: browser uploads to blob storage, server streams + parses incrementally with stream-json, embeddings generated in parallel via a batched embedding service. Replaced a hand-rolled prototype that crashed on serverless."
+    tags: [feature, etl, streaming, embeddings, frontend, azure, inngest]
+    metric: { kind: payload_handled, value: "2.7 GB+" }
+
+  - text: "Architected a major schema overhaul — decomposed a JSONB array into 7 properly relational tables. Stores only non-derived data; quantitative stats computed from classifications at read time. Bundled with a backfill script (dry-run / --run / --verify modes)."
+    tags: [feature, postgres, schema_design, migration, backend]
+
+  - text: "Hardened a multi-step classification pipeline from silent corruption: replaced a parallel pattern (which dropped shared state) with a sequential two-step pipeline. Fixed customer-visible report mismatches across multiple question types."
+    tags: [feature, llm, classification, reliability]
+
+  - text: "Designed a per-package option-label override system — new junction table with nullable label/description overrides falling back to global defaults, plus admin UI with override editor, blue-dot indicators, and clear-override action."
+    tags: [feature, fullstack, postgres, admin_ui, schema_design]
+
+  # ----- TECHNOLOGICAL TRANSITIONS / NEW PIPELINES -------------------------------------
+
+  - text: "Led the introduction of an AI Agent Skills + MCP (Model Context Protocol) framework — codified how Claude / Copilot / ChatGPT-style coding agents auto-discover release, ticket-tracker, and DB workflows. Standardised AI-assisted workflows team-wide rather than per-engineer."
+    tags: [transition, ai, mcp, tooling, leadership, productivity]
+
+  - text: "Migrated long-running LLM calls off the application's primary serverless runtime onto Inngest's distributed step.ai.infer() pattern — fixed connection severing where the host platform cut OpenAI requests mid-response. 3-step pattern (prepare → step.ai.infer → process-and-save): the function pauses during the LLM call, releasing compute and connection."
+    tags: [transition, inngest, llm, openai, vercel, serverless, architecture]
+
+  - text: "Led an Inngest Python SDK migration in a sibling service — large change spanning ~196 files / ~29k LOC; bundled with system overhaul work."
+    tags: [transition, inngest, python, sdk_migration, ai, architecture]
+    metric: { kind: loc_shipped, value: "~29k" }
+
+  - text: "Implemented EU-region OpenAI endpoint routing across the platform for data-residency compliance."
+    tags: [transition, openai, compliance, eu, data_residency]
+
+  - text: "Introduced rate-limit handling, throttling, and reliability fixes across a sibling Python service — production guardrails for LLM-orchestrated work."
+    tags: [transition, llm, reliability, throttling, inngest, observability]
+
+  - text: "Set up a document-extract microservice end-to-end — Inngest async processing, GPU acceleration, validation UI, full document summary pipeline. ~38k LOC across initial scaffold + GPU acceleration + UI features."
+    tags: [transition, new_service, inngest, gpu, ai_pipeline, etl]
+    metric: { kind: loc_shipped, value: "~38k" }
+
+  - text: "Established a data-service microservice (FastAPI) — weighted distributions, multi-country support, reference validation. From greenfield scaffolding to feature-complete API."
+    tags: [transition, new_service, fastapi, python, api]
+
+  # ----- CROSS-REPO / STORY ARCS ------------------------------------------------------
+
+  - text: "Story-arc ownership: explored a research / experimentation phase, built an evaluation framework, then productionised the inference path as a reusable library + service and integrated it into the main app. End-to-end ownership of the AI / LLM stack from research to production."
+    tags: [arc, ai, rag, llm, embeddings, vector_search, leadership, architecture]
+
+  # =====================================================================================
+  # Earlier roles — see profile.yaml for full context
+  # =====================================================================================
+
+  - text: "Reduced infrastructure costs by ~40% through cloud-native architecture migration (legacy Docker-VM stack → AWS serverless)."
+    tags: [aws, perf, devops]
+    metric: { kind: cost_reduction, value: "40%" }
+
+  - text: "Boosted ETL pipeline throughput ~300% via intelligent orchestration (Inngest + AWS Lambda / Batch)."
+    tags: [etl, aws, perf, python, backend]
+    metric: { kind: throughput_uplift, value: "+300%" }
+
+  - text: "Cut build + deploy time by 55% through CI/CD overhaul; introduced linter and review/merge process to raise code quality."
+    tags: [cicd, devops, quality]
+    metric: { kind: time_reduction, value: "-55%" }
+
+  - text: "Implemented an LLM-based document-generation system that reduced documentation time by ~65% — early production GenAI in a regulated/research environment."
+    tags: [llm, ai, frontend, backend, perf]
+    metric: { kind: time_reduction, value: "-65%" }
+
+  - text: "Built a real-time data-monitoring UI that detected anomalies in production streams — cut anomaly-detection time by ~20% and improved overall pipeline reliability."
+    tags: [streamlit, python, observability, perf, data]
+    metric: { kind: time_reduction, value: "-20%" }
+
+  - text: "Principal frontend developer on a public scientific app over a 1M+ node knowledge graph (open-source — see github.com/BlueBrain/core-web-app)."
+    tags: [react, nextjs, frontend, scientific, neuroscience, graphdb]
+
+  - text: "First technical hire at an early-stage startup that scaled to 10k+ active users and was acquired (real-time SaaS, ad-tech)."
+    tags: [exits, leadership, adtech, scaling]
+
+# Standalone metrics — public-safe, role-anonymised.
+metrics:
+  - { label: "Vector-search speedup",            value: "3,370x (25s → 7ms)",   tags: [perf, vectordb, postgres, diskann] }
+  - { label: "Async function test coverage",     value: "8% → 100%",            tags: [quality, testing] }
+  - { label: "Test coverage (overall)",          value: "5% → 85%",             tags: [quality] }
+  - { label: "Serverless memory reduction",      value: "-40 to -70% per req",  tags: [perf, vercel, serverless] }
+  - { label: "Insights generation",              value: "~10x (7.5min → 45-60s)", tags: [perf, parallelization, llm] }
+  - { label: "Image-payload reduction",          value: "73 MB → 5 MB",         tags: [perf, llm, openai] }
+  - { label: "Streaming-import payload",         value: "2.6–2.7 GB",           tags: [perf, etl, streaming] }
+  - { label: "ETL throughput uplift",            value: "+300%",                tags: [etl, perf] }
+  - { label: "DB query speed-up",                value: "up to 10x",            tags: [postgres, perf] }
+  - { label: "Build/deploy time reduction",      value: "-55%",                 tags: [cicd, perf] }
+  - { label: "Infra cost reduction",             value: "-40%",                 tags: [aws, perf] }
+  - { label: "Documentation time reduction",     value: "-65%",                 tags: [llm, perf] }
+  - { label: "Anomaly-detection time reduction", value: "-20%",                 tags: [observability, streamlit] }
+  - { label: "Knowledge graph size",             value: "1M+ nodes",            tags: [graphdb, scientific] }
+  - { label: "Real-time SaaS active users",      value: "10k+",                 tags: [scaling] }
+  - { label: "Team delivery speed uplift",       value: "+20%",                 tags: [agile, leadership] }
+
+# Public links worth surfacing.
+public_links:
+  - url: "https://github.com/BlueBrain/core-web-app"
+    label: "EPFL Blue Brain — open-source app I led the public web-app work on"
+    tags: [frontend, scientific, opensource]

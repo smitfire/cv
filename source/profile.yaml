@@ -1,0 +1,363 @@
+# profile.yaml — single source of truth, superset of every CV variant.
+# Tag every bullet so render.py / Claude can filter relevant ones per JD.
+#
+# Tag taxonomy (loose, extend as needed):
+#   tech:       python, typescript, react, nextjs, streamlit, flask, fastapi, sql
+#   role:       backend, frontend, fullstack, devops, lead
+#   domain:     ai, llm, rag, embeddings, vectordb, etl, observability, perf, scaling
+#   cloud:      aws, azure, gcp, vercel, docker, kubernetes, cicd
+#   data:       postgres, elasticsearch, graphdb, redis, neondb
+#   industry:   adtech, healthcare, neuroscience, fintech, scientific
+#   meta:       leadership, exits, product, mentoring, hiring
+
+basics:
+  name: Nick Smit
+  full_name: Nicolaas Smit
+  title_variants:
+    ai_engineer:        "Senior AI / LLM Engineer"
+    fullstack_python:   "Senior Full Stack Python Engineer"
+    fullstack:          "Senior Full Stack Engineer"
+    frontend:           "Senior Frontend Engineer"
+    backend:            "Senior Backend Engineer"
+    cto:                "Founding Engineer / Tech Lead"
+  email: nick.smit@gmail.com
+  phone: "+41 79 945 57 83"
+  location: "Geneva / Zurich, Switzerland"
+  work_eligibility: "Swiss permit holder; eligible for Switzerland & EU roles"
+  linkedin: "https://www.linkedin.com/in/nicolaas-smit-ab00695a/"
+  github: "https://github.com/"     # update if you want a personal handle here
+  sites:
+    company: "https://voodoolabs.org"
+    personal: "https://nicksmit.me"
+
+# Pre-written summaries — Claude picks one and mutates the wording per JD.
+summaries:
+  ai_engineer: >
+    Senior fullstack engineer with 12+ years building production software, currently
+    operating as 1st engineer at an AI startup. I design and ship LLM systems end-to-end —
+    RAG pipelines, semantic search, prompt orchestration, evaluation loops, and the
+    reliability patterns (throttling, monitoring, guardrails) that keep them stable in
+    production. Two prior exits as 1st engineer. Most effective at the intersection of AI
+    systems, backend architecture, and product execution.
+
+  fullstack_python: >
+    Senior full stack Python engineer with 12+ years experience, specialised in Flask /
+    FastAPI back-ends, ETL pipelines, and modern data tooling (Postgres, Elasticsearch,
+    vector DBs). Track record of measurable impact — 300% ETL throughput uplift, 10x DB
+    query speed-ups, test coverage from 5% to 85%, 50% CI/CD time reduction. Equally
+    comfortable owning the front-end (React, Next.js, Streamlit) and the LLM layer.
+
+  fullstack: >
+    Senior fullstack engineer (12+ yrs) with 2 prior exits as 1st engineer. I own systems
+    end-to-end — backend services, data pipelines, frontend, and the LLM layer where it
+    applies. Strong on engineering quality (5%→85% test coverage at Delta Labs) and on
+    turning fast-moving product ideas into reliable, observable, production systems.
+
+  frontend: >
+    Senior frontend engineer (12+ years) building robust, performant web applications with
+    React, Next.js, and TypeScript. Principal frontend developer for a SaaS platform
+    serving 10k+ users; led UI development for EPFL's Blue Brain neuroscience tooling
+    (Next.js + Elasticsearch over a 1M+ node knowledge graph). Strong collaborative and
+    ownership mindset across startup and research environments.
+
+  backend: >
+    Senior backend engineer with 12+ years building Python services, ETL pipelines, and
+    distributed AI / LLM systems. Recent focus: production RAG and embedding pipelines
+    (Azure, Postgres + pgvector), observability, throttling, evaluation loops. Comfortable
+    in everything from greenfield architecture to scaling and reliability work on
+    inherited systems.
+
+  cto: >
+    Founding / lead engineer with 12+ years and 2 exits as 1st engineer. I take products
+    from zero to scale — backend, data, frontend, infra, hiring, and the product /
+    delegation work that comes with it. Most recently led architecture, release management
+    and product execution at Delta Labs (AI startup, Zurich) and served as CTO at Ranova
+    (Geneva, healthcare data).
+
+experience:
+
+  - id: delta_labs
+    company: "Delta Labs AG"
+    role: "Senior Fullstack Engineer"
+    start: 2025-07
+    end: present
+    location: "Zurich, Switzerland"
+    industry: ai_startup
+    blurb: >
+      Driving product and technical direction at an AI startup; owning end-to-end delivery
+      across backend, data, and LLM systems as the most senior / lead contributor.
+    bullets:
+      - text: "Built and scaled a production RAG / semantic search platform (Python, Azure, Postgres + vector search) for high-quality knowledge retrieval over enterprise documents."
+        tags: [python, rag, llm, embeddings, vectordb, postgres, azure, ai, backend]
+      - text: "Designed LLM orchestration: prompt frameworks, evaluation loops, throttling, retry / circuit-breaker patterns, and reliability guardrails for production use."
+        tags: [llm, ai, observability, perf, backend]
+      - text: "Lifted automated test coverage from ~5% to ~85%, stabilising core systems and giving the team confidence to ship faster."
+        tags: [quality, testing, backend, leadership]
+      - text: "Architected the data + embedding pipeline (ingestion → parsing → chunking → vectorisation → indexing) for scalable AI workflows."
+        tags: [etl, data, embeddings, vectordb, backend, python]
+      - text: "Stood up observability and monitoring across services (metrics, structured logs, tracing) to keep latency, cost and quality measurable."
+        tags: [observability, devops, backend]
+      - text: "Operated as most senior / lead contributor: solutions architecture, release management, prioritisation, delegation, cross-functional alignment during rapid growth and fundraising."
+        tags: [leadership, product, mentoring]
+    stack: [Python, FastAPI, Azure, "Postgres + pgvector", TypeScript, "Next.js", LLM, RAG, Docker, "GitHub Actions"]
+
+  - id: ranova
+    company: "Ranova"
+    role: "CTO"
+    start: 2025-01
+    end: 2025-09
+    location: "Geneva, Switzerland"
+    industry: healthcare_data
+    blurb: >
+      CTO at an early-stage healthcare data startup. Owned architecture, delivery,
+      hiring direction, and product roadmap.
+    bullets:
+      - text: "Spearheaded migration from a legacy Docker-VM stack to AWS serverless (Lambda, DMS, GitLab CI/CD), reducing infra cost and improving deploy ergonomics."
+        tags: [aws, devops, perf, backend, leadership]
+      - text: "Boosted ETL pipeline throughput ~300% via intelligent orchestration (Inngest + AWS Lambda / Batch)."
+        tags: [etl, aws, perf, python, backend]
+      - text: "Cut build + deploy time by 55% through CI/CD overhaul; introduced linter and review/merge process to raise code quality bar."
+        tags: [cicd, devops, quality]
+      - text: "Optimised database query speed up to 10x with caching, indexing, and materialised-view strategies; designed NeonDB schema for safer dev workflows and clean prod/staging sync via AWS DMS."
+        tags: [postgres, neondb, perf, data, backend]
+      - text: "Built Flask-based analytics routes integrating LLMs for enhanced insights and exposed them via Streamlit dashboards."
+        tags: [flask, streamlit, llm, python, backend, frontend]
+      - text: "Took on product management: roadmaps, epics, ticket assignment; suggested product directions that customers responded to."
+        tags: [product, leadership]
+      - text: "Launched and maintained an MVP internal tool, driving ~20% increase in user engagement."
+        tags: [product, fullstack]
+    stack: [Python, Flask, FastAPI, "Next.js", TypeScript, AWS, "AWS Lambda", "AWS DMS", Inngest, NeonDB, PostgreSQL, Docker, "GitLab CI/CD"]
+
+  - id: epfl
+    company: "EPFL — Blue Brain Project"
+    role: "Software Engineer"
+    start: 2021-05
+    end: 2024-12
+    location: "Geneva, Switzerland"
+    industry: scientific_research
+    blurb: >
+      Built UI and data tooling for EPFL's Blue Brain — a research programme mapping and
+      simulating a mouse brain.
+    bullets:
+      - text: "Principal developer on neuron-morphology and electrophysiology viewers (React, Next.js) over a 1M+ node neuroscience knowledge graph."
+        tags: [react, nextjs, frontend, scientific, neuroscience, graphdb]
+      - text: "Designed the data layer for the front-end app, consuming several sources of complex neuroscience data; reduced query times via Elasticsearch + triple-graph DB strategies."
+        tags: [elasticsearch, graphdb, perf, frontend, data]
+      - text: "Implemented an LLM-based document generation system that reduced documentation time by ~65%."
+        tags: [llm, ai, frontend, backend, perf]
+      - text: "Deployed microservices via Docker / Kubernetes with accessibility and performance optimisations; ensured responsive, accessible UIs."
+        tags: [docker, kubernetes, devops, frontend, accessibility]
+      - text: "Collaborated with neuroscientists, designers, backend engineers and data scientists to translate research workflows into usable digital laboratory tools."
+        tags: [collaboration, product, scientific]
+      - text: "Received AA performance reviews two years running with year-on-year improvement across all review categories."
+        tags: [performance_reviews]
+    stack: [TypeScript, JavaScript, React, "Next.js", Elasticsearch, "Triple Graph DB", "JSON-LD", AntD, Tailwind, Cypress, Python, Docker, Kubernetes, REST]
+    public_links:
+      - "https://github.com/BlueBrain/core-web-app"
+
+  - id: magnite
+    company: "Magnite (acquired RTK.io)"
+    role: "Software Engineer"
+    start: 2019-10
+    end: 2019-12
+    location: "Geneva / Zurich, Switzerland"
+    industry: adtech
+    blurb: >
+      Continued role after Magnite's acquisition of RTK.io; world's largest independent
+      sell-side ad-tech platform.
+    bullets:
+      - text: "Frontend contributions on event-driven components for a $50M+ ad-tech platform."
+        tags: [javascript, frontend, adtech]
+      - text: "Worked across PMs, devs, QA and customers to resolve technical issues and roll fixes into release patches."
+        tags: [collaboration, adtech]
+    stack: [JavaScript, REST, "GitLab CI/CD", "Ad Tech SDKs"]
+    note: "Same role as RTK.io after the acquisition — combine into one block when needed for brevity."
+
+  - id: rtkio
+    company: "RTK.io"
+    role: "Software Engineer (Principal Frontend / Fullstack)"
+    start: 2015-10
+    end: 2019-10
+    location: "Zurich, Switzerland"
+    industry: adtech
+    blurb: >
+      Joined as 1st technical hire at an early-stage ad-tech startup; matured the platform
+      to acquisition by Magnite. Principal developer on a SaaS serving 10k+ active users.
+    bullets:
+      - text: "First tech hire at an early-stage startup that matured and was acquired by Magnite (industry-leading sell-side platform)."
+        tags: [exits, leadership, adtech]
+      - text: "Principal developer on real-time SaaS ad-tech infrastructure (AngularJS / PHP / Laravel), supporting 10k+ active users."
+        tags: [angularjs, php, frontend, fullstack, adtech, scaling]
+      - text: "Built a Streamlit-based data monitoring UI that cut anomaly-detection time by 20% and improved overall pipeline reliability."
+        tags: [streamlit, python, observability, perf, data]
+      - text: "Improved pipeline performance with Redis caching and SQL-query optimisation; led DevOps work on Docker images and GitLab CI/CD."
+        tags: [redis, sql, perf, docker, cicd, devops]
+      - text: "Increased team delivery speed ~20% via agile / Scrum process improvements; led daily stand-ups; contributed to hiring."
+        tags: [leadership, agile, hiring]
+    stack: [AngularJS, JavaScript, PHP, Laravel, Python, Streamlit, Redis, MySQL, Elasticsearch, Docker, "GitLab CI/CD"]
+
+  - id: voodoo_labs
+    company: "Voodoo Labs"
+    role: "Web Developer / Founder"
+    start: 2011-10
+    end: 2015-04
+    location: ""
+    industry: agency
+    blurb: >
+      Small web agency / studio (own company); collaborated on full SDLC delivery for
+      external clients.
+    bullets:
+      - text: "Owned full SDLC for client web projects: requirements gathering, design, build, deployment, support."
+        tags: [fullstack, frontend, agency]
+    stack: [PHP, WordPress, JavaScript, jQuery, CSS]
+
+  - id: metis
+    company: "Metis"
+    role: "Data Scientist (cohort)"
+    start: 2015-04
+    end: 2015-07
+    location: "New York, USA"
+    industry: education
+    blurb: >
+      Twelve-week immersive (ACCET-accredited) data science programme. Cohort included
+      Nobel-paper contributors, a nuclear physicist, an Amex VP and an NYU Psychiatry
+      post-doc.
+    bullets:
+      - text: "Built a movie box-office prediction algorithm combining standard movie metrics with sentiment scores derived from Reddit."
+        tags: [ml, python]
+      - text: "Scraped 1M+ neuroscience papers and built a D3 adjacency matrix linking brain regions to symptoms."
+        tags: [scraping, d3, neuroscience]
+      - text: "Built a stock-prediction model fusing regression on numerical data with RNN-based sentiment analysis on Yahoo News."
+        tags: [ml, rnn, nlp]
+    stack: [Python, Pandas, NumPy, "Scikit-learn", BeautifulSoup, Selenium, Flask, "D3.js", SQL, MongoDB, AWS, Hadoop, Dask, NLTK, PySpark]
+
+  - id: ironhack
+    company: "Ironhack"
+    role: "Teaching Assistant"
+    start: 2014-07
+    end: 2015-03
+    location: ""
+    industry: education
+    bullets:
+      - text: "TA on a 9-week intensive Ruby on Rails / JS bootcamp; planned and delivered lessons, graded assignments, supported student learning."
+        tags: [teaching, mentoring, ruby]
+    stack: [Ruby, "Ruby on Rails", JavaScript, jQuery, CSS, Bootstrap, Heroku]
+
+  - id: dev_bootcamp
+    company: "Dev Bootcamp"
+    role: "Engineering Apprentice"
+    start: 2013-08
+    end: 2013-10
+    location: ""
+    industry: education
+    bullets:
+      - text: "Finished top 3 in cohort. One of 14/32 students to complete the programme on schedule."
+        tags: [achievement]
+    stack: [Ruby, Sinatra, ActiveRecord, MySQL, "Ruby on Rails", "D3.js"]
+
+  - id: givengain
+    company: "GivenGain"
+    role: "Software Engineer"
+    start: 2014-01
+    end: 2014-04
+    location: "Villars-sur-Ollon, Switzerland"
+    industry: nonprofit
+    bullets:
+      - text: "Junior engineer at a philanthropic-platform startup; refactoring, feature work, and exposure to senior tooling."
+        tags: [junior, fullstack]
+
+skills:
+  # Categories used by the template; reorder per JD.
+  python:
+    label: "Python"
+    items: ["Python 3 (12+ yrs)", "Flask", "FastAPI", "ETL pipelines", "Pytest", "Pandas / NumPy", "asyncio"]
+    tags: [python, backend, etl]
+  ai_llm:
+    label: "AI / LLM"
+    items: ["RAG architecture", "Prompt engineering & orchestration", "Evaluation loops", "OpenAI / Anthropic APIs", "Embeddings", "Vector DBs (pgvector, FAISS, Pinecone, NeonDB)", "Document parsing & chunking", "Throttling & guardrails"]
+    tags: [llm, ai, rag, embeddings, vectordb]
+  frontend:
+    label: "Frontend"
+    items: ["React (8+ yrs)", "Next.js", "TypeScript", "Streamlit (4+ yrs)", "AngularJS (legacy)", "Tailwind", "AntD"]
+    tags: [frontend, react, nextjs, typescript, streamlit]
+  data:
+    label: "Data & Storage"
+    items: ["PostgreSQL (incl. pgvector)", "Elasticsearch", "Triple / Graph DBs", "Redis", "NeonDB", "MySQL", "Knowledge graphs (1M+ nodes)"]
+    tags: [postgres, elasticsearch, graphdb, redis]
+  cloud_devops:
+    label: "Cloud & DevOps"
+    items: ["AWS (Lambda, Batch, DMS, S3)", "Azure", "Docker", "Kubernetes", "GitLab CI/CD", "GitHub Actions", "Vercel", "Render", "ArgoCD", "Inngest"]
+    tags: [aws, azure, docker, kubernetes, cicd, devops]
+  observability:
+    label: "Observability & Quality"
+    items: ["Structured logging", "Metrics & tracing", "Pytest", "Selenium / Playwright / Cypress", "Coverage reporting", "Linters / formatters"]
+    tags: [observability, testing, devops]
+  visualization:
+    label: "Data Visualisation"
+    items: ["Streamlit", "D3.js", "Plotly"]
+    tags: [streamlit, d3, plotly, frontend]
+
+education:
+  - school: "Northeastern University"
+    degree: "B.Sc., Criminal Justice / Economics"
+    location: "Boston, USA"
+    start: 2008
+    end: 2011
+  - school: "Exeter University"
+    degree: "B.Sc. (read), Economics"
+    location: "Exeter, UK"
+    start: 2006
+    end: 2007
+  - school: "Metis"
+    degree: "Data Science Immersive (ACCET-accredited)"
+    location: "New York, USA"
+    start: 2015-04
+    end: 2015-07
+  - school: "Dev Bootcamp"
+    degree: "Full-Stack Web Development"
+    location: "Chicago, USA"
+    start: 2013-08
+    end: 2013-10
+
+languages:
+  - { name: "English", level: "Native / Bilingual" }
+  - { name: "French",  level: "Professional Working (B1+)" }
+  - { name: "Afrikaans", level: "Professional Working" }
+
+projects:
+  - title: "Neuroscience Research Paper ETL"
+    blurb: "Python ETL that scrapes, normalises and analyses neuroscience research papers; LLM-enriched insights surfaced through interactive Streamlit dashboards correlating brain regions with symptoms."
+    tags: [python, etl, llm, streamlit, neuroscience]
+  - title: "RAG / Semantic Search Platform (Delta Labs)"
+    blurb: "Production retrieval system over enterprise documents — ingestion, chunking, embeddings, vector search, eval loops."
+    tags: [rag, llm, embeddings, vectordb, ai]
+  - title: "Real-time Monitoring Dashboard (RTK.io / Magnite)"
+    blurb: "Streamlit-based UI for real-time pipeline monitoring; cut anomaly-detection time by 20%."
+    tags: [streamlit, observability, perf]
+  - title: "LLM Integration at Ranova"
+    blurb: "Embedded LLMs into existing healthcare data flows for document processing and insights generation."
+    tags: [llm, healthcare, python]
+
+key_achievements:
+  - text: "Two prior exits as 1st engineer (RTK.io → Magnite; one undisclosed)."
+    tags: [exits, leadership]
+  - text: "Lifted test coverage from ~5% to ~85% at Delta Labs."
+    tags: [quality, leadership]
+  - text: "300% ETL pipeline throughput uplift at Ranova via Inngest + AWS orchestration."
+    tags: [perf, etl]
+  - text: "10x DB query speed-ups via caching, indexing, materialised views."
+    tags: [perf, postgres]
+  - text: "65% reduction in documentation time at EPFL via LLM-based generation."
+    tags: [llm, perf]
+  - text: "1M+ node knowledge-graph integration powering EPFL's Blue Brain UI."
+    tags: [graphdb, frontend, scientific]
+  - text: "10k+ active-user SaaS as principal developer at RTK.io."
+    tags: [scaling, frontend]
+  - text: "20% improvement in team delivery speed via agile process work at RTK.io."
+    tags: [leadership, agile]
+  - text: "AA performance reviews two years running at EPFL."
+    tags: [performance_reviews]
+
+availability:
+  status: "Open to senior engineering / lead roles in Switzerland and remote-EU."
+  notice: "Discuss"

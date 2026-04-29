@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ basics.name }} — {{ headline }}</title>
+  <style>
+    /* ATS-safe: single column, no tables, standard fonts, no graphics. */
+    @page { size: A4; margin: 14mm 16mm; }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0; padding: 0;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 10.5pt;
+      line-height: 1.35;
+      color: #111;
+    }
+    h1 {
+      font-size: 20pt; margin: 0 0 2pt 0; font-weight: 700; letter-spacing: 0.2pt;
+    }
+    .role-line {
+      font-size: 11pt; color: #222; margin: 0 0 6pt 0;
+    }
+    .contact {
+      font-size: 9.5pt; color: #333; margin: 0 0 14pt 0;
+    }
+    .contact span + span:before { content: "  ·  "; color: #888; }
+    h2 {
+      font-size: 11pt;
+      text-transform: uppercase;
+      letter-spacing: 0.6pt;
+      margin: 14pt 0 5pt 0;
+      padding-bottom: 2pt;
+      border-bottom: 1px solid #999;
+      font-weight: 700;
+    }
+    .summary { margin: 0 0 4pt 0; text-align: justify; }
+    .role {
+      margin: 8pt 0 6pt 0;
+    }
+    .role-header {
+      display: flex; justify-content: space-between; align-items: baseline;
+      font-size: 10.5pt;
+    }
+    .role-header .left  { font-weight: 700; }
+    .role-header .right { color: #444; font-size: 10pt; white-space: nowrap; }
+    .role-blurb { margin: 1pt 0 3pt 0; color: #333; font-style: italic; font-size: 10pt; }
+    ul {
+      margin: 2pt 0 4pt 18pt; padding: 0;
+    }
+    li { margin: 1pt 0; }
+    .stack {
+      margin: 3pt 0 0 0; font-size: 9.5pt; color: #333;
+    }
+    .stack strong { color: #111; }
+    .skills-grid { margin: 0; padding: 0; list-style: none; }
+    .skills-grid li { margin: 2pt 0; }
+    .skills-grid li strong { display: inline-block; min-width: 110pt; }
+    .edu li { margin: 2pt 0; }
+    .languages, .projects, .achievements { margin: 0; }
+    .achievements li { margin: 2pt 0; }
+  </style>
+</head>
+<body>
+
+  <h1>{{ basics.name }}</h1>
+  <p class="role-line">{{ headline }}</p>
+  <p class="contact">
+    <span>{{ basics.location }}</span>
+    <span>{{ basics.phone }}</span>
+    <span><a href="mailto:{{ basics.email }}">{{ basics.email }}</a></span>
+    <span><a href="{{ basics.linkedin }}">LinkedIn</a></span>
+    {%- if basics.sites and basics.sites.personal %}
+    <span><a href="{{ basics.sites.personal }}">{{ basics.sites.personal | replace('https://','') }}</a></span>
+    {%- endif %}
+  </p>
+
+  <h2>Summary</h2>
+  <p class="summary">{{ summary }}</p>
+
+  <h2>Experience</h2>
+  {%- for role in experience %}
+  <div class="role">
+    <div class="role-header">
+      <div class="left">{{ role.role }} — {{ role.company }}</div>
+      <div class="right">{{ role.start_str }} – {{ role.end_str }}{% if role.location %} · {{ role.location }}{% endif %}</div>
+    </div>
+    {%- if role.blurb %}
+    <div class="role-blurb">{{ role.blurb }}</div>
+    {%- endif %}
+    {%- if role.bullets %}
+    <ul>
+      {%- for b in role.bullets %}
+      <li>{{ b }}</li>
+      {%- endfor %}
+    </ul>
+    {%- endif %}
+    {%- if role.stack %}
+    <div class="stack"><strong>Stack:</strong> {{ role.stack | join(', ') }}</div>
+    {%- endif %}
+  </div>
+  {%- endfor %}
+
+  {%- if key_achievements %}
+  <h2>Selected Achievements</h2>
+  <ul class="achievements">
+    {%- for a in key_achievements %}
+    <li>{{ a }}</li>
+    {%- endfor %}
+  </ul>
+  {%- endif %}
+
+  <h2>Skills</h2>
+  <ul class="skills-grid">
+    {%- for s in skills %}
+    <li><strong>{{ s.label }}:</strong> {{ s['items'] | join(', ') }}</li>
+    {%- endfor %}
+  </ul>
+
+  {%- if projects %}
+  <h2>Selected Projects</h2>
+  <ul class="projects">
+    {%- for p in projects %}
+    <li><strong>{{ p.title }}</strong> — {{ p.blurb }}</li>
+    {%- endfor %}
+  </ul>
+  {%- endif %}
+
+  <h2>Education</h2>
+  <ul class="edu">
+    {%- for e in education %}
+    <li><strong>{{ e.school }}</strong> — {{ e.degree }}{% if e.location %}, {{ e.location }}{% endif %} ({{ e.start }}{% if e.end %} – {{ e.end }}{% endif %})</li>
+    {%- endfor %}
+  </ul>
+
+  <h2>Languages</h2>
+  <ul class="languages">
+    {%- for l in languages %}
+    <li>{{ l.name }} — {{ l.level }}</li>
+    {%- endfor %}
+  </ul>
+
+</body>
+</html>

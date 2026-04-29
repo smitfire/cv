@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
+.playwright-mcp/
+
+# Secrets — NEVER commit
+.env
+.env.*
+!.env.example
+
+# NDA-sensitive content (Delta Labs internal data — clients, PRs, Jira tickets):
+source/raw_harvest/
+source/achievements_bank.yaml
+
+# Active job applications (private — JDs / tailored CVs / cover letters per company):
+applications/
+
+# Old CVs / loose files:
+archive/
+Profile.pdf
+*.REZI
+
+# Rendered output that shouldn't be in source control (regenerable):
+*.pdf
+*.docx
+!docs/**/*.pdf

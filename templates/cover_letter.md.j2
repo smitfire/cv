@@ -1,0 +1,23 @@
+**{{ basics.name }}**
+{{ basics.location }} · {{ basics.phone }} · {{ basics.email }} · [LinkedIn]({{ basics.linkedin }})
+
+{{ today }}
+
+{% if hiring_manager -%}
+{{ hiring_manager }}
+{% endif -%}
+{{ company }}
+{% if company_location -%}{{ company_location }}{%- endif %}
+
+**Re: {{ role_title }}**
+
+Dear {{ salutation | default('Hiring Team') }},
+
+{{ opening }}
+
+{{ body }}
+
+{{ closing | default('I would welcome the chance to discuss how I can contribute to ' ~ company ~ '. Thank you for your time.') }}
+
+Best regards,
+{{ basics.name }}
