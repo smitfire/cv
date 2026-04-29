@@ -210,8 +210,9 @@ def _render_cv_docx(data: dict, out_path: Path, meta: dict) -> None:
         data["basics"].get("email", ""),
         data["basics"].get("linkedin", ""),
     ]
-    if data["basics"].get("sites", {}).get("personal"):
-        contact_bits.append(data["basics"]["sites"]["personal"])
+    sites = data["basics"].get("sites") or {}
+    if sites.get("personal"):
+        contact_bits.append(sites["personal"])
     p = doc.add_paragraph()
     r = p.add_run("  ·  ".join(b for b in contact_bits if b))
     r.font.size = Pt(10)

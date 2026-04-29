@@ -28,7 +28,6 @@ basics:
   github: "https://github.com/"     # update if you want a personal handle here
   sites:
     company: "https://voodoolabs.org"
-    personal: "https://nicksmit.me"
 
 # Pre-written summaries — Claude picks one and mutates the wording per JD.
 summaries:
