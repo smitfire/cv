@@ -23,19 +23,20 @@ OUT = ROOT / "docs" / "index.html"
 # Pick which experiences to feature (most recent / most relevant first).
 FEATURED_EXP_IDS = ["delta_labs", "ranova", "epfl", "rtkio"]
 
-# Pick which skill categories to surface (in order).
-FEATURED_SKILLS = ["python", "ai_llm", "frontend", "data", "cloud_devops", "observability"]
+# Pick which skill categories to surface (in order — AI first, leadership-relevant second).
+FEATURED_SKILLS = ["ai_llm", "python", "frontend", "data", "cloud_devops", "observability"]
 
-# Pick which projects to highlight.
+# Pick which projects to highlight — AI-first.
 FEATURED_PROJECTS = [
     "RAG / Semantic Search Platform (Delta Labs)",
-    "Neuroscience Research Paper ETL",
-    "Real-time Monitoring Dashboard (RTK.io / Magnite)",
+    "Recursive Language Models (RLM) Inference Service (Delta Labs)",
+    "AI Agent Skills + MCP Framework (Delta Labs)",
+    "Document Extract / OCR Microservice (Delta Labs)",
 ]
 
-# Default summary + headline pick (used on the public site — leans fullstack/AI generalist).
-DEFAULT_HEADLINE = "Senior Full Stack Engineer · AI / LLM Systems"
-DEFAULT_SUMMARY_KEY = "fullstack_python"
+# Default summary + headline pick — leads on AI / LLM (current focus) + leadership signal.
+DEFAULT_HEADLINE = "Senior AI / Full Stack Engineer · RAG · RLM · Agentic AI"
+DEFAULT_SUMMARY_KEY = "ai_engineer"
 
 
 # --- helpers ----------------------------------------------------------------

@@ -14,12 +14,12 @@ basics:
   name: Nick Smit
   full_name: Nicolaas Smit
   title_variants:
-    ai_engineer:        "Senior AI / LLM Engineer"
-    fullstack_python:   "Senior Full Stack Python Engineer"
-    fullstack:          "Senior Full Stack Engineer"
+    ai_engineer:        "Senior AI / LLM Engineer · RAG, RLM, Agentic AI"
+    fullstack_python:   "Senior Full Stack Python Engineer · AI / LLM Systems"
+    fullstack:          "Senior Full Stack Engineer · AI / LLM Systems"
     frontend:           "Senior Frontend Engineer"
-    backend:            "Senior Backend Engineer"
-    cto:                "Founding Engineer / Tech Lead"
+    backend:            "Senior Backend Engineer · AI / LLM Systems"
+    cto:                "Founding Engineer / Tech Lead · AI Platforms"
   email: nick.smit@gmail.com
   phone: "+41 79 945 57 83"
   location: "Geneva / Zurich, Switzerland"
@@ -33,25 +33,36 @@ basics:
 # Pre-written summaries — Claude picks one and mutates the wording per JD.
 summaries:
   ai_engineer: >
-    Senior fullstack engineer with 12+ years building production software, currently
-    operating as 1st engineer at an AI startup. I design and ship LLM systems end-to-end —
-    RAG pipelines, semantic search, prompt orchestration, evaluation loops, and the
-    reliability patterns (throttling, monitoring, guardrails) that keep them stable in
-    production. Two prior exits as 1st engineer. Most effective at the intersection of AI
-    systems, backend architecture, and product execution.
+    Senior AI / fullstack engineer with 12+ years and three 1st-engineer / leadership-track
+    builds — currently lead contributor at Delta Labs (Zurich, UZH spin-off, €4.4M seed
+    Mar 2026). I design and ship production AI systems end-to-end: Recursive Language
+    Models (RLM) inference, RAG pipelines, semantic search, prompt orchestration,
+    multi-step agentic workflows (MCP / Model Context Protocol), document parsing /
+    OCR ingestion, evaluation loops, and the reliability patterns (throttling, retry,
+    circuit-breakers, observability) that keep them stable in production. Two prior
+    exits as 1st engineer; CTO at a healthcare-data startup. Most effective at the
+    intersection of AI systems, backend architecture, technical leadership, and product
+    execution.
 
   fullstack_python: >
-    Senior full stack Python engineer with 12+ years experience, specialised in Flask /
-    FastAPI back-ends, ETL pipelines, and modern data tooling (Postgres, Elasticsearch,
-    vector DBs). Track record of measurable impact — 300% ETL throughput uplift, 10x DB
-    query speed-ups, test coverage from 5% to 85%, 50% CI/CD time reduction. Equally
-    comfortable owning the front-end (React, Next.js, Streamlit) and the LLM layer.
+    Senior Python / AI engineer with 12+ years and three leadership-track builds.
+    Currently lead contributor at Delta Labs (Zurich AI startup, €4.4M seed Mar 2026):
+    production RAG, RLM inference, document parsing / OCR pipelines, agentic workflows
+    (MCP), and the orchestration / evaluation / reliability layer that makes AI systems
+    trustworthy. Strong Python (Flask, FastAPI, ETL), modern data tooling (Postgres +
+    pgvector, Elasticsearch, vector DBs), and full-stack delivery (React, Next.js,
+    TypeScript). Track record of measurable impact — 3,370× vector-search speedup,
+    300% ETL throughput uplift, 10× DB query speed-ups, test coverage 5% → 85%, 50%+
+    CI/CD time cut.
 
   fullstack: >
-    Senior fullstack engineer (12+ yrs) with 2 prior exits as 1st engineer. I own systems
-    end-to-end — backend services, data pipelines, frontend, and the LLM layer where it
-    applies. Strong on engineering quality (5%→85% test coverage at Delta Labs) and on
-    turning fast-moving product ideas into reliable, observable, production systems.
+    Senior fullstack engineer (12+ yrs) with three 1st-engineer / leadership-track builds
+    and two prior exits. Currently lead contributor at Delta Labs (Zurich AI startup,
+    €4.4M seed Mar 2026), shipping production RAG, RLM, agentic and OCR systems
+    end-to-end. I own backend services, AI / LLM pipelines, frontend, and the engineering
+    practices around them. Strong on quality (5% → 85% test coverage), high-leverage
+    architecture (3,370× vector-search speedup), and turning fast-moving product ideas
+    into reliable, observable, production systems.
 
   frontend: >
     Senior frontend engineer (12+ years) building robust, performant web applications with
@@ -61,45 +72,55 @@ summaries:
     ownership mindset across startup and research environments.
 
   backend: >
-    Senior backend engineer with 12+ years building Python services, ETL pipelines, and
-    distributed AI / LLM systems. Recent focus: production RAG and embedding pipelines
-    (Azure, Postgres + pgvector), observability, throttling, evaluation loops. Comfortable
-    in everything from greenfield architecture to scaling and reliability work on
-    inherited systems.
+    Senior backend / AI engineer with 12+ years building Python services, ETL pipelines,
+    and distributed AI / LLM systems. Recent focus at Delta Labs (Zurich, €4.4M seed
+    Mar 2026): production RAG and RLM inference, embedding and OCR / document-parsing
+    pipelines (Azure, Postgres + pgvector), agentic workflows via MCP (Model Context
+    Protocol), prompt orchestration, observability, throttling, and evaluation loops.
+    Comfortable from greenfield architecture to scaling, reliability, and AI-quality
+    work on inherited systems.
 
   cto: >
-    Founding / lead engineer with 12+ years and 2 exits as 1st engineer. I take products
-    from zero to scale — backend, data, frontend, infra, hiring, and the product /
-    delegation work that comes with it. Most recently led architecture, release management
-    and product execution at Delta Labs (AI startup, Zurich) and served as CTO at Ranova
-    (Geneva, healthcare data).
+    Founding / lead engineer with 12+ years and three leadership-track builds (CTO at
+    Ranova, lead contributor at Delta Labs, 1st technical hire at RTK.io / Magnite —
+    two prior exits). I take products from zero to scale — backend, AI / LLM systems,
+    data, frontend, infra, hiring, and the product / delegation work that comes with it.
+    Most recently leading architecture, release management, agentic AI / MCP rollout
+    and product execution at Delta Labs (Zurich AI startup, €4.4M seed Mar 2026); served
+    as CTO at Ranova (Geneva, healthcare data, AWS-serverless migration, CI/CD overhaul).
 
 experience:
 
   - id: delta_labs
     company: "Delta Labs AG"
-    role: "Senior Fullstack Engineer"
+    role: "Senior Fullstack / AI Engineer (Lead Contributor)"
     start: 2025-07
     end: present
     location: "Zurich, Switzerland"
     industry: ai_startup
     blurb: >
-      Driving product and technical direction at an AI startup; owning end-to-end delivery
-      across backend, data, and LLM systems as the most senior / lead contributor.
+      Lead contributor at Delta Labs — UZH spin-off building Elaiia, an AI customer-
+      simulation platform powered by Recursive Language Models (RLM). €4.4M seed round
+      led by Cusp Capital (Mar 2026). Owning end-to-end delivery across the AI / LLM
+      stack, backend services, data pipelines, and frontend.
     bullets:
-      - text: "Built and scaled a production RAG / semantic search platform (Python, Azure, Postgres + vector search) for high-quality knowledge retrieval over enterprise documents."
-        tags: [python, rag, llm, embeddings, vectordb, postgres, azure, ai, backend]
-      - text: "Designed LLM orchestration: prompt frameworks, evaluation loops, throttling, retry / circuit-breaker patterns, and reliability guardrails for production use."
-        tags: [llm, ai, observability, perf, backend]
-      - text: "Lifted automated test coverage from ~5% to ~85%, stabilising core systems and giving the team confidence to ship faster."
-        tags: [quality, testing, backend, leadership]
-      - text: "Architected the data + embedding pipeline (ingestion → parsing → chunking → vectorisation → indexing) for scalable AI workflows."
-        tags: [etl, data, embeddings, vectordb, backend, python]
-      - text: "Stood up observability and monitoring across services (metrics, structured logs, tracing) to keep latency, cost and quality measurable."
+      - text: "Built and scaled a production RAG / semantic-search platform (Python, Azure, Postgres + pgvector) for high-quality retrieval over proprietary enterprise documents — designed the ingestion → parsing → OCR → chunking → embedding → indexing pipeline end-to-end."
+        tags: [python, rag, llm, embeddings, vectordb, postgres, azure, ai, ocr, etl, backend]
+      - text: "Architected and operated production Recursive Language Model (RLM) inference and persona-generation services — multi-turn, multi-step LLM workflows backing the company's core product, with strict latency, cost and reliability targets."
+        tags: [llm, rlm, ai, agents, backend, python]
+      - text: "Designed LLM orchestration: prompt frameworks, evaluation loops, throttling, retry / circuit-breaker patterns, schema-enforced structured outputs, and reliability guardrails — the production layer that turns LLM prototypes into trustworthy systems."
+        tags: [llm, ai, orchestration, evaluation, observability, perf, backend]
+      - text: "Introduced the team's AI Agent Skills + MCP (Model Context Protocol) framework — codified how Claude / Copilot / ChatGPT-style coding agents auto-discover release, ticket, and DB workflows. Standardised AI-assisted productivity team-wide."
+        tags: [ai, agents, mcp, agentic, leadership, productivity]
+      - text: "Achieved a 3,370× vector-search speedup (25s → 7ms on 162k rows) by introducing pg_diskann, enabling full 3072-dim cosine similarity natively at scale."
+        tags: [perf, vectordb, postgres, pgvector, diskann]
+      - text: "Lifted automated backend test coverage from ~5% to ~85% (100% on async / event-driven functions), set the bar on code review and merge-process discipline, and shipped 320+ merged PRs across 8 repos in 10 months."
+        tags: [quality, testing, ci, leadership, output]
+      - text: "Stood up observability across services (metrics, structured logs, tracing) so latency, cost and AI-quality stay measurable as the platform scales."
         tags: [observability, devops, backend]
-      - text: "Operated as most senior / lead contributor: solutions architecture, release management, prioritisation, delegation, cross-functional alignment during rapid growth and fundraising."
-        tags: [leadership, product, mentoring]
-    stack: [Python, FastAPI, Azure, "Postgres + pgvector", TypeScript, "Next.js", LLM, RAG, Docker, "GitHub Actions"]
+      - text: "Operated as most-senior contributor / de-facto tech lead during rapid growth and fundraising: solutions architecture, release management, prioritisation, delegation, cross-functional alignment with founders / product / design / investors."
+        tags: [leadership, product, mentoring, architecture]
+    stack: [Python, FastAPI, Azure, "Postgres + pgvector", TypeScript, "Next.js", LLM, RAG, RLM, MCP, OCR, Docker, "GitHub Actions"]
 
   - id: ranova
     company: "Ranova"
@@ -274,8 +295,8 @@ skills:
     tags: [python, backend, etl]
   ai_llm:
     label: "AI / LLM"
-    items: ["RAG architecture", "Prompt engineering & orchestration", "Evaluation loops", "OpenAI / Anthropic APIs", "Embeddings", "Vector DBs (pgvector, FAISS, Pinecone, NeonDB)", "Document parsing & chunking", "Throttling & guardrails"]
-    tags: [llm, ai, rag, embeddings, vectordb]
+    items: ["Production RAG architecture", "Recursive Language Models (RLM) inference & persona generation", "Agentic workflows & MCP (Model Context Protocol)", "Prompt engineering & orchestration", "Evaluation loops & metrics", "OpenAI / Anthropic / Azure OpenAI APIs", "Embedding pipelines (ingestion → chunking → vectorisation → indexing)", "OCR & document parsing pipelines", "Vector DBs (pgvector + DiskANN, FAISS, Pinecone)", "Throttling, retry, circuit-breaker reliability patterns", "Schema-enforced structured outputs"]
+    tags: [llm, ai, rag, rlm, mcp, agentic, embeddings, vectordb, ocr]
   frontend:
     label: "Frontend"
     items: ["React (8+ yrs)", "Next.js", "TypeScript", "Streamlit (4+ yrs)", "AngularJS (legacy)", "Tailwind", "AntD"]
@@ -325,38 +346,46 @@ languages:
   - { name: "Afrikaans", level: "Professional Working" }
 
 projects:
-  - title: "Neuroscience Research Paper ETL"
-    blurb: "Python ETL that scrapes, normalises and analyses neuroscience research papers; LLM-enriched insights surfaced through interactive Streamlit dashboards correlating brain regions with symptoms."
-    tags: [python, etl, llm, streamlit, neuroscience]
   - title: "RAG / Semantic Search Platform (Delta Labs)"
-    blurb: "Production retrieval system over enterprise documents — ingestion, chunking, embeddings, vector search, eval loops."
-    tags: [rag, llm, embeddings, vectordb, ai]
-  - title: "Real-time Monitoring Dashboard (RTK.io / Magnite)"
-    blurb: "Streamlit-based UI for real-time pipeline monitoring; cut anomaly-detection time by 20%."
-    tags: [streamlit, observability, perf]
-  - title: "LLM Integration at Ranova"
-    blurb: "Embedded LLMs into existing healthcare data flows for document processing and insights generation."
-    tags: [llm, healthcare, python]
+    blurb: "Production retrieval over proprietary enterprise documents — Python, Azure, Postgres + pgvector + DiskANN. Full ingestion → parsing → OCR → chunking → embedding → indexing pipeline, plus the evaluation-loop / throttling / reliability layer."
+    tags: [rag, llm, embeddings, vectordb, ai, ocr]
+  - title: "Recursive Language Models (RLM) Inference Service (Delta Labs)"
+    blurb: "Multi-turn, multi-step LLM workflows backing Elaiia (AI customer simulation platform) — persona generation, schema-enforced structured outputs, latency / cost / reliability guardrails."
+    tags: [rlm, llm, ai, agents, python]
+  - title: "AI Agent Skills + MCP Framework (Delta Labs)"
+    blurb: "Codified how Claude / Copilot / ChatGPT-style coding agents auto-discover release, ticket-tracker, and DB workflows. Team-wide standardisation of AI-assisted engineering productivity."
+    tags: [ai, mcp, agentic, leadership, productivity]
+  - title: "Document Extract / OCR Microservice (Delta Labs)"
+    blurb: "GPU-accelerated document-extraction pipeline with Inngest async processing, validation UI, end-to-end document summary."
+    tags: [ocr, ai, gpu, etl, inngest]
+  - title: "LLM Document Generation (EPFL Blue Brain)"
+    blurb: "Cut documentation time by ~65% via LLM generation in a regulated/research environment."
+    tags: [llm, ai, perf, scientific]
+  - title: "Blue Brain Public Web App (EPFL, open-source)"
+    blurb: "React / Next.js / TypeScript application over a 1M+ node neuroscience knowledge graph (github.com/BlueBrain/core-web-app)."
+    tags: [react, nextjs, frontend, scientific, neuroscience, graphdb]
 
 key_achievements:
-  - text: "Two prior exits as 1st engineer (RTK.io → Magnite; one undisclosed)."
+  - text: "Lead contributor at Delta Labs (UZH spin-off, €4.4M seed Mar 2026) — production RAG, RLM inference, agentic / MCP tooling, OCR ingestion."
+    tags: [ai, llm, rag, rlm, mcp, agentic, leadership, delta_labs]
+  - text: "3,370× vector-search speedup (25s → 7ms on 162k rows) via pg_diskann migration."
+    tags: [perf, vectordb, postgres, ai]
+  - text: "Lifted test coverage from ~5% to ~85% at Delta Labs (100% on async / event-driven functions); 320+ merged PRs across 8 repos in 10 months."
+    tags: [quality, leadership, output]
+  - text: "Three leadership-track engagements: lead at Delta Labs, CTO at Ranova, 1st technical hire at the startup that became Magnite. Two prior exits as 1st engineer."
     tags: [exits, leadership]
-  - text: "Lifted test coverage from ~5% to ~85% at Delta Labs."
-    tags: [quality, leadership]
-  - text: "300% ETL pipeline throughput uplift at Ranova via Inngest + AWS orchestration."
-    tags: [perf, etl]
+  - text: "Introduced AI Agent Skills + MCP (Model Context Protocol) framework — team-wide standardisation of how AI coding agents plug into our codebase."
+    tags: [ai, mcp, agentic, leadership]
+  - text: "300% ETL throughput uplift + 55% CI/CD time cut at Ranova via Inngest + AWS-serverless overhaul."
+    tags: [perf, etl, devops]
   - text: "10x DB query speed-ups via caching, indexing, materialised views."
     tags: [perf, postgres]
-  - text: "65% reduction in documentation time at EPFL via LLM-based generation."
+  - text: "65% reduction in documentation time at EPFL via LLM-based generation (early production GenAI in a regulated research environment)."
     tags: [llm, perf]
-  - text: "1M+ node knowledge-graph integration powering EPFL's Blue Brain UI."
+  - text: "1M+ node knowledge-graph integration powering EPFL's open-source Blue Brain web app."
     tags: [graphdb, frontend, scientific]
-  - text: "10k+ active-user SaaS as principal developer at RTK.io."
+  - text: "10k+ active-user real-time SaaS as principal developer at RTK.io / Magnite."
     tags: [scaling, frontend]
-  - text: "20% improvement in team delivery speed via agile process work at RTK.io."
-    tags: [leadership, agile]
-  - text: "AA performance reviews two years running at EPFL."
-    tags: [performance_reviews]
 
 availability:
   status: "Open to senior engineering / lead roles in Switzerland and remote-EU."
