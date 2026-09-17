@@ -1,0 +1,314 @@
+{
+  "schema_version": 1,
+  "diagram_type": "dataflow",
+  "meta": {
+    "title": "CV Pipeline Data Flow",
+    "output": "/var/folders/3z/0z_5_8_51651hrq3b6pzz8qr0000gn/T/opencode/cv-pipeline.html",
+    "viewBox": [
+      1068,
+      640
+    ],
+    "quality_profile": "showcase",
+    "views": [
+      {
+        "id": "authoring-path",
+        "label": "Authoring path",
+        "focus": [
+          "harvest",
+          "bank",
+          "profile",
+          "tailored",
+          "jd",
+          "render"
+        ],
+        "note": "Evidence becomes a tailored application for one JD."
+      },
+      {
+        "id": "validation-gate",
+        "label": "Validation gate",
+        "focus": [
+          "render",
+          "checks",
+          "review",
+          "send"
+        ],
+        "note": "Deterministic checks and a red-team review stand before sending."
+      },
+      {
+        "id": "publish-path",
+        "label": "Publish path",
+        "focus": [
+          "profile",
+          "site",
+          "pages"
+        ],
+        "note": "The same profile builds and deploys the public portfolio site."
+      }
+    ]
+  },
+  "stages": [
+    {
+      "label": "Sources"
+    },
+    {
+      "label": "Curate"
+    },
+    {
+      "label": "Tailor"
+    },
+    {
+      "label": "Validate"
+    },
+    {
+      "label": "Publish"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "harvest",
+      "type": "external",
+      "label": "Raw Harvest",
+      "sublabel": "PRs, Jira, git log",
+      "stage": 0,
+      "row": 0,
+      "tag": "gitignored",
+      "width": 130
+    },
+    {
+      "id": "profile",
+      "type": "database",
+      "label": "Profile Source",
+      "sublabel": "source/profile.yaml",
+      "stage": 1,
+      "row": 1,
+      "tag": "single source of truth",
+      "width": 124
+    },
+    {
+      "id": "bank",
+      "type": "database",
+      "label": "Achievement Bank",
+      "sublabel": "achievements_bank.yaml",
+      "stage": 1,
+      "row": 0,
+      "tag": "sanitised",
+      "width": 134
+    },
+    {
+      "id": "jd",
+      "type": "external",
+      "label": "Job Description",
+      "sublabel": "applications/<slug>/jd.md",
+      "stage": 2,
+      "row": 0,
+      "tag": "per application",
+      "width": 130
+    },
+    {
+      "id": "tailored",
+      "type": "backend",
+      "label": "Tailored App",
+      "sublabel": "tailored.yaml",
+      "stage": 2,
+      "row": 1,
+      "tag": "JD-tuned copy",
+      "width": 130
+    },
+    {
+      "id": "render",
+      "type": "backend",
+      "label": "Render",
+      "sublabel": "render.py + templates",
+      "stage": 2,
+      "row": 2,
+      "tag": "WeasyPrint"
+    },
+    {
+      "id": "checks",
+      "type": "security",
+      "label": "Automated Checks",
+      "sublabel": "render gate",
+      "stage": 3,
+      "row": 1,
+      "tag": "60% floor",
+      "width": 120
+    },
+    {
+      "id": "review",
+      "type": "security",
+      "label": "Critical Review",
+      "sublabel": "review.py rubric",
+      "stage": 3,
+      "row": 2,
+      "tag": "SHIP or REVISE",
+      "width": 120
+    },
+    {
+      "id": "send",
+      "type": "frontend",
+      "label": "Application Bundle",
+      "sublabel": "cv.pdf, cv.docx, cover letter",
+      "stage": 4,
+      "row": 1,
+      "tag": "ATS-safe",
+      "width": 160
+    },
+    {
+      "id": "site",
+      "type": "cloud",
+      "label": "Portfolio Site",
+      "sublabel": "build_site.py",
+      "stage": 2,
+      "row": 3,
+      "tag": "docs/index.html",
+      "width": 120
+    },
+    {
+      "id": "pages",
+      "type": "external",
+      "label": "GitHub Pages",
+      "sublabel": "published site",
+      "stage": 4,
+      "row": 3,
+      "tag": "public"
+    }
+  ],
+  "flows": [
+    {
+      "id": "harvest-in",
+      "from": "harvest",
+      "to": "bank",
+      "label": "curated digest",
+      "classification": "sanitised",
+      "variant": "emphasis"
+    },
+    {
+      "id": "claims",
+      "from": "bank",
+      "to": "profile",
+      "label": "verified claims",
+      "classification": "traceable",
+      "variant": "default",
+      "labelAt": [
+        345,
+        200
+      ]
+    },
+    {
+      "id": "tailor",
+      "from": "profile",
+      "to": "tailored",
+      "classification": "per JD",
+      "variant": "emphasis",
+      "label": "per JD",
+      "labelAt": [
+        449,
+        384
+      ]
+    },
+    {
+      "id": "jd-input",
+      "from": "jd",
+      "to": "tailored",
+      "label": "keywords and vocabulary",
+      "classification": "input",
+      "variant": "default",
+      "labelAt": [
+        556,
+        200
+      ]
+    },
+    {
+      "id": "build",
+      "from": "tailored",
+      "to": "render",
+      "label": "render inputs",
+      "classification": "templates",
+      "variant": "emphasis",
+      "labelAt": [
+        537,
+        317
+      ]
+    },
+    {
+      "id": "gate",
+      "from": "render",
+      "to": "checks",
+      "label": "candidate output",
+      "classification": "deterministic",
+      "variant": "security",
+      "labelAt": [
+        650,
+        317
+      ]
+    },
+    {
+      "id": "verdict",
+      "from": "checks",
+      "to": "review",
+      "label": "review input",
+      "classification": "judgement",
+      "variant": "default",
+      "labelAt": [
+        733,
+        317
+      ]
+    },
+    {
+      "id": "release",
+      "from": "review",
+      "to": "send",
+      "label": "SHIP verdict",
+      "classification": "final artifact",
+      "variant": "emphasis",
+      "labelAt": [
+        818,
+        317
+      ]
+    },
+    {
+      "id": "site-build",
+      "from": "profile",
+      "to": "site",
+      "label": "builds",
+      "classification": "public",
+      "variant": "default",
+      "labelAt": [
+        449,
+        486
+      ]
+    },
+    {
+      "id": "deploy",
+      "from": "site",
+      "to": "pages",
+      "label": "deploy docs/",
+      "classification": "GitHub Pages",
+      "variant": "default",
+      "labelAt": [
+        915,
+        387
+      ]
+    }
+  ],
+  "cards": [
+    {
+      "dot": "rose",
+      "title": "Privacy Boundary",
+      "items": [
+        "Raw harvest, the full achievement bank and applications/ stay gitignored",
+        "synthesize_achievements.py scrubs the harvest into the committed bank",
+        "The public site is built from profile.yaml alone"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Validation Gate",
+      "items": [
+        "Automated checks are deterministic and exit non-zero on failure",
+        "Keyword score has a hard 60% floor and a 70-80% target",
+        "Critical review is the red-team pass before sending"
+      ]
+    }
+  ]
+}
