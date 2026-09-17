@@ -5,7 +5,7 @@
   <title>{{ basics.name }} — {{ headline }}</title>
   <style>
     /* ATS-safe: single column, no tables, standard fonts, no graphics. */
-    @page { size: A4; margin: 14mm 16mm; }
+    @page { size: A4; margin: 12mm 16mm; }
     * { box-sizing: border-box; }
     html, body {
       margin: 0; padding: 0;
@@ -28,7 +28,7 @@
       font-size: 11pt;
       text-transform: uppercase;
       letter-spacing: 0.6pt;
-      margin: 10pt 0 4pt 0;
+      margin: 8pt 0 4pt 0;
       padding-bottom: 2pt;
       border-bottom: 1px solid #999;
       font-weight: 700;
@@ -37,7 +37,8 @@
     .summary strong { color: #111; font-weight: 600; }
     .role__bullets li strong, .role__blurb strong, ul.achievements li strong { color: #111; font-weight: 600; }
     .role {
-      margin: 6pt 0 4pt 0;
+      margin: 5pt 0 3pt 0;
+      break-inside: avoid;
     }
     .role-header {
       display: flex; justify-content: space-between; align-items: baseline;
