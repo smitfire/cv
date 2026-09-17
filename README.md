@@ -5,6 +5,23 @@ A small, repeatable pipeline that takes one YAML source of truth and produces:
 1. **Per-application tailored CVs** — PDF + DOCX + cover letter, ATS-safe single-column, with `/Title /Author /Subject /Keywords` metadata populated per job description.
 2. **A public portfolio site** — typography-led, light/dark, print-friendly, deployed to GitHub Pages from `docs/`.
 
+## How it fits together
+
+```
+harvest --> achievement bank --> profile.yaml --> tailored.yaml --> render --> checks --> review --> send
+   |                              |
+   | gitignored                   | committed        applications/<slug>/: jd.md + tailored.yaml
+   |                              +--> build_site.py --> docs/index.html --> GitHub Pages
+   +-- synthesize_achievements.py scrubs raw exports into the committed bank
+
+render.py produces cv.pdf + cv.docx + cover_letter.pdf and is the deterministic gate (non-zero exit
+on failure); score.py adds the keyword metric; review.py writes the critical-review rubric.
+```
+
+An explorable HTML version with the privacy boundary and validation gate highlighted lives outside
+the repo, in the Obsidian vault: `Projects/cv/Architecture/2026-09-17-cv-pipeline.html` (source:
+`2026-09-17-cv-pipeline.dataflow.json`).
+
 ## Repo layout
 
 ```
