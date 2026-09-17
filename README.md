@@ -18,9 +18,9 @@ render.py produces cv.pdf + cv.docx + cover_letter.pdf and is the deterministic 
 on failure); score.py adds the keyword metric; review.py writes the critical-review rubric.
 ```
 
-An explorable HTML version with the privacy boundary and validation gate highlighted lives outside
-the repo, in the Obsidian vault: `Projects/cv/Architecture/2026-09-17-cv-pipeline.html` (source:
-`2026-09-17-cv-pipeline.dataflow.json`).
+![CV pipeline data flow: raw harvest through the achievement bank and profile source, into tailored applications and rendering, through automated checks and critical review, to the application bundle and the deployed portfolio site](docs/assets/cv-pipeline-2026-09-17.png)
+
+The diagram source is [`docs/assets/cv-pipeline-2026-09-17.dataflow.json`](docs/assets/cv-pipeline-2026-09-17.dataflow.json); render it with the archify skill to reproduce the image. The explorable version also lives in the Obsidian vault: `Projects/cv/Architecture/2026-09-17-cv-pipeline.html`.
 
 ## Repo layout
 
