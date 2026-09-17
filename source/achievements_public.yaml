@@ -18,7 +18,31 @@
 bullets:
 
   # =====================================================================================
-  # Current senior role at a Zurich AI startup (Jul 2025 – present)
+  # Current role at Natzka (Aug 2026 - present)
+  # Data intelligence platform; AI Assistant + MCP platform delivery
+  # =====================================================================================
+
+  - text: "Delivered high-output production work in the first weeks at Natzka: 105 merged PRs (+35,259/-5,185 lines, 920 files changed) across AI Assistant, MCP, and platform hardening."
+    tags: [output, leadership, ai, mcp, natzka]
+    metric: { kind: prs_merged, value: "105", files_changed: 920 }
+
+  - text: "Shipped conversation reliability end-to-end in AI Assistant: long-running turns survive client disconnects, clients can re-attach to running turns, and URL-addressed conversation restore/delete flows stay consistent."
+    tags: [reliability, backend, frontend, ai, product]
+
+  - text: "Built and integrated MCP platform capabilities (api-mcp + shared lib-ai-tools), including connector clients and routing needed for production rollout."
+    tags: [mcp, api, backend, ai, architecture]
+
+  - text: "Added model and tool-call telemetry for AI Assistant in self-hosted Langfuse, improving debugging and trust in assistant outputs."
+    tags: [observability, ai, langfuse, reliability]
+
+  - text: "Strengthened quality gates with integration and e2e coverage around chat APIs and conversation-sidebar flows, reducing regressions in high-change AI UI paths."
+    tags: [testing, quality, ai, frontend, backend]
+
+  - text: "Improved assistant query performance by removing duplicated engine-query construction and adding missing statistical compute functions required by AI-generated analysis."
+    tags: [perf, backend, data, ai]
+
+  # =====================================================================================
+  # Previous role at a Zurich AI startup (Jul 2025 - Jul 2026)
   # 1st engineer / lead contributor on a production AI / LLM platform
   # =====================================================================================
 
@@ -141,6 +165,9 @@ bullets:
 
 # Standalone metrics — public-safe, role-anonymised.
 metrics:
+  - { label: "Natzka merged PRs",              value: "105",                tags: [output, natzka] }
+  - { label: "Natzka line delta",              value: "+35,259 / -5,185",   tags: [output, natzka] }
+  - { label: "Natzka files changed",           value: "920",                tags: [output, natzka] }
   - { label: "Vector-search speedup",            value: "3,370x (25s → 7ms)",   tags: [perf, vectordb, postgres, diskann] }
   - { label: "Async function test coverage",     value: "8% → 100%",            tags: [quality, testing] }
   - { label: "Test coverage (overall)",          value: "5% → 85%",             tags: [quality] }

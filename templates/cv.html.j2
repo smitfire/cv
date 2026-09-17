@@ -28,7 +28,7 @@
       font-size: 11pt;
       text-transform: uppercase;
       letter-spacing: 0.6pt;
-      margin: 14pt 0 5pt 0;
+      margin: 10pt 0 4pt 0;
       padding-bottom: 2pt;
       border-bottom: 1px solid #999;
       font-weight: 700;
@@ -37,7 +37,7 @@
     .summary strong { color: #111; font-weight: 600; }
     .role__bullets li strong, .role__blurb strong, ul.achievements li strong { color: #111; font-weight: 600; }
     .role {
-      margin: 8pt 0 6pt 0;
+      margin: 6pt 0 4pt 0;
     }
     .role-header {
       display: flex; justify-content: space-between; align-items: baseline;
@@ -71,7 +71,7 @@
     <span>{{ basics.phone }}</span>
     <span><a href="mailto:{{ basics.email }}">{{ basics.email }}</a></span>
     <span><a href="{{ basics.linkedin }}">LinkedIn</a></span>
-    {%- if basics.sites and basics.sites.personal %}
+    {%- if basics.get('sites') and basics.get('sites').get('personal') %}
     <span><a href="{{ basics.sites.personal }}">{{ basics.sites.personal | replace('https://','') }}</a></span>
     {%- endif %}
   </p>
@@ -135,11 +135,9 @@
   </ul>
 
   <h2>Languages</h2>
-  <ul class="languages">
-    {%- for l in languages %}
-    <li>{{ l.name }} — {{ l.level }}</li>
-    {%- endfor %}
-  </ul>
+  <p class="languages">
+    {%- for l in languages %}{{ l.name }} ({{ l.level }}){% if not loop.last %}, {% endif %}{% endfor %}
+  </p>
 
 </body>
 </html>

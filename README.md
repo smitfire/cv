@@ -19,6 +19,7 @@ scripts/
   new_application.py        # scaffold a dated applications/<slug>/ folder
   render.py                 # tailored.yaml → cv.pdf + cv.docx + cover_letter.pdf
   score.py                  # JD vs rendered-CV keyword match score
+  review.py                 # validation cycle → review.md (checks + critical rubric)
   synthesize_achievements.py  # raw GitHub PR / Jira / git-log data → curated digest
 docs/                       # GitHub Pages source (index.html + styles.css)
 requirements.txt
@@ -55,14 +56,34 @@ python scripts/new_application.py "Acme Corp" "Senior Python Engineer"
 # 2. paste JD into applications/<date>_<co>_<role>/jd.md, then edit tailored.yaml
 #    against the JD (a long-context LLM is good at this)
 
-# 3. render
+# 3. render (runs the validation pass automatically; --skip-review to opt out)
 python scripts/render.py applications/<slug>/
 
-# 4. score
+# 4. score (standalone; same keyword metric review.py uses)
 python scripts/score.py applications/<slug>/
+
+# 5. re-run the validation pass any time
+python scripts/review.py applications/<slug>/
 ```
 
 Target ≥ 70-80% keyword match. Below 60% means the CV needs more JD-aligned wording.
+
+## Validation cycle
+
+`render.py` writes `review.md` next to the CV. The pass has two halves:
+
+**Automated checks** (deterministic, must pass):
+- required files, JD metadata (`meta.company / role_title / jd_keywords`), no placeholders
+- keyword match against `jd.md` (hard floor 60%, target 70%+)
+- claim traceability: every distinctive numeric claim in `tailored.yaml` must exist in `source/profile.yaml` or `source/achievements_public.yaml` (catches invented or mistyped metrics)
+- timeline sanity: start/end order, a single "present" role, overlap warnings
+- ATS safety: no tables, hidden text, white-on-white, or zero-size fonts in `cv.html`
+- PDF metadata present; CV and cover-letter length sanity
+- style: no em/en dashes in authored text (templates keep their separators)
+
+**Critical review** (judgement, complete in `review.md` before sending): positioning, JD coverage in the JD's own vocabulary, evidence quality, gaps and risks, cover-letter specificity, and a final `SHIP` / `REVISE` verdict. Treat it as a red-team pass: the goal is to find the reason a recruiter would say no.
+
+Exit code is non-zero when a hard check fails, so the cycle can gate a send.
 
 ## Building the portfolio site
 

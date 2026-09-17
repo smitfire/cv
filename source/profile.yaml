@@ -32,33 +32,34 @@ basics:
 # Pre-written summaries — Claude picks one and mutates the wording per JD.
 summaries:
   ai_engineer: >
-    Senior AI / full-stack engineer (12+ yrs) and lead contributor at Delta Labs
-    — Zurich AI startup, €4.4M seed Mar 2026. I ship production AI systems
-    end-to-end: RAG, Recursive Language Model (RLM) inference, agentic workflows
-    (MCP), OCR pipelines, plus the prompt orchestration and reliability layer
-    (throttling, retry, eval loops) that makes them production-grade. Track
-    record of measurable wins — 3,370× vector-search speedup, 5% → 85% test
-    coverage, 320+ PRs in 10 months. Prior CTO at a healthcare-data startup;
-    acquired exit as 1st technical hire at RTK.io / Magnite.
+    Senior AI / full-stack engineer (12+ yrs), currently Senior Software
+    Engineer at Natzka (data intelligence platform), where I am helping build
+    the AI team and ship production AI Assistant capabilities. Previously Team
+    Lead at Delta Labs (Zurich AI startup, €4.4M seed Mar 2026), where I
+    shipped end-to-end RAG, Recursive Language Model (RLM) inference, agentic
+    workflows (MCP), OCR pipelines, plus orchestration and reliability guardrails
+    (throttling, retry, eval loops). Track record of measurable wins: 3,370×
+    vector-search speedup, 5% → 85% test coverage, 320+ PRs in 10 months.
 
   fullstack_python: >
-    Senior Python / AI engineer (12+ yrs) and lead contributor at Delta Labs
-    (Zurich AI startup, €4.4M seed Mar 2026): production RAG, RLM inference,
-    OCR pipelines, agentic workflows (MCP), evaluation and reliability layer.
-    Strong Python (FastAPI, Flask, ETL, async), SQL performance (3,370× via
-    pg_diskann, 10× via index strategy), and full-stack delivery (React,
-    Next.js, TypeScript). Prior CTO at a healthcare-data startup. Acquired
-    exit as 1st technical hire at RTK.io / Magnite.
+    Senior Python / AI engineer (12+ yrs), currently Senior Software Engineer
+    at Natzka (data intelligence platform), where I am helping build the AI
+    team and shipping AI Assistant and MCP capabilities. Previously Team Lead
+    at Delta Labs (Zurich AI startup, €4.4M seed Mar 2026): production RAG,
+    RLM inference, OCR pipelines, and agentic workflows. Strong Python
+    (FastAPI, Flask, ETL, async), SQL performance (3,370× via pg_diskann,
+    10× via index strategy), and full-stack delivery (React, Next.js,
+    TypeScript).
 
   fullstack: >
-    Senior full-stack engineer (12+ yrs) and lead contributor at Delta Labs
-    (Zurich AI startup, €4.4M seed Mar 2026), shipping production RAG, RLM,
-    agentic and OCR systems end-to-end. Own backend, AI / LLM pipelines,
-    frontend, and engineering practices around them. Strong on quality
-    (5% → 85% test coverage at Delta Labs), SQL / index tuning (3,370×
-    speedup), and turning fast-moving product ideas into reliable, observable,
-    production systems. Prior CTO at a healthcare-data startup; acquired exit
-    at RTK.io / Magnite.
+    Senior full-stack engineer (12+ yrs), currently Senior Software Engineer
+    at Natzka (data intelligence platform), where I am helping build the AI
+    team and shipping AI Assistant + MCP platform capabilities. Previously Team
+    Lead at Delta Labs (Zurich AI startup, €4.4M seed Mar 2026), shipping
+    production RAG, RLM, agentic and OCR systems end-to-end. Strong on quality
+    (5% → 85% test coverage at Delta Labs), SQL / index tuning (3,370× speedup),
+    and turning fast-moving product ideas into reliable, observable production
+    systems.
 
   frontend: >
     Senior frontend engineer (12+ years) building robust, performant web applications with
@@ -68,13 +69,13 @@ summaries:
     ownership mindset across startup and research environments.
 
   backend: >
-    Senior backend / AI engineer with 12+ years building Python services, ETL pipelines,
-    and distributed AI / LLM systems. Recent focus at Delta Labs (Zurich, €4.4M seed
-    Mar 2026): production RAG and RLM inference, embedding and OCR / document-parsing
-    pipelines (Azure, Postgres + pgvector), agentic workflows via MCP (Model Context
-    Protocol), prompt orchestration, observability, throttling, and evaluation loops.
-    Comfortable from greenfield architecture to scaling, reliability, and AI-quality
-    work on inherited systems.
+    Senior backend / AI engineer with 12+ years building Python services, ETL
+    pipelines, and distributed AI / LLM systems. Current focus at Natzka
+    (data intelligence platform): AI Assistant + MCP platform capabilities,
+    observability, and production reliability in a high-velocity monorepo.
+    Previous focus at Delta Labs (Zurich, €4.4M seed Mar 2026): production RAG
+    and RLM inference, embedding and OCR pipelines (Azure, Postgres + pgvector),
+    prompt orchestration, throttling, and evaluation loops.
 
   cto: >
     Lead engineer / CTO with 12+ years across three leadership-track builds:
@@ -87,11 +88,35 @@ summaries:
 
 experience:
 
+  - id: natzka
+    company: "Natzka"
+    role: "Senior Software Engineer"
+    start: 2026-08
+    end: present
+    location: "Zurich, Switzerland"
+    industry: data_intelligence
+    blurb: >
+      Senior Software Engineer at Natzka, a data intelligence platform.
+      Brought in to help build the AI team and ship production AI Assistant
+      and MCP capabilities.
+    bullets:
+      - text: "Shipped core AI Assistant features end-to-end: chat persistence, resilient long-running turns, URL-addressable conversations, result side-panels (charts/tables), and actionable tool-call progress UX."
+        tags: [ai, llm, backend, frontend, product, agentic]
+      - text: "Built and integrated api-mcp and shared lib-ai-tools so coding agents can call platform tools through MCP (Model Context Protocol); added secure Keycloak client and routing support for production rollout."
+        tags: [mcp, ai, backend, security, api, agentic]
+      - text: "Instrumented AI Assistant runs with model/tool traces in self-hosted Langfuse and hardened quality with integration + e2e coverage for chat APIs and conversation flows."
+        tags: [observability, testing, ci, ai, backend, frontend]
+      - text: "Improved query and runtime efficiency in AI paths by deduplicating engine-query construction, capping expensive request paths, and adding statistical compute functions required for AI answers."
+        tags: [perf, backend, data, ai]
+      - text: "Delivered at high velocity in production: 105 merged PRs (+35k/-5k lines across 920 files) while coordinating architecture and rollout across backend, frontend, and platform teams."
+        tags: [leadership, output, architecture]
+    stack: [TypeScript, React, Node.js, MCP, Langfuse, Playwright, Keycloak, CI/CD]
+
   - id: delta_labs
     company: "Delta Labs AG"
-    role: "Senior Fullstack / AI Engineer (Lead Contributor)"
+    role: "Team Lead / Senior Fullstack AI Engineer"
     start: 2025-07
-    end: present
+    end: 2026-07
     location: "Zurich, Switzerland"
     industry: ai_startup
     blurb: >
@@ -350,6 +375,9 @@ languages:
   - { name: "Afrikaans", level: "Professional Working" }
 
 projects:
+  - title: "Natzka AI Assistant + MCP Platform"
+    blurb: "Built core AI Assistant capabilities and MCP integrations in production: resilient chat turns, structured tool-call UX, conversation persistence, secure connector rollout, and self-hosted LLM observability."
+    tags: [ai, llm, mcp, agentic, observability, backend, frontend]
   - title: "RAG / Semantic Search Platform (Delta Labs)"
     blurb: "Production retrieval over proprietary enterprise documents — Python, Azure, Postgres + pgvector + DiskANN. Full ingestion → parsing → OCR → chunking → embedding → indexing pipeline, plus the evaluation-loop / throttling / reliability layer."
     tags: [rag, llm, embeddings, vectordb, ai, ocr]
@@ -368,8 +396,13 @@ projects:
   - title: "Blue Brain Public Web App (EPFL, open-source)"
     blurb: "React / Next.js / TypeScript application over a 1M+ node neuroscience knowledge graph (github.com/BlueBrain/core-web-app)."
     tags: [react, nextjs, frontend, scientific, neuroscience, graphdb]
+  - title: "Independent AI Evaluation Harnesses (smitfire)"
+    blurb: "Maintains agent_smit and smitosis, independent projects focused on reproducible AI-agent evaluation loops, strict evidence gates, and CI-enforced quality controls for automated coding workflows."
+    tags: [ai, agents, testing, ci]
 
 key_achievements:
+  - text: "At Natzka (data intelligence platform), shipped AI Assistant and MCP platform capabilities in 105 merged PRs (+35k/-5k lines across 920 files)."
+    tags: [ai, mcp, agentic, output, leadership, natzka]
   - text: "Lead contributor at Delta Labs (UZH spin-off, €4.4M seed Mar 2026) — production RAG, RLM inference, agentic / MCP tooling, OCR ingestion."
     tags: [ai, llm, rag, rlm, mcp, agentic, leadership, delta_labs]
   - text: "3,370× vector-search speedup (25s → 7ms on 162k rows) via pg_diskann + index strategy redesign."
@@ -388,6 +421,8 @@ key_achievements:
     tags: [graphdb, frontend, scientific]
   - text: "10k+ active-user real-time SaaS as 1st technical hire / principal developer at RTK.io (acquired by Magnite)."
     tags: [scaling, exits, leadership]
+  - text: "Maintains independent AI engineering projects (agent_smit, smitosis) focused on reproducible evaluation and safe automation."
+    tags: [ai, testing, ci]
 
 availability:
   status: "Open to senior engineering / lead roles in Switzerland and remote-EU."

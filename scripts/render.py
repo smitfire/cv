@@ -112,6 +112,8 @@ def _normalise_experience(exp_list):
         e.setdefault("stack", [])
         e.setdefault("bullets", [])
         e.setdefault("location", "")
+        # profile.yaml bullets are {text, tags} dicts; templates render plain strings.
+        e["bullets"] = [b.get("text", "") if isinstance(b, dict) else b for b in e["bullets"]]
         # Graduated bullet cap (most recent role dominates).
         cap = (
             BULLET_CAP_BY_ROLE_INDEX[i]
@@ -357,7 +359,7 @@ a {{ color: #2c5282; text-decoration: none; }}
 # ---------------------------------------------------------------------------- driver
 
 
-def render(app_dir: Path) -> None:
+def render(app_dir: Path, do_review: bool = True) -> None:
     data = _load_tailored(app_dir)
     data["experience"] = _normalise_experience(data["experience"])
 
@@ -384,7 +386,10 @@ def render(app_dir: Path) -> None:
         education=data["education"],
         languages=data["languages"],
         projects=data.get("projects", []),
-        key_achievements=data.get("key_achievements", []),
+        key_achievements=[
+            a.get("text", "") if isinstance(a, dict) else a
+            for a in data.get("key_achievements", [])
+        ],
     )
     (app_dir / "cv.html").write_text(html_str)
     print(f"  wrote {app_dir / 'cv.html'}")
@@ -402,17 +407,26 @@ def render(app_dir: Path) -> None:
     if cl_path.exists():
         print(f"  wrote {cl_path}")
 
+    if do_review:
+        try:
+            import review as review_mod
+
+            review_mod.review(app_dir)
+        except Exception as exc:  # review must never block a render
+            print(f"warn: review step failed: {exc}", file=sys.stderr)
+
 
 def main() -> None:
     p = argparse.ArgumentParser()
     p.add_argument("app_dir", help="path to applications/<slug>/")
+    p.add_argument("--skip-review", action="store_true", help="render without the validation pass")
     args = p.parse_args()
 
     app_dir = Path(args.app_dir).resolve()
     if not app_dir.is_dir():
         sys.exit(f"error: {app_dir} is not a directory")
     print(f"rendering {app_dir.name}")
-    render(app_dir)
+    render(app_dir, do_review=not args.skip_review)
 
 
 if __name__ == "__main__":

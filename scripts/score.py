@@ -68,11 +68,20 @@ def _read_cv_text(app_dir: Path) -> str:
     pdf = app_dir / "cv.pdf"
     if not pdf.exists():
         sys.exit(f"error: {pdf} missing — run scripts/render.py first.")
-    out = subprocess.run(
-        ["pdftotext", "-layout", str(pdf), "-"],
-        capture_output=True, text=True, check=True,
-    )
-    return out.stdout
+    try:
+        out = subprocess.run(
+            ["pdftotext", "-layout", str(pdf), "-"],
+            capture_output=True, text=True, check=True,
+        )
+        return out.stdout
+    except (FileNotFoundError, subprocess.CalledProcessError):
+        pass  # no pdftotext on this machine; fall through to pypdf
+    try:
+        from pypdf import PdfReader
+    except ImportError:
+        sys.exit("error: pdftotext unavailable and pypdf missing; run pip install -r requirements.txt")
+    reader = PdfReader(str(pdf))
+    return "\n".join(page.extract_text() or "" for page in reader.pages)
 
 
 def _extract_keywords(jd: str, top: int = 60) -> list[tuple[str, int]]:
@@ -86,14 +95,15 @@ def _extract_keywords(jd: str, top: int = 60) -> list[tuple[str, int]]:
 
 
 def _normalise(s: str) -> str:
-    return s.lower().strip()
+    # PDF extraction wraps lines; collapse whitespace so bigrams still match.
+    return re.sub(r"\s+", " ", s.lower()).strip()
 
 
 def score(app_dir: Path) -> None:
     jd = _read_jd(app_dir)
     cv_text = _read_cv_text(app_dir)
 
-    cv_lower = cv_text.lower()
+    cv_lower = _normalise(cv_text)
     keywords = _extract_keywords(jd)
 
     if not keywords:
