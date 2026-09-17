@@ -35,6 +35,7 @@ STOP = set(
     work working experience experiences year years skill skills ability abilities strong good great
     excellent proven track record looking seeking ideal would want need needs must should plus
     benefit benefits offer offered include includes including etc preferred preferences nice
+    using make right best
     """.split()
 )
 
@@ -95,7 +96,8 @@ def _extract_keywords(jd: str, top: int = 60) -> list[tuple[str, int]]:
 
 
 def _normalise(s: str) -> str:
-    # PDF extraction wraps lines; collapse whitespace so bigrams still match.
+    # PDF extraction wraps lines; rejoin hyphenated breaks, then collapse whitespace.
+    s = re.sub(r"-\s*\n\s*", "-", s)
     return re.sub(r"\s+", " ", s.lower()).strip()
 
 

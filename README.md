@@ -76,7 +76,7 @@ Target ≥ 70-80% keyword match. Below 60% means the CV needs more JD-aligned wo
 - required files, JD metadata (`meta.company / role_title / jd_keywords`), no placeholders
 - keyword match against `jd.md` (hard floor 60%, target 70%+)
 - claim traceability: every distinctive numeric claim in `tailored.yaml` must exist in `source/profile.yaml` or `source/achievements_public.yaml` (catches invented or mistyped metrics)
-- timeline sanity: start/end order, a single "present" role, overlap warnings
+- timeline sanity: start/end order, a single "present" role, overlap warnings (declare real overlaps in `meta.accepted_warnings`)
 - ATS safety: no tables, hidden text, white-on-white, or zero-size fonts in `cv.html`
 - PDF metadata present; CV and cover-letter length sanity
 - style: no em/en dashes in authored text (templates keep their separators)

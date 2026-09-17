@@ -81,6 +81,10 @@ def _corpus() -> str:
     return "\n".join(parts)
 
 
+def _is_accepted(warning: str, accepted: list) -> bool:
+    return any(str(a).lower() in warning.lower() for a in accepted)
+
+
 def _months(v) -> tuple[int, int] | None:
     if v is None:
         return None
@@ -271,14 +275,18 @@ def review(app_dir: Path, threshold: int = 70) -> int:
         if role_title and role_title.split()[0].lower() not in cl_text.lower():
             warnings.append("cover letter does not name the role")
 
-    status = "FAIL" if hard_errors else ("PASS WITH WARNINGS" if warnings else "PASS")
+    accepted_spec = meta.get("accepted_warnings") or []
+    active_warnings = [w for w in warnings if not _is_accepted(w, accepted_spec)]
+    accepted_warnings = [w for w in warnings if _is_accepted(w, accepted_spec)]
+
+    status = "FAIL" if hard_errors else ("PASS WITH WARNINGS" if active_warnings else "PASS")
     slug = app_dir.name
     lines = [
         f"# Review — {meta.get('company', slug)} · {meta.get('role_title', '')}".rstrip(),
         "",
         f"- Date: {date.today().isoformat()}",
         f"- Application: `{slug}`",
-        f"- Status: **{status}** ({len(hard_errors)} errors, {len(warnings)} warnings)",
+        f"- Status: **{status}** ({len(hard_errors)} errors, {len(active_warnings)} warnings, {len(accepted_warnings)} accepted)",
         "",
         "## Automated checks",
         "",
@@ -290,8 +298,10 @@ def review(app_dir: Path, threshold: int = 70) -> int:
 
     if hard_errors:
         lines += ["", "## Errors (must fix)", ""] + [f"- {e}" for e in hard_errors]
-    if warnings:
-        lines += ["", "## Warnings", ""] + [f"- {w}" for w in warnings]
+    if active_warnings:
+        lines += ["", "## Warnings", ""] + [f"- {w}" for w in active_warnings]
+    if accepted_warnings:
+        lines += ["", "## Accepted (declared in meta.accepted_warnings)", ""] + [f"- {w}" for w in accepted_warnings]
 
     if untraceable:
         lines += ["", "## Untraceable numeric claims", ""]
@@ -337,7 +347,7 @@ def review(app_dir: Path, threshold: int = 70) -> int:
     lines += ["", critical.rstrip(), ""]
     out.write_text("\n".join(lines) + "\n")
 
-    print(f"\nreview [{status}]: {len(hard_errors)} errors, {len(warnings)} warnings")
+    print(f"\nreview [{status}]: {len(hard_errors)} errors, {len(active_warnings)} warnings, {len(accepted_warnings)} accepted")
     print(f"  keyword match {pct}%, CV {cv_words} words")
     print(f"  wrote {out}")
     if hard_errors:
