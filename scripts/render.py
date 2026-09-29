@@ -359,7 +359,8 @@ a {{ color: #2c5282; text-decoration: none; }}
 # ---------------------------------------------------------------------------- driver
 
 
-def render(app_dir: Path, do_review: bool = True) -> None:
+def render(app_dir: Path, do_review: bool = True) -> int:
+    """Render the bundle; return the review's exit code (0 when review is skipped)."""
     data = _load_tailored(app_dir)
     data["experience"] = _normalise_experience(data["experience"])
 
@@ -407,13 +408,15 @@ def render(app_dir: Path, do_review: bool = True) -> None:
     if cl_path.exists():
         print(f"  wrote {cl_path}")
 
-    if do_review:
-        try:
-            import review as review_mod
+    if not do_review:
+        return 0
+    import review as review_mod
 
-            review_mod.review(app_dir)
-        except Exception as exc:  # review must never block a render
-            print(f"warn: review step failed: {exc}", file=sys.stderr)
+    try:
+        return review_mod.review(app_dir)
+    except Exception as exc:  # outputs are already written; a crashed review still fails the gate
+        print(f"error: review step failed: {exc}", file=sys.stderr)
+        return 2
 
 
 def main() -> None:
@@ -426,7 +429,7 @@ def main() -> None:
     if not app_dir.is_dir():
         sys.exit(f"error: {app_dir} is not a directory")
     print(f"rendering {app_dir.name}")
-    render(app_dir, do_review=not args.skip_review)
+    sys.exit(render(app_dir, do_review=not args.skip_review))
 
 
 if __name__ == "__main__":
