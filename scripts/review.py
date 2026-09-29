@@ -164,8 +164,10 @@ def review(app_dir: Path, threshold: int = 70) -> int:
         print(f"error: {tailored_path} missing", file=sys.stderr)
         return 1
     tailored = _load_yaml(tailored_path)
-    # meta and the cover letter carry addresses and dates, not CV claims.
+    # meta and the cover letter's address fields carry addresses and dates, not claims; its prose does.
     claim_source = {k: v for k, v in tailored.items() if k not in ("meta", "cover_letter")}
+    letter = tailored.get("cover_letter") or {}
+    claim_source["cover_letter"] = [letter.get(k) for k in ("opening", "body", "closing")]
     authored = "\n".join(_strings(claim_source))
     meta = tailored.get("meta", {}) or {}
 
