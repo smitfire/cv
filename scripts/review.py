@@ -203,9 +203,9 @@ def review(app_dir: Path, threshold: int = 70) -> int:
     cv_text = score_mod._read_cv_text(app_dir)
     cv_norm = score_mod._normalise(cv_text)
     kws = score_mod._extract_keywords(jd)
-    hits = [k for k, _ in kws if score_mod._normalise(k) in cv_norm]
+    hits = [k for k, _ in kws if score_mod._has_keyword(k, cv_norm)]
     pct = round(100 * len(hits) / len(kws)) if kws else 0
-    misses = [(k, c) for k, c in kws if score_mod._normalise(k) not in cv_norm]
+    misses = [(k, c) for k, c in kws if not score_mod._has_keyword(k, cv_norm)]
     add("JD keyword match", pct >= threshold, f"{pct}% ({len(hits)}/{len(kws)}), target {threshold}%")
     if pct < 60:
         hard_errors.append(f"keyword match {pct}% below hard floor 60%")

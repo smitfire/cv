@@ -39,23 +39,32 @@ STOP = set(
     """.split()
 )
 
-WORD_RE = re.compile(r"[A-Za-z][A-Za-z+./#\-]{1,}")
+WORD_RE = re.compile(r"[A-Za-z][A-Za-z0-9+./#'’\-]*")
+# A bigram must not span a comma, clause or sentence break ("retrieval, reranking").
+PHRASE_BREAK_RE = re.compile(r"[,;:!?()\[\]|•·\n]|\.\s")
 
 
 def _tokens(text: str) -> list[str]:
     out = []
     for m in WORD_RE.findall(text):
-        w = m.lower().strip("-./")
-        if not w or len(w) < 2:
-            continue
-        if w in STOP:
+        w = re.sub(r"['’]s$", "", m.lower().strip("-./"))
+        if len(w) < 2 or w in STOP or "'" in w or "’" in w:  # contractions ("you'll") are never keywords
             continue
         out.append(w)
     return out
 
 
-def _bigrams(toks: list[str]) -> list[str]:
-    return [" ".join(p) for p in zip(toks, toks[1:])]
+def _bigrams(text: str) -> list[str]:
+    out = []
+    for phrase in PHRASE_BREAK_RE.split(text):
+        toks = _tokens(phrase)
+        out += [" ".join(p) for p in zip(toks, toks[1:])]
+    return out
+
+
+def _has_keyword(kw: str, text_norm: str) -> bool:
+    """Whole-word match, so "java" misses "javascript"; a plural or verb ending still counts."""
+    return re.search(rf"(?<![a-z0-9]){re.escape(_normalise(kw))}(?:e?s|e?d|ing)?(?![a-z0-9])", text_norm) is not None
 
 
 def _read_jd(app_dir: Path) -> str:
@@ -87,8 +96,7 @@ def _read_cv_text(app_dir: Path) -> str:
 
 def _extract_keywords(jd: str, top: int = 60) -> list[tuple[str, int]]:
     """Crude but effective: most common content words + bigrams in the JD."""
-    toks = _tokens(jd)
-    counts = Counter(toks) + Counter(_bigrams(toks))
+    counts = Counter(_tokens(jd)) + Counter(_bigrams(jd))
     # require a bigram to appear at least twice; unigrams at least twice
     filtered = [(k, v) for k, v in counts.items() if v >= 2]
     filtered.sort(key=lambda x: (-x[1], x[0]))
@@ -113,7 +121,7 @@ def score(app_dir: Path) -> None:
 
     hits, misses = [], []
     for kw, count in keywords:
-        if _normalise(kw) in cv_lower:
+        if _has_keyword(kw, cv_lower):
             hits.append((kw, count))
         else:
             misses.append((kw, count))
