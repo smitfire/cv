@@ -30,8 +30,9 @@ SOURCE_FILES = [
     ROOT / "source" / "achievements_bank.yaml",
 ]
 
+# A unit glued to its number ("9.9M", "10x") has no \b between them, so the unit carries only a trailing \b.
 CLAIM_RE = re.compile(
-    r"\d[\d,]*(?:\.\d+)?\s*(?:%|×|\+|\bGB\b|\bMB\b|\bKB\b|\bms\b|\bs\b|\bk\b|\bK\b|\bM\b|\bx\b)?"
+    r"\d(?:[\d,]*\d)?(?:\.\d+)?\s*(?:%|×|\+|(?:GB|MB|KB|ms|s|k|K|M|x)\b)?"
 )
 
 YEAR_RE = re.compile(r"^(19|20)\d\d$")
