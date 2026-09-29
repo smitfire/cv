@@ -230,6 +230,10 @@ def _render_cv_docx(data: dict, out_path: Path, meta: dict) -> None:
     section("Summary")
     doc.add_paragraph(data["summary"])
 
+    if data.get("competencies"):
+        section("Core Competencies")
+        doc.add_paragraph(", ".join(data["competencies"]))
+
     # experience
     section("Experience")
     for role in data["experience"]:
@@ -381,6 +385,7 @@ def render(app_dir: Path, do_review: bool = True) -> None:
         basics=data["basics"],
         headline=data["headline"],
         summary=data["summary"],
+        competencies=data.get("competencies", []),
         experience=data["experience"],
         skills=data["skills"],
         education=data["education"],

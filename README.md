@@ -29,7 +29,7 @@ source/
   profile.yaml              # SINGLE source of truth (career, skills, education)
   achievements_public.yaml  # sanitised achievement bank (no IP, no client names)
 templates/
-  cv.html.j2                # ATS-safe single-column → PDF
+  cv.html.j2                # ATS-safe single-column → PDF (career-ops look)
   cover_letter.md.j2        # markdown cover-letter template
 scripts/
   build_site.py             # profile.yaml → docs/index.html
