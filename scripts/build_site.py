@@ -21,17 +21,17 @@ PROFILE = ROOT / "source" / "profile.yaml"
 OUT = ROOT / "docs" / "index.html"
 
 # Pick which experiences to feature (most recent / most relevant first).
-FEATURED_EXP_IDS = ["delta_labs", "ranova", "epfl", "rtkio"]
+FEATURED_EXP_IDS = ["natzka", "delta_labs", "ranova", "epfl", "rtkio"]
 
 # Pick which skill categories to surface (in order — AI first, leadership-relevant second).
-FEATURED_SKILLS = ["ai_llm", "python", "frontend", "data", "cloud_devops", "observability"]
+FEATURED_SKILLS = ["ai_llm", "ai_tooling", "python", "frontend", "data", "cloud_devops", "security", "observability"]
 
 # Pick which projects to highlight — AI-first.
 FEATURED_PROJECTS = [
+    "Natzka AI Assistant + MCP Platform",
     "RAG / Semantic Search Platform (Delta Labs)",
     "Recursive Language Models (RLM) Inference Service (Delta Labs)",
-    "AI Agent Skills + MCP Framework (Delta Labs)",
-    "Document Extract / OCR Microservice (Delta Labs)",
+    "Independent AI Context Engine & Agent Harnesses (smitfire)",
 ]
 
 # Default summary + headline pick — leads on AI / LLM (current focus) + leadership signal.
@@ -123,6 +123,10 @@ def render(profile: dict) -> str:
       <li>{esc(basics['location'])}</li>
       <li><a href="mailto:{esc(basics['email'])}">{esc(basics['email'])}</a></li>
       <li><a href="{esc(basics['linkedin'])}" rel="me">LinkedIn</a></li>""")
+
+    gh_url = (basics.get("github") or "").strip()
+    if gh_url.startswith("http") and gh_url.rstrip("/") != "https://github.com":
+        out.append(f'      <li><a href="{esc(gh_url)}" rel="me">GitHub</a></li>')
 
     if basics.get("sites", {}).get("personal"):
         site = basics["sites"]["personal"]

@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Nick Smit — Senior AI / Full Stack Engineer · RAG · RLM · Agentic AI</title>
-<meta name="description" content="Senior AI / full-stack engineer (12+ yrs) and lead contributor at Delta Labs — Zurich AI startup, €4.4M seed Mar 2026. I ship production AI systems end-to-end: ">
+<meta name="description" content="Senior AI / full-stack engineer (12+ yrs), currently Senior Software Engineer at Natzka (data intelligence platform), where I am helping build the AI team and s">
 <meta name="author" content="Nick Smit">
 <meta property="og:title" content="Nick Smit — Senior AI / Full Stack Engineer · RAG · RLM · Agentic AI">
-<meta property="og:description" content="Senior AI / full-stack engineer (12+ yrs) and lead contributor at Delta Labs — Zurich AI startup, €4.4M seed Mar 2026. I ship production AI systems end-to-end: ">
+<meta property="og:description" content="Senior AI / full-stack engineer (12+ yrs), currently Senior Software Engineer at Natzka (data intelligence platform), where I am helping build the AI team and s">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,11 +34,12 @@
       <li>Geneva / Zurich, Switzerland</li>
       <li><a href="mailto:nick.smit@gmail.com">nick.smit@gmail.com</a></li>
       <li><a href="https://www.linkedin.com/in/nicolaas-smit-ab00695a/" rel="me">LinkedIn</a></li>
+      <li><a href="https://github.com/smitfire" rel="me">GitHub</a></li>
     </ul>
   </header>
 
   <section class="brief">
-    <p>Senior AI / full-stack engineer (12+ yrs) and lead contributor at Delta Labs — Zurich AI startup, €4.4M seed Mar 2026. I ship production AI systems end-to-end: RAG, Recursive Language Model (RLM) inference, agentic workflows (MCP), OCR pipelines, plus the prompt orchestration and reliability layer (throttling, retry, eval loops) that makes them production-grade. Track record of measurable wins — 3,370× vector-search speedup, 5% → 85% test coverage, 320+ PRs in 10 months. Prior CTO at a healthcare-data startup; acquired exit as 1st technical hire at RTK.io / Magnite.</p>
+    <p>Senior AI / full-stack engineer (12+ yrs), currently Senior Software Engineer at Natzka (data intelligence platform), where I am helping build the AI team and ship production AI Assistant capabilities. Previously Team Lead at Delta Labs (Zurich AI startup, €4.4M seed Mar 2026), where I shipped end-to-end RAG, Recursive Language Model (RLM) inference, agentic workflows (MCP), OCR pipelines, plus orchestration and reliability guardrails (throttling, retry, eval loops). Track record of measurable wins: 3,370× vector-search speedup, 5% → 85% test coverage, 320+ PRs in 10 months.</p>
   </section>
 
   <section class="experience">
@@ -47,10 +48,44 @@
       <li class="role">
         <header class="role__header">
           <div class="role__title">
-            <h3>Senior Fullstack / AI Engineer (Lead Contributor)</h3>
+            <h3>Senior Software Engineer</h3>
+            <p class="role__company">Natzka · <span class="role__loc">Zurich, Switzerland</span></p>
+          </div>
+          <time class="role__period">2026-08 — Present</time>
+        </header>
+        <p class="role__blurb">Senior Software Engineer at Natzka, a data intelligence platform. Brought in to help build the AI team and ship production AI Assistant and MCP capabilities.</p>
+        <ul class="role__bullets">
+          <li>Shipped core AI Assistant and a docked, screen-aware Chat Panel across 7 screens: browser-only ephemeral chats answered without server storage, live screen context passed as a user-message block outside cached system instructions, bidirectional hover links lighting up referenced panels or table cells, inline result tables/dialogs, and disconnect-resilient URL-addressed conversations.</li>
+          <li>Built an 11-tool MCP OAuth resource server (RFC 9728 metadata, audience-bound tokens, 90s query cap) over shared lib-ai-tools, plus workflow list, start, and cancel write tools over MCP and chat running strictly as the signed-in user with per-action permission checks and an atomic chat approval card claimed before execution.</li>
+          <li>Hardened a tool-calling agent over customer data: prompt-injection isolation, least-privilege impersonated tokens, per-query/per-turn budgets, whitelist chat persistence dropping tool results (customer data) by default, MCP error-leakage filtering, tenant allowlists, and a live figure-grounding metric handling Swiss grouped numbers while excluding prior assistant replies.</li>
+          <li>Built the assistant&#x27;s offline evaluation harness (275 checks across 91 scored cases and 186 total cases across 6 datasets, 20 paired refusal traps, dual-pass Bedrock EU LLM-as-judge grading, headless-Chromium replay, blind side-by-side human review sheet), wired Langfuse tracing and answer ratings, and cut cost/context bloat (47% prefix cache, 60k sliding window with turn-retrieval tool, per-tenant daily token budgets).</li>
+          <li>Drove team quality, security, and delivery velocity: reviewed 54 teammate PRs (113 review passes, 195 inline comments) using a 10-lens agent roster plus isolated worktree repros, led 15 merged IAM security fixes (+3,749 / -585) and CI secret/cache-poisoning fixes, built 11 Claude Code agents and 21 skills (distilling 662 review comments via 3 skeptic agents into 38 verified rules), audited tests in 9 PRs (+891 / -3,065), and merged 243 PRs (+77,062 / -12,641 lines across 977 files on main; 0 open PRs) in 15 weeks.</li>
+        </ul>
+        <ul class="stack">
+          <li>TypeScript</li>
+          <li>Bun</li>
+          <li>Hono</li>
+          <li>NestJS</li>
+          <li>Vercel AI SDK</li>
+          <li>Anthropic API</li>
+          <li>AWS Bedrock</li>
+          <li>React</li>
+          <li>MCP</li>
+          <li>Langfuse</li>
+          <li>Playwright</li>
+          <li>Keycloak</li>
+          <li>OAuth</li>
+          <li>PostgreSQL</li>
+          <li>CI/CD</li>
+        </ul>
+      </li>
+      <li class="role">
+        <header class="role__header">
+          <div class="role__title">
+            <h3>Team Lead / Senior Fullstack AI Engineer</h3>
             <p class="role__company">Delta Labs AG · <span class="role__loc">Zurich, Switzerland</span></p>
           </div>
-          <time class="role__period">2025-07 — Present</time>
+          <time class="role__period">2025-07 — 2026-07</time>
         </header>
         <p class="role__blurb">Lead contributor at Delta Labs — UZH spin-off building Elaiia, an AI customer- simulation platform powered by Recursive Language Models (RLM). €4.4M seed round led by Cusp Capital (Mar 2026). Owning end-to-end delivery across the AI / LLM stack, backend services, data pipelines, and frontend.</p>
         <ul class="role__bullets">
@@ -177,18 +212,22 @@
   <section class="callouts">
     <h2 class="section-title">Selected wins</h2>
     <ul class="callouts__grid">
+      <li>At Natzka (data intelligence platform), shipped AI Assistant, docked chat, 11-tool OAuth MCP, 275-check evals, and IAM security remediation across 243 merged PRs (+77,062 / -12,641 lines on main) while reviewing 54 teammate PRs (195 inline comments) in 15 weeks.</li>
       <li>Lead contributor at Delta Labs (UZH spin-off, €4.4M seed Mar 2026) — production RAG, RLM inference, agentic / MCP tooling, OCR ingestion.</li>
       <li>3,370× vector-search speedup (25s → 7ms on 162k rows) via pg_diskann + index strategy redesign.</li>
       <li>Test coverage 5% → 85% (100% on async / event-driven functions); 320+ merged PRs across 8 repos in 10 months.</li>
       <li>Introduced the team&#x27;s AI Agent Skills + MCP (Model Context Protocol) framework — team-wide standardisation of AI coding-agent productivity.</li>
       <li>300% ETL throughput uplift + 55% CI/CD time cut at Ranova (CTO) via Inngest + AWS-serverless overhaul.</li>
-      <li>10× SQL-query speed-ups via caching, indexing, materialised-view strategies (Postgres / NeonDB).</li>
     </ul>
   </section>
 
   <section class="projects">
     <h2 class="section-title">Selected projects</h2>
     <ul class="projects__grid">
+      <li class="project">
+        <h3>Natzka AI Assistant + MCP Platform</h3>
+        <p>Built core AI Assistant and MCP integrations in production: docked screen-aware chat across 7 screens, 11-tool OAuth MCP server with HITL workflow actions, prompt-injection and grounding guards, per-tenant budgets, Bedrock (EU) hosting, 275-check eval harness with LLM-as-judge grading, and self-hosted Langfuse observability.</p>
+      </li>
       <li class="project">
         <h3>RAG / Semantic Search Platform (Delta Labs)</h3>
         <p>Production retrieval over proprietary enterprise documents — Python, Azure, Postgres + pgvector + DiskANN. Full ingestion → parsing → OCR → chunking → embedding → indexing pipeline, plus the evaluation-loop / throttling / reliability layer.</p>
@@ -198,12 +237,8 @@
         <p>Multi-turn, multi-step LLM workflows backing Elaiia (AI customer simulation platform) — persona generation, schema-enforced structured outputs, latency / cost / reliability guardrails.</p>
       </li>
       <li class="project">
-        <h3>AI Agent Skills + MCP Framework (Delta Labs)</h3>
-        <p>Codified how Claude / Copilot / ChatGPT-style coding agents auto-discover release, ticket-tracker, and DB workflows. Team-wide standardisation of AI-assisted engineering productivity.</p>
-      </li>
-      <li class="project">
-        <h3>Document Extract / OCR Microservice (Delta Labs)</h3>
-        <p>GPU-accelerated document-extraction pipeline with Inngest async processing, validation UI, end-to-end document summary.</p>
+        <h3>Independent AI Context Engine &amp; Agent Harnesses (smitfire)</h3>
+        <p>Built Forewisp (smitfire/context, adaptive context engine with cleanroom benchmarks cutting false-positive context from 17,912 B to 0 B and lifting solves 30 to 34), the 6-plugin ns-dsh and persistent workbench ecosystem (8-hour soak, &gt;=90% coverage gate), cross-harness agent-dotfiles and local-role-kit, plus smitosis and agent_smit for bounded evaluation.</p>
       </li>
     </ul>
   </section>
@@ -213,7 +248,11 @@
     <dl class="skills__list">
       <div class="skills__row">
         <dt>AI / LLM</dt>
-        <dd>Production RAG architecture, Recursive Language Models (RLM) inference &amp; persona generation, Agentic workflows &amp; MCP (Model Context Protocol), Prompt engineering &amp; orchestration, LLM evaluation loops &amp; metrics, OpenAI / Anthropic / Azure OpenAI APIs, Embedding pipelines (ingestion → chunking → vectorisation → indexing), OCR &amp; document parsing pipelines, Vector DBs (pgvector + DiskANN, FAISS, Pinecone), Throttling, retry, circuit-breaker reliability patterns, Schema-enforced structured outputs</dd>
+        <dd>Production RAG architecture, Recursive Language Models (RLM) inference &amp; persona generation, Agentic workflows &amp; MCP (Model Context Protocol), MCP servers with OAuth (RFC 9728), Tool-calling agents (Vercel AI SDK), Human-in-the-loop approval for agent write actions, Prompt engineering &amp; orchestration, Prompt caching &amp; context management, LLM evaluation loops &amp; metrics, Offline eval harnesses &amp; grounding metrics, LLM-as-judge grading, Prompt-injection &amp; data-leakage safeguards, OpenAI / Anthropic / Azure OpenAI / AWS Bedrock APIs, Embedding pipelines (ingestion → chunking → vectorisation → indexing), OCR &amp; document parsing pipelines, Vector DBs (pgvector + DiskANN, FAISS, Pinecone), Throttling, retry, circuit-breaker reliability patterns, Schema-enforced structured outputs</dd>
+      </div>
+      <div class="skills__row">
+        <dt>AI Engineering Productivity</dt>
+        <dd>Claude Code (daily), Multi-harness agent configuration &amp; sandboxing (Claude Code, Codex, Hermes, OpenCode, Antigravity, DSH), Progressive-disclosure skill &amp; subagent architectures, Empirical agent &amp; prompt evaluation (cleanroom benchmarks, multi-skeptic verification), MCP (Model Context Protocol) servers, AI Agent Skills framework (introduced team-wide), LLM-assisted code review, Local small-model offloading (Ollama)</dd>
       </div>
       <div class="skills__row">
         <dt>Python</dt>
@@ -232,8 +271,12 @@
         <dd>AWS (Lambda, Batch, DMS, S3), Azure, Docker, Kubernetes, GitHub Actions, GitLab CI/CD, Vercel, Inngest, ArgoCD</dd>
       </div>
       <div class="skills__row">
+        <dt>Security</dt>
+        <dd>Authorization / permission-guard design, OAuth 2 / OIDC (Keycloak, JWKS, RFC 9728), Security code review &amp; remediation, SSRF, ReDoS and path-injection fixes, Secrets hygiene (log redaction, build-time env scoping), Dependency advisory (GHSA) triage</dd>
+      </div>
+      <div class="skills__row">
         <dt>Observability</dt>
-        <dd>Structured logging, Metrics &amp; tracing, Coverage reporting, Cost / latency / quality dashboards</dd>
+        <dd>Structured logging, Metrics &amp; tracing, LLM tracing (Langfuse), Coverage reporting, Cost / latency / quality dashboards</dd>
       </div>
     </dl>
   </section>
@@ -277,7 +320,7 @@
   <footer class="page__footer">
     <p>Reach me at <a href="mailto:nick.smit@gmail.com">nick.smit@gmail.com</a> or via <a href="https://www.linkedin.com/in/nicolaas-smit-ab00695a/">LinkedIn</a>.</p>
     <p class="page__footer-meta">
-      <span>Last updated April 2026</span>
+      <span>Last updated November 2026</span>
       <span aria-hidden="true">·</span>
       <a href="?print=1" onclick="window.print();return false;">Print / save as PDF</a>
     </p>

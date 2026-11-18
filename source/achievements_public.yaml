@@ -13,33 +13,63 @@
 #   - Any other IP or confidential information from Delta Labs, Ranova, or earlier
 #     employers (Scaler, RTK.io, EPFL, etc.)
 #
-# Last sanitized: 2026-04-29
+# Last sanitized: 2026-11-18
+# Natzka section finalized: 2026-11-18 (all 243 PRs merged through 2026-11-18, 0 open PRs;
+# includes peer code reviews, security/test/eval audits, candidate reviews, and transferable
+# agent-engineering achievements from Claude Code logs and personal GitHub R&D)
 
 bullets:
 
   # =====================================================================================
-  # Current role at Natzka (Aug 2026 - present)
+  # Current role at Natzka (Aug 2026 - Nov 2026)
   # Data intelligence platform; AI Assistant + MCP platform delivery
   # =====================================================================================
 
-  - text: "Delivered high-output production work in the first weeks at Natzka: 105 merged PRs (+35,259/-5,185 lines, 920 files changed) across AI Assistant, MCP, and platform hardening."
+  - text: "243 merged PRs (+77,062 / -12,641 net lines across 977 files on main; 0 open PRs left behind) in 15 weeks at Natzka (Aug 4 to Nov 18, 2026) across the AI Assistant, MCP server, security remediation, evaluation harness, and platform tooling."
     tags: [output, leadership, ai, mcp, natzka]
-    metric: { kind: prs_merged, value: "105", files_changed: 920 }
+    metric: { kind: prs_merged, value: "243", files_changed: 977, as_of: 2026-11-18 }
 
-  - text: "Shipped conversation reliability end-to-end in AI Assistant: long-running turns survive client disconnects, clients can re-attach to running turns, and URL-addressed conversation restore/delete flows stay consistent."
-    tags: [reliability, backend, frontend, ai, product]
+  - text: "Shipped a docked, screen-aware Chat Panel across 7 product screens: browser-only ephemeral chats answered without server storage, live screen context passed as a user-message block outside cached system instructions (so user-written panel or cell titles never become instructions), bidirectional hover links lighting up referenced panels or table cells, panel and cell Ask AI actions, and inline result tables and dialogs."
+    tags: [ai, llm, frontend, product, security, natzka]
 
-  - text: "Built and integrated MCP platform capabilities (api-mcp + shared lib-ai-tools), including connector clients and routing needed for production rollout."
-    tags: [mcp, api, backend, ai, architecture]
+  - text: "Shipped an 11-tool MCP server over the platform's AI tools as an OAuth resource server (RFC 9728 metadata, audience-bound tokens, 90s query cap) plus workflow list, start, and cancel write tools over MCP and chat, running strictly as the signed-in user with per-action permission checks and an atomic chat approval card claimed before execution so a resent message starts nothing."
+    tags: [mcp, ai, agentic, security, api, human_in_the_loop, natzka]
 
-  - text: "Added model and tool-call telemetry for AI Assistant in self-hosted Langfuse, improving debugging and trust in assistant outputs."
-    tags: [observability, ai, langfuse, reliability]
+  - text: "Hardened a tool-calling agent over customer data: prompt rules so customer-authored text in tool results is never read as instructions (prompt injection), per-query and per-turn budgets, least-privilege impersonated tokens, and a figure-grounding metric (also live in production logging) handling Swiss grouped numbers (1'284'500), strict thousands-group joining, separation of adjacent figures, and exclusion of the assistant's own prior replies so repeated hallucinations cannot self-validate."
+    tags: [ai, llm, agentic, security, guardrails, evaluation, natzka]
 
-  - text: "Strengthened quality gates with integration and e2e coverage around chat APIs and conversation-sidebar flows, reducing regressions in high-change AI UI paths."
-    tags: [testing, quality, ai, frontend, backend]
+  - text: "Cut model cost and context bloat across runtime and tenant controls: cached the static prompt prefix (tool declarations and system prompt, 47% of all input tokens sent), sent compact tables instead of full stored results, windowed long conversations past 60k tokens with a tool to read omitted earlier turns back, reused engine job-cache results on chat resume without persisting customer data, and added per-tenant daily token usage rollups with optional budget caps that refuse turns before calling the model."
+    tags: [ai, llm, perf, cost, context_management, backend, natzka]
+    metric: { kind: token_share, value: "47%" }
 
-  - text: "Improved assistant query performance by removing duplicated engine-query construction and adding missing statistical compute functions required by AI-generated analysis."
-    tags: [perf, backend, data, ai]
+  - text: "Built and expanded the assistant's offline evaluation harness to 275 checks across 91 scored cases (186 total cases across 6 datasets), adding 20 unanswerable-data traps paired with answerable twins, multi-cube enterprise cases, long-thread history-cut cases, dual-pass small-model LLM-as-judge claim grading on AWS Bedrock (EU), per-turn latency/token/model stamps, a headless-Chromium UI replay driver with environment fail-fast, and a blind side-by-side human review sheet; audited 100 existing eval turns, uncovering 61 unscored turns and 3 impossible-to-pass checks."
+    tags: [ai, llm, evaluation, testing, playwright, natzka]
+    metric: { kind: eval_suite, value: "275 checks / 91 scored cases", as_of: 2026-11-18 }
+
+  - text: "Moved the assistant onto AWS Bedrock (EU) behind a provider switch with service-account identity, upgraded the model after removing three prompt lines that suppressed parallel tool calls (with explicit user notices on declined turns), made query tools refuse filters a data cube cannot apply instead of returning silently unfiltered numbers, and shipped end-to-end answer ratings wired to self-hosted Langfuse traces and scores."
+    tags: [ai, llm, aws, bedrock, prompt_engineering, data_residency, observability, langfuse, natzka]
+
+  - text: "Built resilient chat UX and privacy-safe persistence: long-running turns survive disconnects with client re-attachment, URL-addressed conversation restore/delete stays consistent, whitelist chat persistence keeps queries while dropping tool results (customer data) and unknown SDK part types by default, and shared tool contracts (lib-ai-tools + api-mcp) plus statistical compute functions and deduplicated engine-query construction speed up analysis."
+    tags: [reliability, privacy, security, backend, frontend, mcp, perf, natzka]
+
+  - text: "Reviewed 54 PRs across 10 engineers and 3 repositories (113 review passes, 195 inline comments), combining a 10-lens specialist subagent roster and cross-family secondary review with isolated worktree repros, mutation controls, and trial merges; caught pre-production issues including HTML injection and sender spoofing in share emails, chatbot markdown off-origin exfiltration, missing group-profile authorization checks, non-UUID MCP environment ids, cross-turn chat-history corruption, and OAuth logins missing a resource parameter."
+    tags: [code_review, security, quality, leadership, ai_tooling, natzka]
+    metric: { kind: prs_reviewed, value: "54 PRs / 113 reviews / 195 inline comments", as_of: 2026-11-18 }
+
+  - text: "Led remediation of an identity and access management code review: 15 merged fixes (+3,749 / -585) closing unguarded permission-annotated routes, cross-tenant token resets and member removals, role escalation through groups and invites, an async guard race, and missing owner checks on shared bundles; restricted IdP URLs to https public hosts (SSRF), anchored Authorization-header regexes (~100 ms ReDoS), protected JWKS refreshes, and redacted secrets from logs."
+    tags: [security, auth, iam, oauth, backend, natzka]
+    metric: { kind: security_fixes, value: "15" }
+
+  - text: "Hardened CI/CD and client supply-chain security: fixed a frontend build writing the entire CI environment (secrets included) into the public JS bundle, stopped deploy artifacts from reading caches writable by PR jobs, blocked MCP tool error leakage of internal service URLs and tenant ids, enforced server-side chat tenant allowlists, and wrote customer MCP data-flow docs and consent-screen warnings."
+    tags: [security, frontend, cicd, mcp, privacy, docs, natzka]
+
+  - text: "Defined a 'should this test exist' gate for writers and reviewers, then audited unit, integration, and Playwright e2e suites across 9 merged PRs (+891 / -3,065): repaired false-green tests, removed duplicates naming the keeper test for each, extended the e2e 5xx guard to 432 of 576 tests previously skipping it, and fixed a flaky table-unmount reload test."
+    tags: [testing, e2e, playwright, quality, leadership, ci, natzka]
+    metric: { kind: test_audit, value: "9 PRs (+891 / -3,065)", as_of: 2026-11-18 }
+
+  - text: "Built the team's AI-assisted engineering harness (CLAUDE.md as map, 11 single-responsibility agents, 21 progressive-disclosure skills including silent repo-specific failure traps): mined 662 review comments across 421 PRs through 3 skeptic agents to retain 38 verified review rules, built automated weekly on-call Slack plus attempt-1 GitHub Actions failure synthesis to Confluence and customer release-notes drafting (plus 13-minute CI e2e skip on config-only PRs), evaluated Senior Full-Stack candidate take-home submissions via live probes, and authored the AI Assistant capability-gap handover roadmap."
+    tags: [ai_tooling, agentic, code_review, automation, hiring, leadership, productivity, natzka]
+    metric: { kind: review_mining, value: "662 comments / 421 PRs / 38 rules" }
 
   # =====================================================================================
   # Previous role at a Zurich AI startup (Jul 2025 - Jul 2026)
@@ -160,14 +190,60 @@ bullets:
   - text: "Principal frontend developer on a public scientific app over a 1M+ node knowledge graph (open-source — see github.com/BlueBrain/core-web-app)."
     tags: [react, nextjs, frontend, scientific, neuroscience, graphdb]
 
+  - text: "Received AA performance reviews two years running at EPFL Blue Brain with year-on-year improvement across all categories; authored 50+ merged pull requests across open-source knowledge-graph web apps (BlueBrain/nexus-web and BlueBrain/core-web-app)."
+    tags: [performance_reviews, opensource, frontend, epfl]
+
   - text: "First technical hire at an early-stage startup that scaled to 10k+ active users and was acquired (real-time SaaS, ad-tech)."
     tags: [exits, leadership, adtech, scaling]
+
+  # =====================================================================================
+  # Independent AI Harnesses, Context Engine & Agent Tooling (transferable R&D)
+  # =====================================================================================
+
+  - text: "Built Forewisp (smitfire/context, 705 commits), an adaptive coding-agent context engine combining PostgreSQL + Qdrant/FTS5, two-stage JEV/Choice ranking, SHA-256 freshness gating, a pre-invocation lifecycle hook, and an MCP stdio control plane across 7 harnesses (~2.2 KB context slate in <16 ms); paired multi-model cleanroom benchmarks eliminated false-positive context injection (17,912 B to 0 B on S1; -31,758 B on S3), lifted solve rates (30 to 34 on 36 slots with 0% regressions; local 9B model 0/4 to 3/4 on S2 and 3/9 to 7/9 on S3), and cut tokens 8 to 12% and wall time 17 to 23%."
+    tags: [ai, llm, agentic, mcp, context_management, evaluation, perf, opensource]
+    metric: { kind: context_benchmark, value: "17,912 B to 0 B FP / 30 to 34 solves / -23% wall" }
+
+  - text: "Audited coding-agent sandbox and permission boundaries empirically via a 21-cell live probe matrix across shell redirections, command substitutions, python/bun subprocesses, network fetches, and subagent vs agent-team skill preloading; replaced vendor documentation assumptions with verified guardrails, hid 10 zero-use skills from idle prompt context, and resolved global TypeScript 7 and Rust LSP tooling incompatibilities."
+    tags: [ai_tooling, security, agentic, testing, productivity]
+
+  - text: "Designed adversarial multi-agent verification pipelines for rule distillation and code review: falsified mined PR-review conventions through 3 independent skeptic agents against live code (662 comments distilled to 38 verified rules), and gated batch PR reviews with specialist reviewers plus cross-family secondary review, isolated worktree mutation controls, and dual adversarial verifiers per finding (95-agent batch runs, 0 errors)."
+    tags: [ai_tooling, agentic, code_review, evaluation, quality]
+
+  - text: "Created a 6-plugin modular agent harness ecosystem and persistent execution workbench (smitfire/ns-dsh, dsh-workbench, team, board, codemode, cuga, tui): worker-isolated node:vm Code Mode with SQLite FTS5 output slicing, realpath tool/intent policy guards, a 6-column HITL Kanban and cycle-checked DAG MCP server, and a multi-worktree orchestrator with per-card model routing, mid-session quota failover, stall watchdog, and non-author cross-family review gates (>=90% coverage gate; passed 8-hour soak and rollback qualification)."
+    tags: [ai, agentic, mcp, architecture, testing, opensource]
+    metric: { kind: reliability_soak, value: "8-hour soak (>=90% coverage)" }
+
+  - text: "Built cross-harness engineering tooling (agent-dotfiles, local-role-kit, smitfire/cw): single-source-of-truth config hub syncing instructions, skills, and dual-protocol secret-scanner / TDD / pre-push hooks across 6+ coding agents; portable YAML role cards (37 tests) offloading log triage, multi-file digests, and fact extraction to a 3.3 GB local Ollama model in 0.7 to 5.0 s per call; Git-worktree + Claude Code workflow CLI."
+    tags: [ai_tooling, security, devops, local_llm, productivity, opensource]
+
+  - text: "Built bounded coding harnesses, grounded AI apps, and preregistered robotics simulations (smitosis, agent_smit, p-dashboard, drone-lab, rlm): container-isolated harnesses with frozen A/B skill gates (330 commits in smitosis), a portfolio impact dashboard whose assistant server-checks every entity name and figure against app data, an agent-native MuJoCo + C simulation toolkit (17.7x to 21.4x real-time 2-robot runs, saved-match geometry verifier, preregistered 5% optimization gate), and OpenAI tool-calling / Responses API chaining in Recursive Language Models (rlm)."
+    tags: [ai, llm, agentic, rlm, simulation, evaluation, testing]
 
 # Standalone metrics — public-safe, role-anonymised.
 metrics:
   - { label: "Natzka merged PRs",              value: "105",                tags: [output, natzka] }
   - { label: "Natzka line delta",              value: "+35,259 / -5,185",   tags: [output, natzka] }
   - { label: "Natzka files changed",           value: "920",                tags: [output, natzka] }
+  - { label: "Natzka merged PRs (8 weeks)",    value: "114",                tags: [output, natzka] }
+  - { label: "Natzka line delta (8 weeks)",    value: "+37,347 / -6,186",   tags: [output, natzka] }
+  - { label: "Assistant eval suite",           value: "117 checks / 39 cases", tags: [ai, evaluation, natzka] }
+  - { label: "Natzka merged PRs (14 weeks)",   value: "200",                tags: [output, natzka] }
+  - { label: "Natzka line delta (14 weeks)",   value: "+54,518 / -10,879",  tags: [output, natzka] }
+  - { label: "Natzka files changed (14 weeks)", value: "1,583",             tags: [output, natzka] }
+  - { label: "Assistant eval suite (Nov 2026)", value: "171 checks / 59 cases", tags: [ai, evaluation, natzka] }
+  - { label: "Natzka merged PRs (15 weeks)",   value: "243",                tags: [output, natzka] }
+  - { label: "Natzka net main line delta (15 weeks)", value: "+77,062 / -12,641", tags: [output, natzka] }
+  - { label: "Natzka unique files touched (15 weeks)", value: "977",        tags: [output, natzka] }
+  - { label: "Natzka peer PR reviews",         value: "54 PRs / 113 reviews / 195 inline comments", tags: [code_review, leadership, natzka] }
+  - { label: "Assistant eval suite (final)",   value: "275 checks / 91 scored cases (186 total)", tags: [ai, evaluation, natzka] }
+  - { label: "IAM security review fixes",      value: "15 merged (+3,749 / -585)", tags: [security, natzka] }
+  - { label: "Review comments mined into agent rules", value: "662 comments / 421 PRs / 38 rules", tags: [ai_tooling, natzka] }
+  - { label: "Claude Code team harness",       value: "11 agents / 21 skills", tags: [ai_tooling, leadership, natzka] }
+  - { label: "Test audit line delta",          value: "+792 / -2,417",      tags: [testing, natzka] }
+  - { label: "Test audit line delta (final)",  value: "9 PRs (+891 / -3,065)", tags: [testing, natzka] }
+  - { label: "Forewisp cleanroom benchmark",   value: "17,912 B to 0 B FP (30 to 34 solves, -23% wall)", tags: [ai, context_management, evaluation] }
+  - { label: "DSH workbench qualification",    value: "8-hour soak (>=90% coverage)", tags: [ai, agentic, reliability] }
   - { label: "Vector-search speedup",            value: "3,370x (25s → 7ms)",   tags: [perf, vectordb, postgres, diskann] }
   - { label: "Async function test coverage",     value: "8% → 100%",            tags: [quality, testing] }
   - { label: "Test coverage (overall)",          value: "5% → 85%",             tags: [quality] }
@@ -187,6 +263,27 @@ metrics:
 
 # Public links worth surfacing.
 public_links:
+  - url: "https://github.com/smitfire"
+    label: "Personal GitHub profile (open-source agent harnesses, MCP servers, context engine, CV pipeline)"
+    tags: [ai, agentic, mcp, opensource]
   - url: "https://github.com/BlueBrain/core-web-app"
-    label: "EPFL Blue Brain — open-source app I led the public web-app work on"
+    label: "EPFL Blue Brain: open-source app I led the public web-app work on"
     tags: [frontend, scientific, opensource]
+  - url: "https://github.com/BlueBrain/nexus-web"
+    label: "EPFL Blue Brain Nexus Web: 50+ merged PRs on open-source knowledge-graph frontend"
+    tags: [frontend, scientific, opensource]
+  - url: "https://github.com/smitfire/ns-dsh"
+    label: "ns-dsh: modular plugin distribution and MCP ecosystem for DeepSeek Harness"
+    tags: [ai, agentic, mcp, opensource]
+  - url: "https://github.com/smitfire/team"
+    label: "team: multi-worktree orchestrator with per-card routing, quota failover, and non-author review gate"
+    tags: [ai, agentic, orchestration, opensource]
+  - url: "https://github.com/smitfire/codemode"
+    label: "codemode: worker-isolated node:vm Code Mode MCP server with SQLite FTS5 output slicing"
+    tags: [ai, mcp, security, opensource]
+  - url: "https://github.com/smitfire/context"
+    label: "context: Forewisp dynamic context injection plugin and MCP server"
+    tags: [ai, context_management, mcp, opensource]
+  - url: "https://github.com/smitfire/cw"
+    label: "cw: Claude Worktree CLI integrating Git worktrees, Claude Code, and GitHub"
+    tags: [ai_tooling, git, opensource]
