@@ -59,7 +59,7 @@
           <li>Built an 11-tool MCP OAuth resource server (RFC 9728 metadata, audience-bound tokens, 90s query cap) over shared lib-ai-tools, plus workflow list, start, and cancel write tools over MCP and chat running strictly as the signed-in user with per-action permission checks and an atomic chat approval card claimed before execution.</li>
           <li>Hardened a tool-calling agent over customer data: prompt-injection isolation, least-privilege impersonated tokens, per-query/per-turn budgets, whitelist chat persistence dropping tool results (customer data) by default, MCP error-leakage filtering, tenant allowlists, and a live figure-grounding metric handling Swiss grouped numbers while excluding prior assistant replies.</li>
           <li>Built the assistant&#x27;s offline evaluation harness (275 checks across 91 scored cases and 186 total cases across 6 datasets, 20 paired refusal traps, dual-pass Bedrock EU LLM-as-judge grading, headless-Chromium replay, blind side-by-side human review sheet), wired Langfuse tracing and answer ratings, and cut cost/context bloat (47% prefix cache, 60k sliding window with turn-retrieval tool, per-tenant daily token budgets).</li>
-          <li>Drove team quality, security, and delivery velocity: reviewed 54 teammate PRs (113 review passes, 195 inline comments) using a 10-lens agent roster plus isolated worktree repros, led 15 merged IAM security fixes (+3,749 / -585) and CI secret/cache-poisoning fixes, built 11 Claude Code agents and 21 skills (distilling 662 review comments via 3 skeptic agents into 38 verified rules), audited tests in 9 PRs (+891 / -3,065), and merged 243 PRs (+77,062 / -12,641 lines across 977 files on main; 0 open PRs) in 15 weeks.</li>
+          <li>Drove team quality, security, and delivery velocity: reviewed 54 teammate PRs (46 merged/closed, 8 open in active review; 113 review passes, 195 inline comments) using a 10-lens agent roster plus isolated worktree repros, led 15 merged IAM security fixes (+3,749 / -585) and CI secret/cache-poisoning fixes, built 11 Claude Code agents and 21 skills (distilling 662 review comments via 3 skeptic agents into 38 verified rules), audited tests in 9 PRs (+891 / -3,065), and opened 272 PRs (243 merged; +77,062 / -12,641 lines across 977 files on main) in 15 weeks.</li>
         </ul>
         <ul class="stack">
           <li>TypeScript</li>
@@ -212,7 +212,7 @@
   <section class="callouts">
     <h2 class="section-title">Selected wins</h2>
     <ul class="callouts__grid">
-      <li>At Natzka (data intelligence platform), shipped AI Assistant, docked chat, 11-tool OAuth MCP, 275-check evals, and IAM security remediation across 243 merged PRs (+77,062 / -12,641 lines on main) while reviewing 54 teammate PRs (195 inline comments) in 15 weeks.</li>
+      <li>At Natzka (data intelligence platform), opened 272 PRs (243 merged; +77,062 / -12,641 lines on main) across AI Assistant, docked chat, 11-tool OAuth MCP, 275-check evals, and IAM security remediation while reviewing 54 teammate PRs (46 closed, 8 open; 195 inline comments) in 15 weeks.</li>
       <li>Lead contributor at Delta Labs (UZH spin-off, €4.4M seed Mar 2026) — production RAG, RLM inference, agentic / MCP tooling, OCR ingestion.</li>
       <li>3,370× vector-search speedup (25s → 7ms on 162k rows) via pg_diskann + index strategy redesign.</li>
       <li>Test coverage 5% → 85% (100% on async / event-driven functions); 320+ merged PRs across 8 repos in 10 months.</li>
@@ -238,7 +238,7 @@
       </li>
       <li class="project">
         <h3>Independent AI Context Engine &amp; Agent Harnesses (smitfire)</h3>
-        <p>Built Forewisp (smitfire/context, adaptive context engine with cleanroom benchmarks cutting false-positive context from 17,912 B to 0 B and lifting solves 30 to 34), the 6-plugin ns-dsh and persistent workbench ecosystem (8-hour soak, &gt;=90% coverage gate), cross-harness agent-dotfiles and local-role-kit, plus smitosis and agent_smit for bounded evaluation.</p>
+        <p>848 merged and 26 open PRs across smitfire and upstream OSS: built Forewisp (smitfire/context, 657 merged and 11 open PRs, adaptive context engine cutting false-positive context from 17,912 B to 0 B and lifting solves 30 to 34), the 6-plugin ns-dsh and persistent workbench ecosystem (8-hour soak, &gt;=90% coverage gate), cross-harness agent-dotfiles and local-role-kit, smitfire/cv (10 open validation PRs), open alexzhang13/rlm Responses API PRs, plus smitosis and agent_smit.</p>
       </li>
     </ul>
   </section>

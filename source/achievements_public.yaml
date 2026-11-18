@@ -14,9 +14,9 @@
 #     employers (Scaler, RTK.io, EPFL, etc.)
 #
 # Last sanitized: 2026-11-18
-# Natzka section finalized: 2026-11-18 (all 243 PRs merged through 2026-11-18, 0 open PRs;
-# includes peer code reviews, security/test/eval audits, candidate reviews, and transferable
-# agent-engineering achievements from Claude Code logs and personal GitHub R&D)
+# Natzka & personal R&D refreshed: 2026-11-18 (272 Natzka PRs opened / 243 merged; 54 teammate PRs
+# reviewed with 8 currently open; 848 merged + 26 open smitfire PRs. Items marked
+# `status: in_review` are open PRs or unmerged/handover branches: claim as open/in review or handover-ready)
 
 bullets:
 
@@ -25,9 +25,9 @@ bullets:
   # Data intelligence platform; AI Assistant + MCP platform delivery
   # =====================================================================================
 
-  - text: "243 merged PRs (+77,062 / -12,641 net lines across 977 files on main; 0 open PRs left behind) in 15 weeks at Natzka (Aug 4 to Nov 18, 2026) across the AI Assistant, MCP server, security remediation, evaluation harness, and platform tooling."
+  - text: "Opened 272 PRs and merged 243 (+77,062 / -12,641 net lines across 977 files on main) in 15 weeks at Natzka (Aug 4 to Nov 18, 2026) across the AI Assistant, MCP server, security remediation, evaluation harness, and platform tooling, while reviewing 54 teammate PRs (46 merged/closed, 8 open in active review)."
     tags: [output, leadership, ai, mcp, natzka]
-    metric: { kind: prs_merged, value: "243", files_changed: 977, as_of: 2026-11-18 }
+    metric: { kind: prs_merged, value: "272 opened / 243 merged", files_changed: 977, as_of: 2026-11-18 }
 
   - text: "Shipped a docked, screen-aware Chat Panel across 7 product screens: browser-only ephemeral chats answered without server storage, live screen context passed as a user-message block outside cached system instructions (so user-written panel or cell titles never become instructions), bidirectional hover links lighting up referenced panels or table cells, panel and cell Ask AI actions, and inline result tables and dialogs."
     tags: [ai, llm, frontend, product, security, natzka]
@@ -52,9 +52,9 @@ bullets:
   - text: "Built resilient chat UX and privacy-safe persistence: long-running turns survive disconnects with client re-attachment, URL-addressed conversation restore/delete stays consistent, whitelist chat persistence keeps queries while dropping tool results (customer data) and unknown SDK part types by default, and shared tool contracts (lib-ai-tools + api-mcp) plus statistical compute functions and deduplicated engine-query construction speed up analysis."
     tags: [reliability, privacy, security, backend, frontend, mcp, perf, natzka]
 
-  - text: "Reviewed 54 PRs across 10 engineers and 3 repositories (113 review passes, 195 inline comments), combining a 10-lens specialist subagent roster and cross-family secondary review with isolated worktree repros, mutation controls, and trial merges; caught pre-production issues including HTML injection and sender spoofing in share emails, chatbot markdown off-origin exfiltration, missing group-profile authorization checks, non-UUID MCP environment ids, cross-turn chat-history corruption, and OAuth logins missing a resource parameter."
+  - text: "Reviewed 54 PRs across 10 engineers and 3 repositories (46 merged/closed and 8 currently open PRs; 113 review passes, 195 inline comments), combining a 10-lens specialist subagent roster and cross-family secondary review with isolated worktree repros, mutation controls, and trial merges; caught pre-production issues including HTML injection and sender spoofing in share emails, chatbot markdown off-origin exfiltration, missing group-profile authorization checks, non-UUID MCP environment ids, cross-turn chat-history corruption, and OAuth logins missing a resource parameter."
     tags: [code_review, security, quality, leadership, ai_tooling, natzka]
-    metric: { kind: prs_reviewed, value: "54 PRs / 113 reviews / 195 inline comments", as_of: 2026-11-18 }
+    metric: { kind: prs_reviewed, value: "54 PRs (46 closed, 8 open) / 113 reviews / 195 inline comments", as_of: 2026-11-18 }
 
   - text: "Led remediation of an identity and access management code review: 15 merged fixes (+3,749 / -585) closing unguarded permission-annotated routes, cross-tenant token resets and member removals, role escalation through groups and invites, an async guard race, and missing owner checks on shared bundles; restricted IdP URLs to https public hosts (SSRF), anchored Authorization-header regexes (~100 ms ReDoS), protected JWKS refreshes, and redacted secrets from logs."
     tags: [security, auth, iam, oauth, backend, natzka]
@@ -70,6 +70,18 @@ bullets:
   - text: "Built the team's AI-assisted engineering harness (CLAUDE.md as map, 11 single-responsibility agents, 21 progressive-disclosure skills including silent repo-specific failure traps): mined 662 review comments across 421 PRs through 3 skeptic agents to retain 38 verified review rules, built automated weekly on-call Slack plus attempt-1 GitHub Actions failure synthesis to Confluence and customer release-notes drafting (plus 13-minute CI e2e skip on config-only PRs), evaluated Senior Full-Stack candidate take-home submissions via live probes, and authored the AI Assistant capability-gap handover roadmap."
     tags: [ai_tooling, agentic, code_review, automation, hiring, leadership, productivity, natzka]
     metric: { kind: review_mining, value: "662 comments / 421 PRs / 38 rules" }
+
+  - text: "Open AI and platform PRs in active review and QA (8 open PRs): driving multi-pass agentic plus manual code review, mutation controls, and rolling-window query-filter breakfixes across 8 currently open PRs extending chat query subtotals, post-aggregation over/under row filtering, engine job-id result display, per-group distinct member counts, cube-total semantics, stacked-PR review configuration, and release-notes routing."
+    tags: [code_review, ai, data, quality, leadership, natzka]
+    status: in_review
+
+  - text: "In-flight workflow-write concurrency guard, semantic eval claims, and security proof suites (unmerged handover branches): built a concurrent workflow-write guard refusing chat turns that would cut short or repeat an approved workflow run (catching up stale windows from stored chat state without error flicker and redacting customer member codes from logged refusals), 12 self-contained LLM-as-judge eval claims targeting 4 semantic failure modes string checks miss, and standalone IAM/API security reproduction harnesses across 4 backend packages."
+    tags: [ai, human_in_the_loop, evaluation, security, reliability, natzka]
+    status: in_review
+
+  - text: "Shared multi-tenant MCP host, OAuth workspace picker, and IaC PRs (29 unmerged/superseded PRs): authored shared multi-tenant MCP host routing with workspace-selection OAuth login flows, Terraform IaC for the Keycloak OAuth connector and apex-domain redirect, stripping client-forged forwarded headers before Keycloak, token-lifetime preflight checks, and markdown image-fetch exfiltration protection."
+    tags: [mcp, oauth, security, terraform, iac, natzka]
+    status: in_review
 
   # =====================================================================================
   # Previous role at a Zurich AI startup (Jul 2025 - Jul 2026)
@@ -196,11 +208,19 @@ bullets:
   - text: "First technical hire at an early-stage startup that scaled to 10k+ active users and was acquired (real-time SaaS, ad-tech)."
     tags: [exits, leadership, adtech, scaling]
 
+  - text: "Open-source Recursive Language Models (alexzhang13/rlm, open PRs): authored Responses API migration design and implementation adding server-side multi-turn state chaining and reasoning-token extraction on top of merged OpenAI tool-calling support."
+    tags: [rlm, llm, ai, opensource, python]
+    status: in_review
+
+  - text: "Cloud CI/CD security (open PR): implemented a keyless OIDC-federated AWS deployment pipeline replacing static CI secrets."
+    tags: [aws, cicd, security, devops]
+    status: in_review
+
   # =====================================================================================
   # Independent AI Harnesses, Context Engine & Agent Tooling (transferable R&D)
   # =====================================================================================
 
-  - text: "Built Forewisp (smitfire/context, 705 commits), an adaptive coding-agent context engine combining PostgreSQL + Qdrant/FTS5, two-stage JEV/Choice ranking, SHA-256 freshness gating, a pre-invocation lifecycle hook, and an MCP stdio control plane across 7 harnesses (~2.2 KB context slate in <16 ms); paired multi-model cleanroom benchmarks eliminated false-positive context injection (17,912 B to 0 B on S1; -31,758 B on S3), lifted solve rates (30 to 34 on 36 slots with 0% regressions; local 9B model 0/4 to 3/4 on S2 and 3/9 to 7/9 on S3), and cut tokens 8 to 12% and wall time 17 to 23%."
+  - text: "Built Forewisp (smitfire/context, 657 merged PRs and 11 open PRs, 705 commits), an adaptive coding-agent context engine combining PostgreSQL + Qdrant/FTS5, two-stage JEV/Choice ranking, SHA-256 freshness gating, a pre-invocation lifecycle hook, and an MCP stdio control plane across 7 harnesses (~2.2 KB context slate in <16 ms); paired multi-model cleanroom benchmarks eliminated false-positive context injection (17,912 B to 0 B on S1; -31,758 B on S3), lifted solve rates (30 to 34 on 36 slots with 0% regressions; local 9B model 0/4 to 3/4 on S2 and 3/9 to 7/9 on S3), and cut tokens 8 to 12% and wall time 17 to 23%."
     tags: [ai, llm, agentic, mcp, context_management, evaluation, perf, opensource]
     metric: { kind: context_benchmark, value: "17,912 B to 0 B FP / 30 to 34 solves / -23% wall" }
 
@@ -220,6 +240,15 @@ bullets:
   - text: "Built bounded coding harnesses, grounded AI apps, and preregistered robotics simulations (smitosis, agent_smit, p-dashboard, drone-lab, rlm): container-isolated harnesses with frozen A/B skill gates (330 commits in smitosis), a portfolio impact dashboard whose assistant server-checks every entity name and figure against app data, an agent-native MuJoCo + C simulation toolkit (17.7x to 21.4x real-time 2-robot runs, saved-match geometry verifier, preregistered 5% optimization gate), and OpenAI tool-calling / Responses API chaining in Recursive Language Models (rlm)."
     tags: [ai, llm, agentic, rlm, simulation, evaluation, testing]
 
+  - text: "Forewisp open PRs (11 open PRs): stripping withdrawn Harbor tool schemas prior to provider dispatch, fixed-workload DSH context-delivery benchmarking, task-family selection and JEV/verifier diagnostics, pre-dispatch pick-deadline tracing with timing-independent controls, empty PostgreSQL catalog origin-checkpoint bootstrap, native Linux local execution, and retiring legacy SQLite v1 embedding strategies."
+    tags: [ai, llm, context_management, evaluation, postgres, opensource]
+    status: in_review
+
+  - text: "Deterministic CV and claim-traceability pipeline (smitfire/cv) and personal R&D open PRs (848 merged + 26 open PRs across smitfire and OSS): built a YAML-to-PDF/DOCX/GitHub Pages pipeline with automated ATS, timeline, and numeric claim-traceability gates, with 10 open PRs adding whole-word phrase-aware JD keyword scoring, unit-attached numeric claim parsing, cover-letter placeholder and traceability checks, non-zero review exit gates, parsed YAML scaffolding, and pagination-safe role blocks, plus open PRs on local-role-kit prompt fidelity and smitfire/legartis dynamic DB-backed contract-clause CRUD."
+    tags: [ai_tooling, python, testing, quality, opensource]
+    status: in_review
+    metric: { kind: smitfire_prs, value: "848 merged / 26 open", as_of: 2026-11-18 }
+
 # Standalone metrics — public-safe, role-anonymised.
 metrics:
   - { label: "Natzka merged PRs",              value: "105",                tags: [output, natzka] }
@@ -233,9 +262,12 @@ metrics:
   - { label: "Natzka files changed (14 weeks)", value: "1,583",             tags: [output, natzka] }
   - { label: "Assistant eval suite (Nov 2026)", value: "171 checks / 59 cases", tags: [ai, evaluation, natzka] }
   - { label: "Natzka merged PRs (15 weeks)",   value: "243",                tags: [output, natzka] }
+  - { label: "Natzka PRs opened / merged (15 weeks)", value: "272 opened / 243 merged", tags: [output, natzka] }
   - { label: "Natzka net main line delta (15 weeks)", value: "+77,062 / -12,641", tags: [output, natzka] }
   - { label: "Natzka unique files touched (15 weeks)", value: "977",        tags: [output, natzka] }
-  - { label: "Natzka peer PR reviews",         value: "54 PRs / 113 reviews / 195 inline comments", tags: [code_review, leadership, natzka] }
+  - { label: "Natzka peer PR reviews",         value: "54 PRs (46 closed, 8 open) / 113 reviews / 195 inline comments", tags: [code_review, leadership, natzka] }
+  - { label: "Personal & OSS PRs (smitfire)",  value: "848 merged / 26 open", tags: [output, opensource] }
+  - { label: "Forewisp PRs",                   value: "657 merged / 11 open", tags: [ai, context_management, output] }
   - { label: "Assistant eval suite (final)",   value: "275 checks / 91 scored cases (186 total)", tags: [ai, evaluation, natzka] }
   - { label: "IAM security review fixes",      value: "15 merged (+3,749 / -585)", tags: [security, natzka] }
   - { label: "Review comments mined into agent rules", value: "662 comments / 421 PRs / 38 rules", tags: [ai_tooling, natzka] }
@@ -287,3 +319,9 @@ public_links:
   - url: "https://github.com/smitfire/cw"
     label: "cw: Claude Worktree CLI integrating Git worktrees, Claude Code, and GitHub"
     tags: [ai_tooling, git, opensource]
+  - url: "https://github.com/smitfire/cv"
+    label: "cv: YAML-driven CV pipeline, claim-traceability checks, and portfolio site (10 open PRs)"
+    tags: [python, testing, quality, opensource]
+  - url: "https://github.com/alexzhang13/rlm"
+    label: "Recursive Language Models (rlm): upstream OpenAI Responses API migration design PR"
+    tags: [rlm, llm, ai, opensource]
