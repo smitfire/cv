@@ -28,6 +28,7 @@ The diagram source is [`docs/assets/cv-pipeline-2026-09-17.dataflow.json`](docs/
 source/
   profile.yaml              # SINGLE source of truth (career, skills, education)
   achievements_public.yaml  # sanitised achievement bank (no IP, no client names)
+  positioning.md            # copy-paste value proposition & LinkedIn / GitHub copy
 templates/
   cv.html.j2                # ATS-safe single-column → PDF
   cover_letter.md.j2        # markdown cover-letter template

@@ -195,9 +195,13 @@ class SiteAndHygieneTests(unittest.TestCase):
             r"ponytail|career-ops|ai_notes_min",
             re.I,
         )
-        for rel in ("source/profile.yaml", "source/achievements_public.yaml", "docs/index.html"):
+        for rel in ("source/profile.yaml", "source/achievements_public.yaml", "source/positioning.md", "docs/index.html"):
             txt = (ROOT / rel).read_text()
             self.assertEqual(banned.findall(txt), [], rel)
+
+        pos_txt = (ROOT / "source" / "positioning.md").read_text()
+        self.assertNotIn("—", pos_txt)
+        self.assertNotIn("–", pos_txt)
 
         profile = yaml.safe_load((ROOT / "source" / "profile.yaml").read_text())
         vp = profile.get("value_proposition") or {}
