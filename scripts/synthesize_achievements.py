@@ -102,63 +102,86 @@ def flatten_adf(node) -> str:
 # ---- ingest ----------------------------------------------------------------
 
 
-def load_prs() -> list[dict]:
-    prs = json.load(open(RAW / "github_prs_full.json"))
-    out = []
-    for p in prs:
-        title = p.get("title") or ""
-        body = p.get("body") or ""
-        text = f"{title}\n{body}"
-        axes = classify(text)
-        out.append({
-            "kind": "pr",
-            "id": f"{p['repository']}#{p['number']}",
-            "repo": p["repository"],
-            "title": title,
-            "url": p.get("url"),
-            "additions": p.get("additions", 0),
-            "deletions": p.get("deletions", 0),
-            "files": p.get("changedFiles", 0),
-            "merged_at": (p.get("mergedAt") or "")[:10],
-            "labels": [l["name"] for l in p.get("labels", {}).get("nodes", [])],
-            "axes": axes,
-            "metrics": extract_metrics(body),
-            "body_excerpt": (body[:600] + "…") if len(body) > 600 else body,
-        })
-    return out
+def _repo_name(repo_raw) -> str:
+    if isinstance(repo_raw, dict):
+        return repo_raw.get("nameWithOwner") or repo_raw.get("name") or ""
+    return str(repo_raw or "")
 
 
-def load_jira() -> list[dict]:
-    issues = json.load(open(RAW / "jira_done_full.json"))
+def _pr_labels(labels_raw) -> list[str]:
+    if isinstance(labels_raw, dict):
+        nodes = labels_raw.get("nodes", [])
+    elif isinstance(labels_raw, list):
+        nodes = labels_raw
+    else:
+        nodes = []
+    return [l["name"] if isinstance(l, dict) else str(l) for l in nodes if l]
+
+
+def load_prs(raw_dir: Path = RAW) -> tuple[list[dict], list[Path]]:
+    files = sorted(raw_dir.glob("*prs_full.json"))
     out = []
-    for i in issues:
-        f = i["fields"]
-        desc = flatten_adf(f.get("description"))
-        title = f.get("summary") or ""
-        text = f"{title}\n{desc}"
-        axes = classify(text)
-        out.append({
-            "kind": "jira",
-            "id": i["key"],
-            "project": f["project"]["key"],
-            "type": f["issuetype"]["name"],
-            "title": title,
-            "resolved": (f.get("resolutiondate") or "")[:10],
-            "labels": f.get("labels", []),
-            "components": [c["name"] for c in (f.get("components") or [])],
-            "axes": axes,
-            "metrics": extract_metrics(desc),
-            "desc_excerpt": (desc[:400] + "…") if len(desc) > 400 else desc,
-        })
-    return out
+    for path in files:
+        prs = json.loads(path.read_text())
+        for p in prs:
+            title = p.get("title") or ""
+            body = p.get("body") or ""
+            text = f"{title}\n{body}"
+            repo = _repo_name(p.get("repository"))
+            out.append({
+                "kind": "pr",
+                "id": f"{repo}#{p['number']}",
+                "repo": repo,
+                "title": title,
+                "url": p.get("url"),
+                "additions": p.get("additions", 0),
+                "deletions": p.get("deletions", 0),
+                "files": p.get("changedFiles", 0),
+                "merged_at": (p.get("mergedAt") or "")[:10],
+                "labels": _pr_labels(p.get("labels")),
+                "axes": classify(text),
+                "metrics": extract_metrics(body),
+                "body_excerpt": (body[:600] + "…") if len(body) > 600 else body,
+            })
+    return out, files
+
+
+def load_jira(raw_dir: Path = RAW) -> tuple[list[dict], list[Path]]:
+    files = sorted(raw_dir.glob("*jira*.json"))
+    out = []
+    for path in files:
+        data = json.loads(path.read_text())
+        issues = data.get("issues", []) if isinstance(data, dict) else data
+        for i in issues:
+            f = i["fields"]
+            desc = flatten_adf(f.get("description"))
+            title = f.get("summary") or ""
+            text = f"{title}\n{desc}"
+            out.append({
+                "kind": "jira",
+                "id": i["key"],
+                "project": f["project"]["key"],
+                "type": f["issuetype"]["name"],
+                "title": title,
+                "resolved": (f.get("resolutiondate") or "")[:10],
+                "labels": f.get("labels", []),
+                "components": [c["name"] for c in (f.get("components") or [])],
+                "axes": classify(text),
+                "metrics": extract_metrics(desc),
+                "desc_excerpt": (desc[:400] + "…") if len(desc) > 400 else desc,
+            })
+    return out, files
 
 
 GIT_COMMIT_RE = re.compile(r"^([0-9a-f]{7,})\|(\d{4}-\d{2}-\d{2})\|(.+)$")
 
 
-def load_git_logs() -> list[dict]:
+def load_git_logs(raw_dir: Path = RAW) -> list[dict]:
+    logs_dir = raw_dir / "git_logs"
+    if not logs_dir.is_dir():
+        return []
     out = []
-    for f in sorted((RAW / "git_logs").glob("*.log")):
+    for f in sorted(logs_dir.glob("*.log")):
         repo = f.stem
         text = f.read_text()
         # parse: each commit is "<sha>|<date>|<subj>\n<stat-line maybe blank>\n"
@@ -200,10 +223,10 @@ def load_git_logs() -> list[dict]:
 # ---- digest ----------------------------------------------------------------
 
 
-def main():
-    prs = load_prs()
-    jira = load_jira()
-    commits = load_git_logs()
+def main(raw_dir: Path = RAW) -> None:
+    prs, pr_files = load_prs(raw_dir)
+    jira, jira_files = load_jira(raw_dir)
+    commits = load_git_logs(raw_dir)
 
     by_axis = defaultdict(list)
     for item in prs + jira + commits:
@@ -238,12 +261,14 @@ def main():
             "commits": cmts_a[:30],
         }
 
-    (RAW / "digest.yaml").write_text(yaml.safe_dump(digest, sort_keys=False, allow_unicode=True, width=120))
-    print(f"wrote {RAW / 'digest.yaml'}")
+    (raw_dir / "digest.yaml").write_text(yaml.safe_dump(digest, sort_keys=False, allow_unicode=True, width=120))
+    print(f"wrote {raw_dir / 'digest.yaml'}")
 
+    stems = sorted({p.stem.split("_")[0] for p in pr_files + jira_files if "_" in p.stem})
+    scope = ", ".join(stems) if stems else "raw harvest"
     # Human highlights — top of each axis
-    md = ["# Achievements digest — Delta Labs (org-wide)\n",
-          f"Generated from `source/raw_harvest/`. Source totals: {digest['summary']['github_prs']} merged PRs, "
+    md = [f"# Achievements digest — {scope}\n",
+          f"Generated from `{raw_dir.name}/`. Source totals: {digest['summary']['github_prs']} merged PRs, "
           f"{digest['summary']['jira_done']} done Jira tickets, {digest['summary']['commits']} local commits.\n",
           "## Distribution\n"]
     for k, v in digest["summary"]["by_axis"].items():
@@ -274,8 +299,8 @@ def main():
             for c in sec["commits"][:10]:
                 md.append(f"- **`{c['id']}`** (+{c['insertions']}/-{c['deletions']}) — {c['title']}")
 
-    (RAW / "highlights.md").write_text("\n".join(md))
-    print(f"wrote {RAW / 'highlights.md'}")
+    (raw_dir / "highlights.md").write_text("\n".join(md))
+    print(f"wrote {raw_dir / 'highlights.md'}")
     print(f"\nsummary:")
     for k, v in digest["summary"]["by_axis"].items():
         print(f"  {k:12} {v:>4}")

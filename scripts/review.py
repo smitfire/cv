@@ -30,8 +30,9 @@ SOURCE_FILES = [
     ROOT / "source" / "achievements_bank.yaml",
 ]
 
+# Unit glued to number ("9.9M", "10x") has no \b between digit and letter; only trailing \b.
 CLAIM_RE = re.compile(
-    r"\d[\d,]*(?:\.\d+)?\s*(?:%|×|\+|\bGB\b|\bMB\b|\bKB\b|\bms\b|\bs\b|\bk\b|\bK\b|\bM\b|\bx\b)?"
+    r"\d(?:[\d,]*\d)?(?:\.\d+)?\s*(?:%|×|\+|(?:GB|MB|KB|ms|s|k|K|M|x)\b)?"
 )
 
 YEAR_RE = re.compile(r"^(19|20)\d\d$")
@@ -51,20 +52,20 @@ def _strings(obj):
 def _claim_tokens(text: str) -> set[str]:
     out: set[str] = set()
     for m in CLAIM_RE.finditer(text):
-        core = m.group(0).strip().replace(" ", "")
+        core = m.group(0).strip().replace(" ", "").replace("×", "x")
         digits = re.sub(r"[^\d]", "", core)
         if not digits or YEAR_RE.match(digits):
             continue
+        low = core.lower()
         distinctive = (
-            "," in core
-            or "%" in core
-            or "×" in core
-            or core.endswith("+")
-            or core.endswith(("x", "GB", "MB", "KB", "ms", "k", "K", "M"))
+            "," in low
+            or "%" in low
+            or low.endswith("+")
+            or low.endswith(("x", "gb", "mb", "kb", "ms", "s", "k", "m"))
             or len(digits) >= 3
         )
         if distinctive:
-            out.add(core.lower())
+            out.add(low)
     return out
 
 
@@ -164,8 +165,10 @@ def review(app_dir: Path, threshold: int = 70) -> int:
         print(f"error: {tailored_path} missing", file=sys.stderr)
         return 1
     tailored = _load_yaml(tailored_path)
-    # meta and the cover letter carry addresses and dates, not CV claims.
+    # meta and cover letter address/date carry metadata, not claims; cover letter prose carries claims.
     claim_source = {k: v for k, v in tailored.items() if k not in ("meta", "cover_letter")}
+    letter = tailored.get("cover_letter") or {}
+    claim_source["cover_letter"] = [letter.get(k) for k in ("opening", "body", "closing")]
     authored = "\n".join(_strings(claim_source))
     meta = tailored.get("meta", {}) or {}
 
@@ -201,12 +204,9 @@ def review(app_dir: Path, threshold: int = 70) -> int:
 
     jd = score_mod._read_jd(app_dir)
     cv_text = score_mod._read_cv_text(app_dir)
-    cv_norm = score_mod._normalise(cv_text)
-    kws = score_mod._extract_keywords(jd)
-    hits = [k for k, _ in kws if score_mod._normalise(k) in cv_norm]
-    pct = round(100 * len(hits) / len(kws)) if kws else 0
-    misses = [(k, c) for k, c in kws if score_mod._normalise(k) not in cv_norm]
-    add("JD keyword match", pct >= threshold, f"{pct}% ({len(hits)}/{len(kws)}), target {threshold}%")
+    pct, hits, misses = score_mod.score_texts(jd, cv_text)
+    kws_total = len(hits) + len(misses)
+    add("JD keyword match", pct >= threshold, f"{pct}% ({len(hits)}/{kws_total}), target {threshold}%")
     if pct < 60:
         hard_errors.append(f"keyword match {pct}% below hard floor 60%")
     elif pct < threshold:
@@ -241,7 +241,21 @@ def review(app_dir: Path, threshold: int = 70) -> int:
     warnings.extend(tl_warnings)
 
     html = (app_dir / "cv.html").read_text() if (app_dir / "cv.html").exists() else ""
-    ats_flags = [t for t in ("<table", "display:none", "visibility:hidden", "#fff", "#ffffff", "font-size: 0") if t in html]
+    ats_flags = [
+        t
+        for t in (
+            "<table",
+            "display:none",
+            "display: none",
+            "visibility:hidden",
+            "visibility: hidden",
+            "font-size:0",
+            "font-size: 0",
+        )
+        if t in html
+    ]
+    if re.search(r"(?<![a-z-])color\s*:\s*#(?:fff|ffffff)\b", html, re.I):
+        ats_flags.append("color:#fff")
     add("ATS: single column, no hidden text", not ats_flags, ", ".join(ats_flags) if ats_flags else "clean")
     if ats_flags:
         hard_errors.append("ATS flags in cv.html: " + ", ".join(ats_flags))

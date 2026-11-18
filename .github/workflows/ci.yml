@@ -1,0 +1,21 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Install pipeline check dependencies
+        run: pip install PyYAML Jinja2 markdown pypdf
+      - name: Run unit and hygiene tests
+        run: python -m unittest discover -s tests -v
+      - name: Verify docs/index.html matches source/profile.yaml
+        run: python scripts/build_site.py --check

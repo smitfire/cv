@@ -10,13 +10,20 @@ dependencies, no JS frameworks, GitHub-Pages-ready.
 """
 from __future__ import annotations
 
+import argparse
 import html
+import sys
 from datetime import date
 from pathlib import Path
 
 import yaml
 
-ROOT = Path(__file__).resolve().parent.parent
+SCRIPTS_DIR = Path(__file__).resolve().parent
+if str(SCRIPTS_DIR) not in sys.path:
+    sys.path.insert(0, str(SCRIPTS_DIR))
+from render import fmt_date  # noqa: E402
+
+ROOT = SCRIPTS_DIR.parent
 PROFILE = ROOT / "source" / "profile.yaml"
 OUT = ROOT / "docs" / "index.html"
 
@@ -42,23 +49,18 @@ DEFAULT_SUMMARY_KEY = "ai_engineer"
 # --- helpers ----------------------------------------------------------------
 
 
-def fmt_date(v) -> str:
-    if v is None:
-        return ""
-    if isinstance(v, str):
-        return v
-    if isinstance(v, int):
-        return str(v)
-    if isinstance(v, (date,)):
-        return v.strftime("%b %Y")
-    return str(v)
-
-
 def fmt_period(role: dict) -> str:
     s = fmt_date(role.get("start"))
     e = role.get("end")
     e_str = "Present" if e in (None, "present", "Present") else fmt_date(e)
     return f"{s} — {e_str}"
+
+
+def _meta_desc(text: str, limit: int = 160) -> str:
+    s = " ".join(text.split())
+    if len(s) <= limit:
+        return s
+    return s[: limit - 1].rsplit(" ", 1)[0].rstrip(".,;:") + "…"
 
 
 def esc(s: str) -> str:
@@ -85,6 +87,8 @@ def render(profile: dict) -> str:
     languages = profile.get("languages", [])
     achievements = profile.get("key_achievements", [])
 
+    meta_desc = esc(_meta_desc(summary))
+
     # ---- HTML ----
     out = []
     out.append(f"""<!doctype html>
@@ -93,10 +97,10 @@ def render(profile: dict) -> str:
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{esc(basics['name'])} — {esc(DEFAULT_HEADLINE)}</title>
-<meta name="description" content="{esc(' '.join(summary.split())[:160])}">
+<meta name="description" content="{meta_desc}">
 <meta name="author" content="{esc(basics['name'])}">
 <meta property="og:title" content="{esc(basics['name'])} — {esc(DEFAULT_HEADLINE)}">
-<meta property="og:description" content="{esc(' '.join(summary.split())[:160])}">
+<meta property="og:description" content="{meta_desc}">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -139,6 +143,22 @@ def render(profile: dict) -> str:
     <p>""" + esc(" ".join(summary.split())) + """</p>
   </section>
 """)
+
+    # Value proposition pillars
+    vp = profile.get("value_proposition") or {}
+    if vp.get("pillars"):
+        out.append('  <section class="projects">')
+        out.append('    <h2 class="section-title">What I bring</h2>')
+        if vp.get("headline"):
+            out.append(f'    <p class="role__blurb">{esc(vp["headline"])}</p>')
+        out.append('    <ul class="projects__grid">')
+        for pillar in vp["pillars"]:
+            out.append(f"""      <li class="project">
+        <h3>{esc(pillar['title'])}</h3>
+        <p>{esc(pillar['blurb'])}</p>
+      </li>""")
+        out.append('    </ul>')
+        out.append('  </section>\n')
 
     # Experience
     out.append('  <section class="experience">')
@@ -272,9 +292,20 @@ def render(profile: dict) -> str:
 
 
 def main() -> None:
+    p = argparse.ArgumentParser()
+    p.add_argument("--check", action="store_true", help="exit non-zero if docs/index.html is out of date")
+    args = p.parse_args()
+
     profile = yaml.safe_load(PROFILE.read_text())
+    rendered = render(profile)
+    if args.check:
+        if not OUT.exists() or OUT.read_text() != rendered:
+            print(f"{OUT} is out of date; run scripts/build_site.py", file=sys.stderr)
+            sys.exit(1)
+        print(f"{OUT} is up to date")
+        return
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(render(profile))
+    OUT.write_text(rendered)
     print(f"wrote {OUT}")
 
 

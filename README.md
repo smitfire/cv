@@ -62,6 +62,15 @@ pip install -r requirements.txt
 
 # WeasyPrint needs Pango / Cairo on macOS:
 brew install pango cairo gdk-pixbuf libffi
+# ...and must find Homebrew's libraries on Apple Silicon, or it fails with "cannot load library 'libgobject-2.0-0'":
+export DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib
+```
+
+## Tests & CI
+
+```bash
+python -m unittest discover -s tests -v
+python scripts/build_site.py --check
 ```
 
 ## Per-application workflow

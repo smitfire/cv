@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Nick Smit — Senior AI / Full Stack Engineer · RAG · RLM · Agentic AI</title>
-<meta name="description" content="Senior AI / full-stack engineer (12+ yrs), currently Senior Software Engineer at Natzka (data intelligence platform), where I am helping build the AI team and s">
+<meta name="description" content="Senior AI / full-stack engineer (12+ yrs) who turns high-risk LLM capabilities into governed, measured production systems. At Natzka (data intelligence…">
 <meta name="author" content="Nick Smit">
 <meta property="og:title" content="Nick Smit — Senior AI / Full Stack Engineer · RAG · RLM · Agentic AI">
-<meta property="og:description" content="Senior AI / full-stack engineer (12+ yrs), currently Senior Software Engineer at Natzka (data intelligence platform), where I am helping build the AI team and s">
+<meta property="og:description" content="Senior AI / full-stack engineer (12+ yrs) who turns high-risk LLM capabilities into governed, measured production systems. At Natzka (data intelligence…">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,7 +39,34 @@
   </header>
 
   <section class="brief">
-    <p>Senior AI / full-stack engineer (12+ yrs), currently Senior Software Engineer at Natzka (data intelligence platform), where I am helping build the AI team and ship production AI Assistant capabilities. Previously Team Lead at Delta Labs (Zurich AI startup, €4.4M seed Mar 2026), where I shipped end-to-end RAG, Recursive Language Model (RLM) inference, agentic workflows (MCP), OCR pipelines, plus orchestration and reliability guardrails (throttling, retry, eval loops). Track record of measurable wins: 3,370× vector-search speedup, 5% → 85% test coverage, 320+ PRs in 10 months.</p>
+    <p>Senior AI / full-stack engineer (12+ yrs) who turns high-risk LLM capabilities into governed, measured production systems. At Natzka (data intelligence platform; 272 PRs opened, 243 merged in 15 weeks), built the production AI Assistant, docked 7-screen Chat Panel, 11-tool OAuth MCP server with HITL write approval, AWS Bedrock (EU) routing, 275-check eval harness, and 15-PR IAM security remediation while reviewing 54 teammate PRs. Previously Team Lead at Delta Labs (€4.4M seed Mar 2026), shipping RAG, RLM inference, OCR pipelines, 3,370x vector-search speedup (pg_diskann), 5% to 85% test coverage, and 320+ PRs in 10 months.</p>
+  </section>
+
+  <section class="projects">
+    <h2 class="section-title">What I bring</h2>
+    <p class="role__blurb">I turn ambiguous, high-risk AI product ideas into governed, measured production systems, and multiply the engineering team around them by encoding security, correctness, and verification into the harness itself.</p>
+    <ul class="projects__grid">
+      <li class="project">
+        <h3>Governed Production AI (Safety &amp; Grounding by Construction)</h3>
+        <p>Treat every LLM boundary as an untrusted distributed system: least-privilege OAuth MCP servers (RFC 9728, audience-bound tokens), whitelist chat persistence that drops customer data by default, untrusted context isolated outside cached instructions, atomic HITL approval cards for write tools, AWS Bedrock (EU) residency, per-tenant token budgets, and live figure-grounding checks.</p>
+      </li>
+      <li class="project">
+        <h3>Empirical Rigor Over Vibes (Falsification &amp; Cleanroom Evals)</h3>
+        <p>Replace gut-feel QA and vendor claims with falsifiable evidence: 275-check / 91-scored-case assistant eval suite with 20 paired refusal traps, dual-pass Bedrock EU LLM-as-judge grading, and Playwright UI replay (after an audit exposed 61 unscored turns out of 100); paired cleanroom benchmarks in Forewisp (17,912 B to 0 B false-positive context, 30 to 34 solves, -23% wall time), a 21-cell live sandbox bypass matrix, and preregistered 5% optimization gates.</p>
+      </li>
+      <li class="project">
+        <h3>Team-Wide Engineering Leverage (Harness, Review &amp; Test Architecture)</h3>
+        <p>Multiply team throughput while shipping at high individual velocity (272 PRs opened / 243 merged in 15 weeks at Natzka; 320+ merged PRs in 10 months at Delta Labs; 848 merged + 26 open PRs in personal R&amp;D): distilled 662 review comments through 3 falsifying skeptic agents into 38 verified rules across 11 specialist agents and 21 skills, reviewed 54 teammate PRs (113 passes, 195 inline comments), audited tests across 9 PRs (+891 / -3,065), and lifted Delta Labs coverage from 5% to 85%.</p>
+      </li>
+      <li class="project">
+        <h3>End-to-End Systems Depth (DB Internals to Interactive UX)</h3>
+        <p>Own bottlenecks across the full stack: 3,370x PostgreSQL vector-search speedup (25s to 7ms on 162k rows via pg_diskann with zero app code change), overcoming Postgres&#x27;s 256 MB JSONB limit, 2.7 GB+ streaming ETL imports, 40 to 70% serverless memory cuts, 300% ETL uplift and 40% AWS cost cut at Ranova, up to a 7-screen context-aware docked chat and a 1M+ node neuroscience knowledge-graph UI at EPFL.</p>
+      </li>
+      <li class="project">
+        <h3>Zero-to-One Ownership, Security Mindset &amp; Clean Handover</h3>
+        <p>Trusted technical anchor from seed to scale: 1st technical hire scaling RTK.io to 10k+ active users and acquisition by Magnite, CTO at Ranova, Team Lead through Delta Labs&#x27; €4.4M seed round, and leading Natzka&#x27;s AI Assistant, customer MCP rollout, 15-PR IAM security remediation, CI supply-chain hardening, candidate take-home reviews, and capability-gap handover roadmaps.</p>
+      </li>
+    </ul>
   </section>
 
   <section class="experience">
@@ -51,7 +78,7 @@
             <h3>Senior Software Engineer</h3>
             <p class="role__company">Natzka · <span class="role__loc">Zurich, Switzerland</span></p>
           </div>
-          <time class="role__period">2026-08 — Present</time>
+          <time class="role__period">Aug 2026 — Present</time>
         </header>
         <p class="role__blurb">Senior Software Engineer at Natzka, a data intelligence platform. Brought in to help build the AI team and ship production AI Assistant and MCP capabilities.</p>
         <ul class="role__bullets">
@@ -85,7 +112,7 @@
             <h3>Team Lead / Senior Fullstack AI Engineer</h3>
             <p class="role__company">Delta Labs AG · <span class="role__loc">Zurich, Switzerland</span></p>
           </div>
-          <time class="role__period">2025-07 — 2026-07</time>
+          <time class="role__period">Jul 2025 — Jul 2026</time>
         </header>
         <p class="role__blurb">Lead contributor at Delta Labs — UZH spin-off building Elaiia, an AI customer- simulation platform powered by Recursive Language Models (RLM). €4.4M seed round led by Cusp Capital (Mar 2026). Owning end-to-end delivery across the AI / LLM stack, backend services, data pipelines, and frontend.</p>
         <ul class="role__bullets">
@@ -117,7 +144,7 @@
             <h3>CTO</h3>
             <p class="role__company">Ranova · <span class="role__loc">Geneva, Switzerland</span></p>
           </div>
-          <time class="role__period">2025-01 — 2025-09</time>
+          <time class="role__period">Jan 2025 — Sep 2025</time>
         </header>
         <p class="role__blurb">CTO at an early-stage healthcare data startup. Owned architecture, delivery, hiring direction, and product roadmap.</p>
         <ul class="role__bullets">
@@ -149,7 +176,7 @@
             <h3>Software Engineer</h3>
             <p class="role__company">EPFL — Blue Brain Project · <span class="role__loc">Geneva, Switzerland</span></p>
           </div>
-          <time class="role__period">2021-05 — 2024-12</time>
+          <time class="role__period">May 2021 — Dec 2024</time>
         </header>
         <p class="role__blurb">Built UI and data tooling for EPFL&#x27;s Blue Brain — a research programme mapping and simulating a mouse brain.</p>
         <ul class="role__bullets">
@@ -182,7 +209,7 @@
             <h3>Software Engineer (Principal Frontend / Fullstack)</h3>
             <p class="role__company">RTK.io · <span class="role__loc">Zurich, Switzerland</span></p>
           </div>
-          <time class="role__period">2015-10 — 2019-10</time>
+          <time class="role__period">Oct 2015 — Oct 2019</time>
         </header>
         <p class="role__blurb">Joined as 1st technical hire at an early-stage ad-tech startup; matured the platform to acquisition by Magnite. Principal developer on a SaaS serving 10k+ active users.</p>
         <ul class="role__bullets">

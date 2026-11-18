@@ -39,7 +39,7 @@ MAX_BULLETS_PER_ROLE = 5  # absolute fallback
 # ---------------------------------------------------------------------------- helpers
 
 
-def _fmt_date(v) -> str:
+def fmt_date(v) -> str:
     """Render dates in human form: 'Jul 2025' / '2025' / 'Present'."""
     if v is None:
         return ""
@@ -71,28 +71,27 @@ def _fmt_date(v) -> str:
     return str(v)
 
 
+_fmt_date = fmt_date
+
+
 # Bold common metric tokens in body text. Applied as a Jinja filter; output is HTML-safe.
 import html as _html
 
-_METRIC_PATTERNS = [
-    re.compile(r"(\b\d{1,3}(?:,\d{3})*(?:\.\d+)?\s*[×xX]\b)"),    # 3,370× / 10x
-    re.compile(r"(\b\d+(?:\.\d+)?\s*%)"),                          # 5% / 85%
-    re.compile(r"(\b\d+(?:\.\d+)?\s*(?:to|→|->)\s*\d+(?:\.\d+)?\s*%)"),  # 5% to 85%
-    re.compile(r"(\b\d{2,}\+\b)"),                                # 320+, 10k+
-    re.compile(r"(\b\d{1,3}(?:,\d{3})+\b)"),                      # 162,000
-    re.compile(r"(\$\s*\d+(?:\.\d+)?\s*[KMB]?\b)"),               # $50M
-    re.compile(r"(\b€\s*\d+(?:\.\d+)?\s*[KMB]?\b)"),              # €4.4M
-]
+_METRIC_RE = re.compile(
+    r"(?:[$€£]\s*\d[\d,]*(?:\.\d+)?\s*[KMBkmb]?\+?)"
+    r"|(?<![A-Za-z0-9])(?:"
+    r"(?:\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?)\s*(?:[×xX](?![A-Za-z])|%|[KMBkmb]\+|\+)"
+    r"|\d{1,3}(?:,\d{3})+"
+    r")(?![A-Za-z0-9])"
+)
 
 
 def metric_emphasis(text: str) -> Markup:
-    """HTML-escape input, then wrap metric tokens in <strong>. Markup-safe (won't double-escape)."""
+    """HTML-escape input, then wrap metric tokens in <strong>. Single pass avoids nested tags."""
     if text is None:
         return Markup("")
     safe = _html.escape(str(text))
-    for pat in _METRIC_PATTERNS:
-        safe = pat.sub(r"<strong>\1</strong>", safe)
-    return Markup(safe)
+    return Markup(_METRIC_RE.sub(r"<strong>\g<0></strong>", safe))
 
 
 def _normalise_experience(exp_list):
@@ -212,6 +211,9 @@ def _render_cv_docx(data: dict, out_path: Path, meta: dict) -> None:
         data["basics"].get("email", ""),
         data["basics"].get("linkedin", ""),
     ]
+    gh_url = (data["basics"].get("github") or "").strip()
+    if gh_url.startswith("http") and gh_url.rstrip("/") != "https://github.com":
+        contact_bits.append(gh_url)
     sites = data["basics"].get("sites") or {}
     if sites.get("personal"):
         contact_bits.append(sites["personal"])
@@ -229,6 +231,10 @@ def _render_cv_docx(data: dict, out_path: Path, meta: dict) -> None:
     # summary
     section("Summary")
     doc.add_paragraph(data["summary"])
+
+    if data.get("competencies"):
+        section("Core Competencies")
+        doc.add_paragraph(", ".join(data["competencies"]))
 
     # experience
     section("Experience")
@@ -359,7 +365,8 @@ a {{ color: #2c5282; text-decoration: none; }}
 # ---------------------------------------------------------------------------- driver
 
 
-def render(app_dir: Path, do_review: bool = True) -> None:
+def render(app_dir: Path, do_review: bool = True) -> int:
+    """Render CV (HTML/PDF/DOCX) + cover letter; return review exit code (0 if skipped)."""
     data = _load_tailored(app_dir)
     data["experience"] = _normalise_experience(data["experience"])
 
@@ -381,6 +388,7 @@ def render(app_dir: Path, do_review: bool = True) -> None:
         basics=data["basics"],
         headline=data["headline"],
         summary=data["summary"],
+        competencies=data.get("competencies", []),
         experience=data["experience"],
         skills=data["skills"],
         education=data["education"],
@@ -407,13 +415,15 @@ def render(app_dir: Path, do_review: bool = True) -> None:
     if cl_path.exists():
         print(f"  wrote {cl_path}")
 
-    if do_review:
-        try:
-            import review as review_mod
+    if not do_review:
+        return 0
+    import review as review_mod
 
-            review_mod.review(app_dir)
-        except Exception as exc:  # review must never block a render
-            print(f"warn: review step failed: {exc}", file=sys.stderr)
+    try:
+        return review_mod.review(app_dir)
+    except Exception as exc:  # outputs are already written; a crashed review still fails the gate
+        print(f"error: review step failed: {exc}", file=sys.stderr)
+        return 2
 
 
 def main() -> None:
@@ -426,7 +436,7 @@ def main() -> None:
     if not app_dir.is_dir():
         sys.exit(f"error: {app_dir} is not a directory")
     print(f"rendering {app_dir.name}")
-    render(app_dir, do_review=not args.skip_review)
+    sys.exit(render(app_dir, do_review=not args.skip_review))
 
 
 if __name__ == "__main__":

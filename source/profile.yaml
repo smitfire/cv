@@ -29,62 +29,75 @@ basics:
   sites:
     company: "https://voodoolabs.org"
 
+value_proposition:
+  headline: "I turn ambiguous, high-risk AI product ideas into governed, measured production systems, and multiply the engineering team around them by encoding security, correctness, and verification into the harness itself."
+  pillars:
+    - title: "Governed Production AI (Safety & Grounding by Construction)"
+      blurb: "Treat every LLM boundary as an untrusted distributed system: least-privilege OAuth MCP servers (RFC 9728, audience-bound tokens), whitelist chat persistence that drops customer data by default, untrusted context isolated outside cached instructions, atomic HITL approval cards for write tools, AWS Bedrock (EU) residency, per-tenant token budgets, and live figure-grounding checks."
+      tags: [ai, security, mcp, guardrails, privacy]
+    - title: "Empirical Rigor Over Vibes (Falsification & Cleanroom Evals)"
+      blurb: "Replace gut-feel QA and vendor claims with falsifiable evidence: 275-check / 91-scored-case assistant eval suite with 20 paired refusal traps, dual-pass Bedrock EU LLM-as-judge grading, and Playwright UI replay (after an audit exposed 61 unscored turns out of 100); paired cleanroom benchmarks in Forewisp (17,912 B to 0 B false-positive context, 30 to 34 solves, -23% wall time), a 21-cell live sandbox bypass matrix, and preregistered 5% optimization gates."
+      tags: [evaluation, testing, ai, benchmarks]
+    - title: "Team-Wide Engineering Leverage (Harness, Review & Test Architecture)"
+      blurb: "Multiply team throughput while shipping at high individual velocity (272 PRs opened / 243 merged in 15 weeks at Natzka; 320+ merged PRs in 10 months at Delta Labs; 848 merged + 26 open PRs in personal R&D): distilled 662 review comments through 3 falsifying skeptic agents into 38 verified rules across 11 specialist agents and 21 skills, reviewed 54 teammate PRs (113 passes, 195 inline comments), audited tests across 9 PRs (+891 / -3,065), and lifted Delta Labs coverage from 5% to 85%."
+      tags: [leadership, code_review, ai_tooling, testing]
+    - title: "End-to-End Systems Depth (DB Internals to Interactive UX)"
+      blurb: "Own bottlenecks across the full stack: 3,370x PostgreSQL vector-search speedup (25s to 7ms on 162k rows via pg_diskann with zero app code change), overcoming Postgres's 256 MB JSONB limit, 2.7 GB+ streaming ETL imports, 40 to 70% serverless memory cuts, 300% ETL uplift and 40% AWS cost cut at Ranova, up to a 7-screen context-aware docked chat and a 1M+ node neuroscience knowledge-graph UI at EPFL."
+      tags: [perf, postgres, fullstack, frontend, etl]
+    - title: "Zero-to-One Ownership, Security Mindset & Clean Handover"
+      blurb: "Trusted technical anchor from seed to scale: 1st technical hire scaling RTK.io to 10k+ active users and acquisition by Magnite, CTO at Ranova, Team Lead through Delta Labs' €4.4M seed round, and leading Natzka's AI Assistant, customer MCP rollout, 15-PR IAM security remediation, CI supply-chain hardening, candidate take-home reviews, and capability-gap handover roadmaps."
+      tags: [leadership, security, exits, architecture]
+
 # Pre-written summaries — Claude picks one and mutates the wording per JD.
 summaries:
   ai_engineer: >
-    Senior AI / full-stack engineer (12+ yrs), currently Senior Software
-    Engineer at Natzka (data intelligence platform), where I am helping build
-    the AI team and ship production AI Assistant capabilities. Previously Team
-    Lead at Delta Labs (Zurich AI startup, €4.4M seed Mar 2026), where I
-    shipped end-to-end RAG, Recursive Language Model (RLM) inference, agentic
-    workflows (MCP), OCR pipelines, plus orchestration and reliability guardrails
-    (throttling, retry, eval loops). Track record of measurable wins: 3,370×
-    vector-search speedup, 5% → 85% test coverage, 320+ PRs in 10 months.
+    Senior AI / full-stack engineer (12+ yrs) who turns high-risk LLM capabilities into
+    governed, measured production systems. At Natzka (data intelligence platform; 272 PRs opened,
+    243 merged in 15 weeks), built the production AI Assistant, docked 7-screen Chat Panel,
+    11-tool OAuth MCP server with HITL write approval, AWS Bedrock (EU) routing, 275-check eval
+    harness, and 15-PR IAM security remediation while reviewing 54 teammate PRs. Previously Team
+    Lead at Delta Labs (€4.4M seed Mar 2026), shipping RAG, RLM inference, OCR pipelines, 3,370x
+    vector-search speedup (pg_diskann), 5% to 85% test coverage, and 320+ PRs in 10 months.
 
   fullstack_python: >
-    Senior Python / AI engineer (12+ yrs), currently Senior Software Engineer
-    at Natzka (data intelligence platform), where I am helping build the AI
-    team and shipping AI Assistant and MCP capabilities. Previously Team Lead
-    at Delta Labs (Zurich AI startup, €4.4M seed Mar 2026): production RAG,
-    RLM inference, OCR pipelines, and agentic workflows. Strong Python
-    (FastAPI, Flask, ETL, async), SQL performance (3,370× via pg_diskann,
-    10× via index strategy), and full-stack delivery (React, Next.js,
-    TypeScript).
+    Senior Python / AI engineer (12+ yrs) shipping production LLM platforms, data pipelines,
+    and full-stack TypeScript/React products. At Natzka (272 PRs opened, 243 merged in 15 weeks),
+    built the AI Assistant, 11-tool OAuth MCP server, 275-check eval suite, Bedrock (EU)
+    routing, and IAM security fixes. Previously Team Lead at Delta Labs (€4.4M seed) and CTO at
+    Ranova: FastAPI/Flask services, production RAG and RLM inference, 3,370x SQL vector speedup
+    via pg_diskann, 300% ETL throughput uplift, and 5% to 85% test coverage.
 
   fullstack: >
-    Senior full-stack engineer (12+ yrs), currently Senior Software Engineer
-    at Natzka (data intelligence platform), where I am helping build the AI
-    team and shipping AI Assistant + MCP platform capabilities. Previously Team
-    Lead at Delta Labs (Zurich AI startup, €4.4M seed Mar 2026), shipping
-    production RAG, RLM, agentic and OCR systems end-to-end. Strong on quality
-    (5% → 85% test coverage at Delta Labs), SQL / index tuning (3,370× speedup),
-    and turning fast-moving product ideas into reliable, observable production
-    systems.
+    Senior full-stack and AI engineer (12+ yrs) across TypeScript/React, Python/FastAPI, and
+    PostgreSQL. At Natzka (272 PRs opened, 243 merged; 54 teammate PRs reviewed in 15 weeks),
+    built a docked 7-screen AI Chat Panel, 11-tool OAuth MCP server, Langfuse observability,
+    275-check eval harness, and 15 IAM security fixes. Previously Team Lead at Delta Labs (€4.4M
+    seed, 3,370x pg_diskann speedup, 5% to 85% coverage), CTO at Ranova, and principal developer
+    at EPFL Blue Brain (1M+ node knowledge graph).
 
   frontend: >
-    Senior frontend engineer (12+ years) building robust, performant web applications with
-    React, Next.js, and TypeScript. Principal frontend developer for a SaaS platform
-    serving 10k+ users; led UI development for EPFL's Blue Brain neuroscience tooling
-    (Next.js + Elasticsearch over a 1M+ node knowledge graph). Strong collaborative and
-    ownership mindset across startup and research environments.
+    Senior frontend / full-stack engineer (12+ yrs) building complex, high-throughput TypeScript,
+    React, and Next.js applications. Most recently shipped a docked 7-screen AI Chat Panel with
+    bidirectional hover links, inline result dialogs, and Playwright 5xx/e2e hardening at Natzka.
+    Previously principal frontend developer for EPFL's open-source Blue Brain tooling (Next.js
+    over a 1M+ node knowledge graph, 50+ merged PRs) and RTK.io (10k+ active users, acquired by
+    Magnite).
 
   backend: >
-    Senior backend / AI engineer with 12+ years building Python services, ETL
-    pipelines, and distributed AI / LLM systems. Current focus at Natzka
-    (data intelligence platform): AI Assistant + MCP platform capabilities,
-    observability, and production reliability in a high-velocity monorepo.
-    Previous focus at Delta Labs (Zurich, €4.4M seed Mar 2026): production RAG
-    and RLM inference, embedding and OCR pipelines (Azure, Postgres + pgvector),
-    prompt orchestration, throttling, and evaluation loops.
+    Senior backend / AI platform engineer (12+ yrs) building Python services, ETL pipelines, and
+    governed LLM/MCP systems. At Natzka (272 PRs opened, 243 merged in 15 weeks), shipped an
+    11-tool OAuth MCP resource server (RFC 9728), AWS Bedrock (EU) routing, per-tenant token
+    budgets, whitelist privacy persistence, and 15 IAM security fixes. Previously Team Lead at
+    Delta Labs (€4.4M seed: RAG/OCR pipelines, pg_diskann 3,370x speedup, 5% to 85% test
+    coverage) and CTO at Ranova (300% ETL throughput uplift, 40% AWS cost cut).
 
   cto: >
-    Lead engineer / CTO with 12+ years across three leadership-track builds:
-    lead contributor at Delta Labs (Zurich AI startup, €4.4M seed Mar 2026),
-    CTO at Ranova (Geneva healthcare-data startup), 1st technical hire at
-    RTK.io (acquired by Magnite). I take products from zero to scale —
-    backend, AI / LLM systems, data, frontend, infra, hiring, and the
-    product / delegation work that comes with it. Most recently leading
-    architecture, agentic AI / MCP rollout, and product execution.
+    Lead engineer / CTO (12+ yrs) across four leadership-track builds: AI platform lead at
+    Natzka (272 PRs opened / 243 merged, 54 peer PRs reviewed, 11-agent Claude Code harness,
+    15-PR IAM remediation), Team Lead at Delta Labs (€4.4M seed, 320+ PRs, 5% to 85% coverage),
+    CTO at Ranova (300% ETL uplift, 40% AWS cost cut), and 1st technical hire at RTK.io
+    (10k+ users, acquired by Magnite). Takes products from zero to governed scale across backend,
+    AI/LLM systems, data, frontend, security, and team engineering standards.
 
 experience:
 

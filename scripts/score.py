@@ -39,23 +39,32 @@ STOP = set(
     """.split()
 )
 
-WORD_RE = re.compile(r"[A-Za-z][A-Za-z+./#\-]{1,}")
+WORD_RE = re.compile(r"[A-Za-z][A-Za-z0-9+./#'’\-]*")
+# Bigrams stay inside a clause so comma/sentence boundaries don't fuse unrelated words.
+PHRASE_BREAK_RE = re.compile(r"[,;:!?()\[\]|•·\n]|\.\s")
 
 
 def _tokens(text: str) -> list[str]:
     out = []
     for m in WORD_RE.findall(text):
-        w = m.lower().strip("-./")
-        if not w or len(w) < 2:
-            continue
-        if w in STOP:
+        w = re.sub(r"['’]s$", "", m.lower().strip("-./"))
+        if len(w) < 2 or w in STOP or "'" in w or "’" in w:
             continue
         out.append(w)
     return out
 
 
-def _bigrams(toks: list[str]) -> list[str]:
-    return [" ".join(p) for p in zip(toks, toks[1:])]
+def _bigrams(text: str) -> list[str]:
+    out = []
+    for phrase in PHRASE_BREAK_RE.split(text):
+        toks = _tokens(phrase)
+        out += [" ".join(p) for p in zip(toks, toks[1:])]
+    return out
+
+
+def _has_keyword(kw: str, text_norm: str) -> bool:
+    """Whole-word match (so 'java' misses 'javascript'), allowing common plural/verb endings."""
+    return re.search(rf"(?<![a-z0-9]){re.escape(_normalise(kw))}(?:e?s|e?d|ing)?(?![a-z0-9])", text_norm) is not None
 
 
 def _read_jd(app_dir: Path) -> str:
@@ -75,8 +84,8 @@ def _read_cv_text(app_dir: Path) -> str:
             capture_output=True, text=True, check=True,
         )
         return out.stdout
-    except (FileNotFoundError, subprocess.CalledProcessError):
-        pass  # no pdftotext on this machine; fall through to pypdf
+    except (OSError, subprocess.CalledProcessError):
+        pass  # pdftotext unavailable or blocked; fall through to pypdf
     try:
         from pypdf import PdfReader
     except ImportError:
@@ -87,8 +96,7 @@ def _read_cv_text(app_dir: Path) -> str:
 
 def _extract_keywords(jd: str, top: int = 60) -> list[tuple[str, int]]:
     """Crude but effective: most common content words + bigrams in the JD."""
-    toks = _tokens(jd)
-    counts = Counter(toks) + Counter(_bigrams(toks))
+    counts = Counter(_tokens(jd)) + Counter(_bigrams(jd))
     # require a bigram to appear at least twice; unigrams at least twice
     filtered = [(k, v) for k, v in counts.items() if v >= 2]
     filtered.sort(key=lambda x: (-x[1], x[0]))
@@ -101,29 +109,35 @@ def _normalise(s: str) -> str:
     return re.sub(r"\s+", " ", s.lower()).strip()
 
 
+def score_texts(jd: str, cv_text: str) -> tuple[int, list[tuple[str, int]], list[tuple[str, int]]]:
+    """Return (match_pct, hits, misses) comparing extracted JD keywords against CV text."""
+    keywords = _extract_keywords(jd)
+    if not keywords:
+        return 0, [], []
+    cv_lower = _normalise(cv_text)
+    hits, misses = [], []
+    for kw, count in keywords:
+        if _has_keyword(kw, cv_lower):
+            hits.append((kw, count))
+        else:
+            misses.append((kw, count))
+    pct = round(100 * len(hits) / len(keywords))
+    return pct, hits, misses
+
+
 def score(app_dir: Path) -> None:
     jd = _read_jd(app_dir)
     cv_text = _read_cv_text(app_dir)
 
-    cv_lower = _normalise(cv_text)
-    keywords = _extract_keywords(jd)
-
-    if not keywords:
+    pct, hits, misses = score_texts(jd, cv_text)
+    total_kws = len(hits) + len(misses)
+    if not total_kws:
         sys.exit("error: no keywords extracted from jd.md — is it empty?")
-
-    hits, misses = [], []
-    for kw, count in keywords:
-        if _normalise(kw) in cv_lower:
-            hits.append((kw, count))
-        else:
-            misses.append((kw, count))
-
-    pct = round(100 * len(hits) / len(keywords))
 
     # hidden-text sanity check
     cv_words = len(_tokens(cv_text))
 
-    print(f"\n— keyword match: {pct}%  ({len(hits)}/{len(keywords)} keywords present) —")
+    print(f"\n— keyword match: {pct}%  ({len(hits)}/{total_kws} keywords present) —")
     if pct >= 80:
         verdict = "strong (≥80%)"
     elif pct >= 70:
